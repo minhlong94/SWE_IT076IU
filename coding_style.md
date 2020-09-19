@@ -23,18 +23,18 @@ Packages and Modules: lowercase with separator `_`
 Documentation: every function/method should make documentation, following this format:
 ```python
 def multiply_x_by_y(x, y):
-"""Multiplying function
+    """Multiplying function
 
-Function description goes here...
+    Function description goes here...
 
-Args:
-    x: a number, can be any type of number
-    y: a number, can be any type of number
-Returns:
-    result: the result of x*y
-Raises:
-    TypeError: if either x or y is not a type of number
-"""
+    Args:
+        x: a number, can be any type of number
+        y: a number, can be any type of number
+    Returns:
+        result: the result of x*y
+    Raises:
+        TypeError: if either x or y is not a type of number
+    """
     ...
     return ...
 ```
@@ -65,7 +65,7 @@ d = 24 # Hours in a day
 hours_in_a_day = 24
 
 # NO
-def gendmyhms(): # generate  day month year hour minute second
+def gendmyhms(): # generate day month year hour minute second
     return
 
 # YES
