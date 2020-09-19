@@ -1,2 +1,2 @@
-# SWE_IT1706IU
-Repository
+# SWE_IT076IU
+Software Engineering course project (IT076IU) at IU-VNUHCMC.
