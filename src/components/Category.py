@@ -4,7 +4,7 @@ class Category:
 
     Args:
         category_id (str): is used for identifying category
-        category_name (str): name of the category
+        category_name (str): is the name of the category
 
     Attributes:
         _category_id: where we store category_id
