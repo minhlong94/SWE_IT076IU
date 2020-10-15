@@ -10,6 +10,7 @@ class Buyer:
         _buyer_id: where we store buyer_id
         _buyer_name: where we store buyer_name
     """
+
     def __init__(self, buyer_id, buyer_name):
         _buyer_id = buyer_id
         _buyer_name = buyer_name

@@ -10,6 +10,7 @@ class Customer:
         _customer_id: where we store customer_id
         _customer_name: where we store customer_name
     """
+
     def __init__(self, customer_id, customer_name):
         _customer_id = customer_id
         _customer_name = customer_name

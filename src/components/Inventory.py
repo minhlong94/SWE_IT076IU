@@ -8,5 +8,6 @@ class Inventory:
     Attributes:
         _inventory_id: where we store inventory_id
     """
+
     def __init__(self, inventory_id):
         _inventory_id = inventory_id
