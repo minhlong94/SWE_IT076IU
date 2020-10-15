@@ -14,6 +14,6 @@ class Item:
     """
 
     def __init__(self, item_id, item_name, category_id):
-        _item_id = item_id
-        _item_name = item_name
-        _category_id = category_id
+        self._item_id = item_id
+        self._item_name = item_name
+        self._category_id = category_id

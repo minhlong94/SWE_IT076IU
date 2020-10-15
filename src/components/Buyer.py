@@ -12,5 +12,5 @@ class Buyer:
     """
 
     def __init__(self, buyer_id, buyer_name):
-        _buyer_id = buyer_id
-        _buyer_name = buyer_name
+        self._buyer_id = buyer_id
+        self._buyer_name = buyer_name

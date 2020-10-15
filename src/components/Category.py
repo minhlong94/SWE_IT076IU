@@ -12,5 +12,5 @@ class Category:
     """
 
     def __init__(self, category_id, category_name):
-        _category_id = category_id
-        _category_name = category_name
+        self._category_id = category_id
+        self._category_name = category_name

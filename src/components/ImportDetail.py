@@ -21,8 +21,8 @@ class ImportDetail:
     """
 
     def __init__(self, product_id, buyer_id, inventory_id, imported_amount, imported_date=date.today()):
-        _product_id = product_id
-        _buyer_id = buyer_id
-        _inventory_id = inventory_id
-        _imported_amount = imported_amount
-        _imported_date = imported_date
+        self._product_id = product_id
+        self._buyer_id = buyer_id
+        self._inventory_id = inventory_id
+        self._imported_amount = imported_amount
+        self._imported_date = imported_date

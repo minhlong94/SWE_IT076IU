@@ -10,4 +10,4 @@ class Inventory:
     """
 
     def __init__(self, inventory_id):
-        _inventory_id = inventory_id
+        self._inventory_id = inventory_id

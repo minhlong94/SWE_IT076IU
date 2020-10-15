@@ -12,5 +12,5 @@ class Customer:
     """
 
     def __init__(self, customer_id, customer_name):
-        _customer_id = customer_id
-        _customer_name = customer_name
+        self._customer_id = customer_id
+        self._customer_name = customer_name
