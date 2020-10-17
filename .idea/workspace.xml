@@ -1,39 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Make project structure">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/SWE_IT076IU.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MANIFEST.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +15,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="39913744-4496-4b67-867d-f327c52de98c" />
@@ -68,7 +42,16 @@
       <workItem from="1601194536919" duration="16000" />
       <workItem from="1601194587445" duration="1522000" />
       <workItem from="1601196747496" duration="307000" />
+      <workItem from="1602211834028" duration="5000" />
     </task>
+    <task id="LOCAL-00001" summary="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b">
+      <created>1601199138423</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1601199138423</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -77,6 +60,11 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
@@ -89,16 +77,36 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Make project strucutre" />
     <MESSAGE value="Make project structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make project structure" />
+    <MESSAGE value="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="358" y="0" width="874" height="854" key="CommitChangelistDialog2" timestamp="1601199138244">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="358" y="0" width="874" height="854" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1601199138244" />
+    <state x="579" y="51" width="432" height="750" key="RollbackChangesDialog" timestamp="1601199294463">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="579" y="51" width="432" height="750" key="RollbackChangesDialog/0.0.1600.860@0.0.1600.860" timestamp="1601199294463" />
     <state x="304" y="64" key="SettingsEditor" timestamp="1601196724282">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="304" y="64" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1601196724282" />
+    <state x="649" y="338" width="292" height="175" key="VCS.ChangelistChooser" timestamp="1601199167757">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="649" y="338" width="292" height="175" key="VCS.ChangelistChooser/0.0.1600.860@0.0.1600.860" timestamp="1601199167757" />
     <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2" timestamp="1601196695692">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1601196695692" />
+    <state x="607" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601199277577">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="607" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1600.860@0.0.1600.860" timestamp="1601199277577" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SWE_IT076IU$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1601197822228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>
