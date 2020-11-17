@@ -20,17 +20,17 @@ class Table:
 
     def show_dataframe(self):
         with st.beta_container():
-            col1, col2 = st.beta_columns(2)
-            with col1:
-                options = os.listdir(self.data_path)
-                table = st.selectbox(self.text, options)
-                df = pd.read_csv(os.path.join(self.data_path, table))
-                self.show_df = df.head(self.limit_rows)
-                self.profile_df = df
-                buffer = io.StringIO()
-                df.info(buf=buffer)
-                st.text(buffer.getvalue())
-                st.dataframe(self.show_df)
-            with col2:
-                self.profile_report = self.profile_df.profile_report()
-                spr(self.profile_report)
+            # col1, col2 = st.beta_columns(2)
+            # with col1:
+            options = os.listdir(self.data_path)
+            table = st.selectbox(self.text, options)
+            df = pd.read_csv(os.path.join(self.data_path, table))
+            self.show_df = df.head(self.limit_rows)
+            self.profile_df = df
+            buffer = io.StringIO()
+            df.info(buf=buffer)
+            st.text(buffer.getvalue())
+            st.dataframe(self.show_df)
+            # with col2:
+            self.profile_report = self.profile_df.profile_report()
+            spr(self.profile_report)
