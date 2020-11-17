@@ -25,12 +25,16 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Refactor files">
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Create Streamlit demo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/encryption/hash_password.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/encryption/hash_password.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/main_page/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/menu/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/plot/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/table/__init__.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +175,12 @@
       <workItem from="1603530842006" duration="5000" />
       <workItem from="1603619665568" duration="5937000" />
       <workItem from="1603625622328" duration="13996000" />
-      <workItem from="1603643292912" duration="332000" />
+      <workItem from="1603643292912" duration="577000" />
+      <workItem from="1603675968851" duration="807000" />
+      <workItem from="1603683361768" duration="119000" />
+      <workItem from="1604628065625" duration="30000" />
+      <workItem from="1605584616672" duration="10596000" />
+      <workItem from="1605597825693" duration="947000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b">
       <created>1601199138423</created>
@@ -187,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602936198975</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Create Streamlit demo">
+      <created>1603643712685</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1603643712685</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,13 +243,18 @@
     <MESSAGE value="Make project structure" />
     <MESSAGE value="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b" />
     <MESSAGE value="Refactor files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor files" />
+    <MESSAGE value="Create Streamlit demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Streamlit demo" />
   </component>
   <component name="WindowStateProjectService">
     <state x="260" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603619868376">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="260" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1603619868376" />
+    <state x="467" y="121" width="655" height="617" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605594372170">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="467" y="121" width="655" height="617" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1600.860@0.0.1600.860" timestamp="1605594372170" />
     <state x="358" y="0" width="874" height="854" key="CommitChangelistDialog2" timestamp="1601199138244">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -270,10 +291,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="649" y="338" width="292" height="175" key="VCS.ChangelistChooser/0.0.1600.860@0.0.1600.860" timestamp="1601199167757" />
-    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2" timestamp="1602936367214">
+    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2" timestamp="1603643726442">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1602936367214" />
+    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1603643726442" />
     <state x="607" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603619776904">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
