@@ -4,6 +4,7 @@ import pandas_profiling as pp
 import pandas as pd
 import streamlit as st
 from streamlit_pandas_profiling import st_profile_report as spr
+import streamlit.components.v1 as components
 
 
 class Table:
@@ -34,3 +35,4 @@ class Table:
             # with col2:
             self.profile_report = self.profile_df.profile_report()
             spr(self.profile_report)
+            # components.html(self.profile_report.to_html(), height=900, scrolling=True)
