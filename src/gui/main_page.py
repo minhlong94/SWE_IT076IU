@@ -2,11 +2,22 @@ import streamlit as st
 
 
 class MainPage:
+    """Main Page of the Web App
+
+    The main page displays the title, a short description, and instructions for admin
+
+    Attributes:
+        title: streamlit container. The title of the web.
+        info_field: streamlit container. The short description of the web
+
+    Example usage:
+    main_page = MainPage()
+    main_page.call() => display title and info_field
+    main_page.clear() => clear info field
+    """
     def __init__(self):
-        self.login_successful = True
         self.title = st.empty()
         self.info_field = st.empty()
-        self.success = st.empty()
 
     def call(self):
         self._welcome()

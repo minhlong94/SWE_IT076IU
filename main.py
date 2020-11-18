@@ -2,7 +2,7 @@ import streamlit as st
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
 import bcrypt
-import time
+
 
 def main():
     with open("src/encryption/hash_pw.txt", "rb") as f:
@@ -19,7 +19,7 @@ def main():
         st.sidebar.warning("Wrong password!")
         st.stop()
     else:
-        st.sidebar.success("Login successful")
+        st.sidebar.success("Login successful!")
         main_page.clear()
         menu = Menu()
         menu.display_option()

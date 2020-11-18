@@ -1,35 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/Streamlit_LML" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </select>
+    <expand />
+    <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Refactor file directories, finish creating view">
+    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Change column to non-column viewer.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/main_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/plot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/table.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +158,8 @@
       <workItem from="1605584616672" duration="10596000" />
       <workItem from="1605597825693" duration="1149000" />
       <workItem from="1605613316250" duration="1684000" />
-      <workItem from="1605615016148" duration="886000" />
+      <workItem from="1605615016148" duration="945000" />
+      <workItem from="1605708708733" duration="874000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b">
       <created>1601199138423</created>
@@ -207,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605598891322</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Change column to non-column viewer.">
+      <created>1605618851870</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1605618851870</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,7 +243,8 @@
     <MESSAGE value="Refactor files" />
     <MESSAGE value="Create Streamlit demo" />
     <MESSAGE value="Refactor file directories, finish creating view" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor file directories, finish creating view" />
+    <MESSAGE value="Change column to non-column viewer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Change column to non-column viewer." />
   </component>
   <component name="WindowStateProjectService">
     <state x="260" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603619868376">
@@ -301,14 +291,14 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="649" y="338" width="292" height="175" key="VCS.ChangelistChooser/0.0.1600.860@0.0.1600.860" timestamp="1601199167757" />
-    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605598911313">
+    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605618858591">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1605598911313" />
-    <state x="607" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603619776904">
+    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1605618858591" />
+    <state x="607" y="342" width="455" height="200" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605708725247">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="607" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1600.860@0.0.1600.860" timestamp="1603619776904" />
+    <state x="607" y="342" width="455" height="200" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1600.860@0.0.1600.860" timestamp="1605708725247" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SWE_IT076IU$main.coverage" NAME="main Coverage Results" MODIFIED="1603620456792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
