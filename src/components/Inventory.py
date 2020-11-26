@@ -40,3 +40,9 @@ class Inventory:
         """
 
         self.items.pop(item.item_id, None)
+
+    def add_quantity(self, item, quantity):
+        pass
+
+    def remove_quantity(self, item, quantity):
+        pass
