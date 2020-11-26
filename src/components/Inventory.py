@@ -10,4 +10,7 @@ class Inventory:
     """
 
     def __init__(self, inventory_id):
+        if inventory_id is None:
+            raise TypeError("Argument 'inventory_id' is required!")
+
         self._inventory_id = inventory_id

@@ -12,5 +12,10 @@ class Category:
     """
 
     def __init__(self, category_id, category_name):
+        if category_id is None:
+            raise TypeError("Argument 'category_id' is required!")
+        if category_name is None:
+            raise TypeError("Argument 'category_name' is required!")
+
         self._category_id = category_id
         self._category_name = category_name

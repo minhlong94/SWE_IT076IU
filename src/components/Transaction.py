@@ -1,10 +1,6 @@
 from datetime import datetime
 
 
-def pending():
-    return "pending"
-
-
 class Transaction:
     """
     Class Transaction is where we manage the transactions which the customers have made.
@@ -22,7 +18,18 @@ class Transaction:
         _created_date: where we store created_date
     """
 
+    STATUSES = {"PENDING", "COMPLETED"}
+
     def __init__(self, transaction_id, customer_id, status, created_date=datetime.today()):
+        if transaction_id is None:
+            raise TypeError("Argument 'transaction_id' is required!")
+        if customer_id is None:
+            raise TypeError("Argument 'customer_id' is required!")
+        if status is None:
+            raise TypeError("Argument 'status' is required!")
+        if status not in self.STATUSES:
+            raise ValueError("Argument 'status' must be one of {}!".format(self.STATUSES))
+
         self._transaction_id = transaction_id
         self._customer_id = customer_id
         self._status = status

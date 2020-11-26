@@ -14,6 +14,13 @@ class Item:
     """
 
     def __init__(self, item_id, item_name, category_id):
+        if item_id is None:
+            raise TypeError("Argument 'item_id' is required!")
+        if item_name is None:
+            raise TypeError("Argument 'item_name' is required!")
+        if category_id is None:
+            raise TypeError("Argument 'category_id' is required!")
+
         self._item_id = item_id
         self._item_name = item_name
         self._category_id = category_id

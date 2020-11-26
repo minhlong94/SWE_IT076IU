@@ -12,5 +12,10 @@ class Buyer:
     """
 
     def __init__(self, buyer_id, buyer_name):
+        if buyer_id is None:
+            raise TypeError("Argument 'buyer_id' is required!")
+        if buyer_id is None:
+            raise TypeError("Argument 'buyer_name' is required!")
+
         self._buyer_id = buyer_id
         self._buyer_name = buyer_name

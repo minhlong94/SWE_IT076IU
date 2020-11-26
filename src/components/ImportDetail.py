@@ -21,6 +21,19 @@ class ImportDetail:
     """
 
     def __init__(self, product_id, buyer_id, inventory_id, imported_amount, imported_date=datetime.today()):
+        if product_id is None:
+            raise TypeError("Argument 'product_id' is required!")
+        if buyer_id is None:
+            raise TypeError("Argument 'buyer_id' is required!")
+        if inventory_id is None:
+            raise TypeError("Argument 'inventory_id' is required!")
+        if imported_amount is None:
+            raise TypeError("Argument 'imported_amount' must be specified!")
+        if not isinstance(imported_amount, int):
+            raise TypeError("Argument 'imported_amount' must be an integer!")
+        if imported_amount <= 0:
+            raise ValueError("Argument 'imported_amount' must be greater than 0!")
+
         self._product_id = product_id
         self._buyer_id = buyer_id
         self._inventory_id = inventory_id

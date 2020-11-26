@@ -12,5 +12,10 @@ class Customer:
     """
 
     def __init__(self, customer_id, customer_name):
+        if customer_id is None:
+            raise TypeError("Argument 'customer_id' is required!")
+        if customer_name is None:
+            raise TypeError("Argument 'customer_name' is required!")
+
         self._customer_id = customer_id
         self._customer_name = customer_name
