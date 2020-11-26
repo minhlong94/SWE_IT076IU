@@ -24,18 +24,13 @@ class Menu:
         self.text = "Choose between viewing table or viewing profit plot: "
         self.options = ["View table", "View profit plot"]
         self.current_option = ""
+        self.plot = Plot()
+        self.table = Table()
 
     def display_option(self):
         self.current_option = self.select_box.selectbox(self.text, self.options)
         if self.current_option == "View table":
-            self.display_table()
+            self.table.show_dataframe()
         elif self.current_option == "View profit plot":
-            self.plot()
+            self.plot.plot()
 
-    def display_table(self):
-        table = Table()
-        table.show_dataframe()
-
-    def plot(self):
-        plot = Plot()
-        plot.plot()
