@@ -1,6 +1,7 @@
 import streamlit as st
 
 from src.gui.table import Table
+from src.gui.plot import Plot
 
 
 class Menu:
@@ -29,8 +30,12 @@ class Menu:
         if self.current_option == "View table":
             self.display_table()
         elif self.current_option == "View profit plot":
-            pass
+            self.plot()
 
     def display_table(self):
         table = Table()
         table.show_dataframe()
+
+    def plot(self):
+        plot = Plot()
+        plot.plot()

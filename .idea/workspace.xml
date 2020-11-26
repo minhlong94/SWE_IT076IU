@@ -5,13 +5,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Change column to non-column viewer.">
+    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Write documentation and cleanup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/main_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/table.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +156,8 @@
       <workItem from="1605597825693" duration="1149000" />
       <workItem from="1605613316250" duration="1684000" />
       <workItem from="1605615016148" duration="945000" />
-      <workItem from="1605708708733" duration="874000" />
+      <workItem from="1605708708733" duration="1748000" />
+      <workItem from="1606369136390" duration="1274000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b">
       <created>1601199138423</created>
@@ -196,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605618851870</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Write documentation and cleanup">
+      <created>1605709851346</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1605709851346</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,7 +249,8 @@
     <MESSAGE value="Create Streamlit demo" />
     <MESSAGE value="Refactor file directories, finish creating view" />
     <MESSAGE value="Change column to non-column viewer." />
-    <option name="LAST_COMMIT_MESSAGE" value="Change column to non-column viewer." />
+    <MESSAGE value="Write documentation and cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Write documentation and cleanup" />
   </component>
   <component name="WindowStateProjectService">
     <state x="260" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603619868376">
@@ -291,10 +297,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="649" y="338" width="292" height="175" key="VCS.ChangelistChooser/0.0.1600.860@0.0.1600.860" timestamp="1601199167757" />
-    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605618858591">
+    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605709856076">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1605618858591" />
+    <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1605709856076" />
     <state x="607" y="342" width="455" height="200" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605708725247">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
