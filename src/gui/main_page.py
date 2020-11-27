@@ -17,6 +17,7 @@ class MainPage:
     """
     def __init__(self):
         self.title = st.empty()
+        self.header = st.empty()
         self.info_field = st.empty()
 
     def call(self):
@@ -24,12 +25,8 @@ class MainPage:
 
     def _welcome(self):
         self.title.title("Wholesale Management System")
-        text = """
-               Wholesale management system of company That Boring Company.  
-               ## **WARNING: AUTHORIZED ACCESS ONLY**
-               Input your administrator password on the left sidebar, then press "Enter" to login.
-               """
-        self.info_field.markdown(text)
-
-    def clear(self):
-        self.info_field.empty()
+        self.header.header("Welcome to the WMS of company That Boring Company.")
+    #
+    #
+    # def clear(self):
+    #     self.info_field.empty()

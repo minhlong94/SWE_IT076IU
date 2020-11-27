@@ -2,7 +2,7 @@ import streamlit as st
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
 import bcrypt
-import subprocess
+
 
 def main():
     with open("src/encryption/hash_pw.txt", "rb") as f:
@@ -11,7 +11,12 @@ def main():
 
     main_page = MainPage()
     main_page.call()
-    st.sidebar.title("Login section")
+    st.sidebar.title("LOGIN SECTION")
+    text = """ 
+           ## **WARNING: AUTHORIZED ACCESS ONLY**
+           Input your administrator password on the left sidebar, then press "Enter" to login.
+           """
+    st.sidebar.markdown(text)
     input_password = st.sidebar.text_input("Input administrator password: ", type="password", value="")
     st.sidebar.write("Note: this is a collapsible sidebar.")
 
@@ -20,7 +25,7 @@ def main():
         st.stop()
     else:
         st.sidebar.success("Login successful!")
-        main_page.clear()
+        # main_page.clear()
         menu = Menu()
         menu.display_option()
 

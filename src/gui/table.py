@@ -20,7 +20,7 @@ class Table:
         dataframe: streamlit container. A container to display the DataFrame.
         text: string. The instruction for admin.
         data_path: string (as path). The relative path to the data directory.
-        profile_report: Pandas Profiling's ProfileReport. The Pandas Profiling ProfileReport \
+        profile_report: Pandas Profiling ProfileReport. The Pandas Profiling ProfileReport \
             that will be displayed as HTML.
 
     Example usage:
@@ -39,7 +39,7 @@ class Table:
         self.data_path = "src/data"
         self.profile_report = None
 
-    def show_dataframe(self):
+    def show_dataframe(self, minimal=True):
         with st.beta_container():
             col1, col2 = st.beta_columns(2)
             with col1:
@@ -53,7 +53,6 @@ class Table:
                 st.text(buffer.getvalue())
                 st.dataframe(self.show_df)
             with col2:
-                self.profile_report = self.profile_df.profile_report()
-                # spr(self.profile_report)
+                self.profile_report = pp.ProfileReport(self.profile_df, minimal=minimal, progress_bar=False)
                 with st.spinner("Generating profile report..."):
-                    components.html(self.profile_report.to_html(), height=900, scrolling=True)
+                    components.html(self.profile_report.to_html(), height=700, scrolling=True)

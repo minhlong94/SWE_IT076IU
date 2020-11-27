@@ -1,5 +1,4 @@
 import streamlit as st
-
 from src.gui.table import Table
 from src.gui.plot import Plot
 
@@ -28,6 +27,10 @@ class Menu:
         self.table = Table()
 
     def display_option(self):
+        """Display options as select box
+
+        Display options as select box, either View table or View profit plot
+        """
         self.current_option = self.select_box.selectbox(self.text, self.options)
         if self.current_option == "View table":
             self.table.show_dataframe()

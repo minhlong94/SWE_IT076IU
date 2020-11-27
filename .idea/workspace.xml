@@ -8,7 +8,10 @@
     <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Plot is still in progress">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/main_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/table.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,6 +165,8 @@
       <workItem from="1606405449292" duration="2245000" />
       <workItem from="1606408117096" duration="1382000" />
       <workItem from="1606443978710" duration="4138000" />
+      <workItem from="1606481918711" duration="323000" />
+      <workItem from="1606482279350" duration="4219000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b">
       <created>1601199138423</created>
