@@ -5,11 +5,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Add HiPlot to view table, doing profit comparison">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Finish HiPlot view. Plot now supports multiple Shop IDs.">
       <change beforePath="$PROJECT_DIR$/src/gui/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/table.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +164,7 @@
       <workItem from="1606482279350" duration="4373000" />
       <workItem from="1606701243499" duration="4534000" />
       <workItem from="1606721089361" duration="3676000" />
-      <workItem from="1606734566483" duration="740000" />
+      <workItem from="1606734566483" duration="1225000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;Make project structure&quot;&#10;&#10;This reverts commit 46b1322b">
       <created>1601199138423</created>
@@ -239,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606724764012</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Finish HiPlot view. Plot now supports multiple Shop IDs.">
+      <created>1606735376798</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1606735376798</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,7 +296,8 @@
     <MESSAGE value="Plot is still in progress" />
     <MESSAGE value="Refactor code" />
     <MESSAGE value="Add HiPlot to view table, doing profit comparison" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add HiPlot to view table, doing profit comparison" />
+    <MESSAGE value="Finish HiPlot view. Plot now supports multiple Shop IDs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish HiPlot view. Plot now supports multiple Shop IDs." />
   </component>
   <component name="WindowStateProjectService">
     <state x="209" y="337" width="1492" height="365" key="#SQL_Dialects" timestamp="1606406703986">
@@ -348,11 +353,11 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="649" y="338" width="292" height="175" key="VCS.ChangelistChooser/0.0.1600.860@0.0.1600.860" timestamp="1601199167757" />
-    <state x="474" y="195" width="1000" height="664" key="Vcs.Push.Dialog.v2" timestamp="1606486646359">
+    <state x="474" y="195" width="1000" height="664" key="Vcs.Push.Dialog.v2" timestamp="1606735379489">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1605709856076" />
-    <state x="474" y="195" width="1000" height="664" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1606486646359" />
+    <state x="474" y="195" width="1000" height="664" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1606735379489" />
     <state x="728" y="414" width="455" height="200" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606720168477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
