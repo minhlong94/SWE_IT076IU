@@ -2,6 +2,8 @@ import streamlit as st
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
 import bcrypt
+import base64
+import hashlib
 
 
 def main():
@@ -20,7 +22,7 @@ def main():
     input_password = st.sidebar.text_input("Input administrator password: ", type="password", value="")
     st.sidebar.write("Note: this is a collapsible sidebar.")
 
-    while not bcrypt.checkpw(input_password.encode("utf8"), hashed_password):
+    while not bcrypt.checkpw(base64.b64encode(hashlib.sha256(input_password.encode("utf8")).digest()), hashed_password):
         st.sidebar.warning("Wrong password!")
         st.stop()
     else:

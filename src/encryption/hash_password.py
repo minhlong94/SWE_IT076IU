@@ -11,11 +11,11 @@ def hash_password():
     Returns:
         None
     """
-    password = b"py"
+    password = b"python"
     hashed_pw = bcrypt.hashpw(
         base64.b64encode(hashlib.sha256(password).digest()),
         bcrypt.gensalt())
-    with open("hash_pw.txt", "wb+") as txt:
+    with open("encryption/hash_pw.txt", "wb+") as txt:
         txt.write(hashed_pw)
         txt.close()
 

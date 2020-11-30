@@ -115,6 +115,6 @@ class Plot:
             selected_df: pandas DataFrame. Subset of the DF with the given condition
         """
         selected_df = df[(df["date"].between(start_date, end_date))
-                              & (df["shop_id"] == shop_id)]
+                         & (df["shop_id"] == shop_id)]
         selected_df["profit"] = selected_df["item_price"] * selected_df["item_cnt_day"]
         return selected_df
