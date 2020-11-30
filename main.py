@@ -10,7 +10,9 @@ def main():
     with open("src/encryption/hash_pw.txt", "rb") as f:
         hashed_password = f.read()
         f.close()
-
+    st.set_page_config(  # Alternate names: setup_page, page, layout
+        layout="wide"
+    )
     main_page = MainPage()
     main_page.call()
     st.sidebar.title("LOGIN SECTION")

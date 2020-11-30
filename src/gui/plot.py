@@ -38,7 +38,7 @@ class Plot:
         self.max_date = self.df["date"].max()
         self.shop_ids = shops["shop_id"].unique()
         self.num_days_to_plot_week = 90
-        self.template = "ggplot2"
+        self.template = "plotly"
 
     def plot(self):
         """Plot the profit
@@ -84,7 +84,7 @@ class Plot:
                 st.info("Plotting profit by month")
                 profit_df = self._group_by(selected_df, "M")
                 fig = px.line(profit_df, x="date", y="profit",
-                              title="Monthly" + plot_title, template=self.template)
+                              title="Monthly" + plot_title, template=self.template, color="shop_id")
                 st.plotly_chart(fig)
 
     def _group_by(self, df, freq):
@@ -98,7 +98,7 @@ class Plot:
              profit_df: pandas DataFrame. The grouped DF by freq, with profit calculated.
         """
         df["date"] = pd.to_datetime(df["date"]) - pd.to_timedelta(7, unit="d")
-        profit_df = df.groupby([pd.Grouper(key="date", freq=freq)])["profit"].sum() \
+        profit_df = df.groupby([pd.Grouper(key="date", freq=freq), "shop_id"])["profit"].sum() \
             .reset_index() \
             .sort_values("date")  # Group by week
         return profit_df
@@ -114,7 +114,11 @@ class Plot:
         :returns
             selected_df: pandas DataFrame. Subset of the DF with the given condition
         """
+        shop_ids = [1, 2]
+        conditions = [df["shop_id"] == x for x in shop_ids]
+        # selected_df = df[(df["date"].between(start_date, end_date))
+        #                  & (df["shop_id"] == shop_id)]
         selected_df = df[(df["date"].between(start_date, end_date))
-                         & (df["shop_id"] == shop_id)]
+                         & (df["shop_id"].isin(shop_ids))]
         selected_df["profit"] = selected_df["item_price"] * selected_df["item_cnt_day"]
         return selected_df

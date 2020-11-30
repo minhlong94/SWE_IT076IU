@@ -4,6 +4,7 @@ import pandas_profiling as pp
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+import hiplot as hip
 
 
 class Table:
@@ -31,7 +32,7 @@ class Table:
     def __init__(self):
         self.show_df = None
         self.profile_df = None
-        self.limit_rows = 200
+        self.limit_rows = 100000
         self.select_box = st.empty()
         self.dataframe = st.empty()
         self.text = "Choose the DataFrame (table) you want to display. " \
@@ -41,18 +42,22 @@ class Table:
 
     def show_dataframe(self, minimal=True):
         with st.beta_container():
+            options = os.listdir(self.data_path)
+            table = st.selectbox(self.text, options)
+            st.info(f"Note: due to limited output size, the displayed DataFrame is limited to the first "
+                    f"{self.limit_rows} rows only.\n\nHowever, the Pandas Profiling Report "
+                    f"calculates on the full DataFrame.")
             col1, col2 = st.beta_columns(2)
             with col1:
-                options = os.listdir(self.data_path)
-                table = st.selectbox(self.text, options)
                 df = pd.read_csv(os.path.join(self.data_path, table))
                 self.show_df = df.head(self.limit_rows)
                 self.profile_df = df
                 buffer = io.StringIO()
                 df.info(buf=buffer)
                 st.text(buffer.getvalue())
-                st.dataframe(self.show_df)
+                xp = hip.Experiment.from_dataframe(self.show_df)
+                xp.display_st(key="hip")
             with col2:
                 self.profile_report = pp.ProfileReport(self.profile_df, minimal=minimal, progress_bar=False)
                 with st.spinner("Generating profile report..."):
-                    components.html(self.profile_report.to_html(), height=700, scrolling=True)
+                    components.html(self.profile_report.to_html(), height=1500, scrolling=True)
