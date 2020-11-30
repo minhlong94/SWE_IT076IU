@@ -118,7 +118,7 @@ class Plot:
              start_date: datetime.datetime. The start date to select
              end_date: datettime.datetime. The end date to select. Start_date <= end_date
              shop_id: int. The shop_id to select
-        :returns
+        Returns:
             selected_df: pandas DataFrame. Subset of the DF with the given condition
         """
 
