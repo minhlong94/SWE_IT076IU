@@ -29,7 +29,6 @@ def main():
         st.stop()
     else:
         st.sidebar.success("Login successful!")
-        # main_page.clear()
         menu = Menu()
         menu.display_option()
 

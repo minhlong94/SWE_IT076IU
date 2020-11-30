@@ -26,7 +26,3 @@ class MainPage:
     def _welcome(self):
         self.title.title("Wholesale Management System")
         self.header.header("Welcome to the WMS of company That Boring Company.")
-    #
-    #
-    # def clear(self):
-    #     self.info_field.empty()

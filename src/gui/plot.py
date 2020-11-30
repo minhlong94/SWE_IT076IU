@@ -53,38 +53,45 @@ class Plot:
             None
         """
         with st.beta_container():
-            st.write("Please choose the start date and end date. Notice that start day should be less than end date")
+            # Options
+            st.info("Please choose the start date and end date. Notice that start day should be less than end date")
             start_date = datetime.datetime.fromordinal(st.date_input("Start date", value=self.min_date,
                                                                      min_value=self.min_date,
                                                                      max_value=self.max_date, key="start").toordinal())
             end_date = datetime.datetime.fromordinal(st.date_input("Start date", value=self.max_date,
                                                                    min_value=self.min_date,
                                                                    max_value=self.max_date, key="end").toordinal())
-            shop_id = st.selectbox("Select the SHOP ID: ", self.shop_ids)
+            shop_ids = st.multiselect("Select the SHOP ID: ", self.shop_ids)
+            st.dataframe(self.shop_df)  # Show the sample DF
 
-            st.dataframe(self.shop_df)
+            # While multiselect is None
+            while not shop_ids:
+                st.stop()
 
+            # Sanity check start_date and end_date
             try:
                 assert start_date <= end_date
             except AssertionError:
                 st.exception("Start day is after end date.")
                 st.stop()
-            days_in_between = end_date - start_date
 
-            selected_df = self._select_df_in_between(self.df, start_date, end_date, shop_id)
-            plot_title = " profit of shop {} from {} to {}".format(shop_id, start_date.date(), end_date.date())
+            days_in_between = end_date - start_date  # Get days in between
+
+            selected_df = self._select_df_in_between(self.df, start_date, end_date, shop_ids)
+            plot_title = " profit of shop {} from {} to {}".format(shop_ids, start_date.date(), end_date.date())
 
             if days_in_between.days <= self.num_days_to_plot_week:
                 st.info("Plotting profit by week")
                 profit_df = self._group_by(selected_df, "W-MON")
+                st.dataframe(profit_df)
                 fig = px.line(profit_df, x="date", y="profit",
-                              title="Weekly" + plot_title, template=self.template)
+                              title="Weekly" + plot_title, template=self.template)  # Plotly line chart
                 st.plotly_chart(fig)
             else:
                 st.info("Plotting profit by month")
                 profit_df = self._group_by(selected_df, "M")
                 fig = px.line(profit_df, x="date", y="profit",
-                              title="Monthly" + plot_title, template=self.template, color="shop_id")
+                              title="Monthly" + plot_title, template=self.template, color="shop_id")  # Plotly
                 st.plotly_chart(fig)
 
     def _group_by(self, df, freq):
@@ -103,7 +110,7 @@ class Plot:
             .sort_values("date")  # Group by week
         return profit_df
 
-    def _select_df_in_between(self, df, start_date, end_date, shop_id):
+    def _select_df_in_between(self, df, start_date, end_date, shop_ids):
         """Get subset of DF that is between given dates
 
         Arguments:
@@ -114,10 +121,7 @@ class Plot:
         :returns
             selected_df: pandas DataFrame. Subset of the DF with the given condition
         """
-        shop_ids = [1, 2]
-        conditions = [df["shop_id"] == x for x in shop_ids]
-        # selected_df = df[(df["date"].between(start_date, end_date))
-        #                  & (df["shop_id"] == shop_id)]
+
         selected_df = df[(df["date"].between(start_date, end_date))
                          & (df["shop_id"].isin(shop_ids))]
         selected_df["profit"] = selected_df["item_price"] * selected_df["item_cnt_day"]
