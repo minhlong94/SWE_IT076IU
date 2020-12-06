@@ -38,13 +38,13 @@ cur.execute('''CREATE TABLE Inventory
 cur.execute('''DROP TABLE IF EXISTS Imports''')
 cur.execute('''CREATE TABLE Imports
 (
-  importDate DATE NOT NULL,
   importID VARCHAR(50) NOT NULL,
-  inventoryID VARCHAR(50) NOT NULL,
+  importDate DATE NOT NULL,
   buyerID VARCHAR(50) NOT NULL,
+  inventoryID VARCHAR(50) NOT NULL,
   PRIMARY KEY (importID),
-  FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID),
-  FOREIGN KEY (buyerID) REFERENCES Buyer(buyerID)
+  FOREIGN KEY (buyerID) REFERENCES Buyer(buyerID),
+  FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID)
 )''')
 
 cur.execute('''DROP TABLE IF EXISTS Transactions''')
@@ -63,8 +63,8 @@ cur.execute('''CREATE TABLE Transactions
 cur.execute('''DROP TABLE IF EXISTS Item''')
 cur.execute('''CREATE TABLE Item
 (
-  itemName VARCHAR(500) NOT NULL,
   itemID VARCHAR(50) NOT NULL,
+  itemName VARCHAR(500) NOT NULL,
   quantity INT NOT NULL,
   categoryID VARCHAR(50) NOT NULL,
   inventoryID VARCHAR(50) NOT NULL,
@@ -76,9 +76,9 @@ cur.execute('''CREATE TABLE Item
 cur.execute('''DROP TABLE IF EXISTS TransactionsDetail''')
 cur.execute('''CREATE TABLE TransactionsDetail
 (
-  transactionAmount INT NOT NULL,
   transactionID VARCHAR(50) NOT NULL,
   itemID VARCHAR(50) NOT NULL,
+  transactionAmount INT NOT NULL,
   PRIMARY KEY (transactionID),
   FOREIGN KEY (transactionID) REFERENCES Transactions(transactionID),
   FOREIGN KEY (itemID) REFERENCES Item(itemID)
@@ -87,12 +87,12 @@ cur.execute('''CREATE TABLE TransactionsDetail
 cur.execute('''DROP TABLE IF EXISTS ImportsDetail''')
 cur.execute('''CREATE TABLE ImportsDetail
 (
-  importAmount INT NOT NULL,
-  itemID VARCHAR(50) NOT NULL,
   importID VARCHAR(50) NOT NULL,
+  itemID VARCHAR(50) NOT NULL,
+  importAmount INT NOT NULL,
   PRIMARY KEY (itemID, importID),
-  FOREIGN KEY (itemID) REFERENCES Item(itemID),
-  FOREIGN KEY (importID) REFERENCES Imports(importID)
+  FOREIGN KEY (importID) REFERENCES Imports(importID),
+  FOREIGN KEY (itemID) REFERENCES Item(itemID)
 )''')
 
 con.commit()
