@@ -52,7 +52,7 @@ def search_by_date(connection, import_date):
     cur.execute('''SELECT * FROM Imports WHERE importDate LIKE ?''', ('%' + import_date + '%',))
 
 
-def search_by_buyer(connection, buyer_id):
+def search_by_buyer_id(connection, buyer_id):
     if not buyer_id:
         raise TypeError("Argument 'buyer_id' is required!")
 
@@ -60,7 +60,7 @@ def search_by_buyer(connection, buyer_id):
     cur.execute('''SELECT * FROM Imports WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
 
 
-def search_by_inventory(connection, inventory_id):
+def search_by_inventory_id(connection, inventory_id):
     if not inventory_id:
         raise TypeError("Argument 'inventory_id' is required!")
 
