@@ -1,0 +1,61 @@
+CREATE TABLE ItemCategory
+(
+  Category_id INT NOT NULL,
+  Name INT NOT NULL,
+  PRIMARY KEY (Category_id)
+);
+
+CREATE TABLE Customer
+(
+  Customer_id INT NOT NULL,
+  Name VARCHAR NOT NULL,
+  PRIMARY KEY (Customer_id)
+);
+
+CREATE TABLE Buyer
+(
+  Buyer_id INT NOT NULL,
+  Name VARCHAR NOT NULL,
+  PRIMARY KEY (Buyer_id)
+);
+
+CREATE TABLE Transaction
+(
+  transaction_id INT NOT NULL,
+  Date DATE NOT NULL,
+  Buyer_id INT NOT NULL,
+  Customer_id INT NOT NULL,
+  PRIMARY KEY (transaction_id),
+  FOREIGN KEY (Buyer_id) REFERENCES Buyer(Buyer_id),
+  FOREIGN KEY (Customer_id) REFERENCES Customer(Customer_id),
+  UNIQUE ()
+);
+
+CREATE TABLE Transact_Details
+(
+  item_price INT NOT NULL,
+  quantity INT NOT NULL,
+  transaction_id INT NOT NULL,
+  FOREIGN KEY (transaction_id) REFERENCES Transaction(transaction_id)
+);
+
+CREATE TABLE Item
+(
+  Amount__in_stock INT NOT NULL,
+  Item_id INT NOT NULL,
+  Category_id INT NOT NULL,
+  transaction_id INT NOT NULL,
+  PRIMARY KEY (Item_id),
+  FOREIGN KEY (Category_id) REFERENCES ItemCategory(Category_id),
+  FOREIGN KEY (transaction_id) REFERENCES Transaction(transaction_id)
+);
+
+CREATE TABLE StockImport
+(
+  Import_date DATE NOT NULL,
+  Amount INT NOT NULL,
+  Item_id INT NOT NULL,
+  Buyer_id INT NOT NULL,
+  FOREIGN KEY (Item_id) REFERENCES Item(Item_id),
+  FOREIGN KEY (Buyer_id) REFERENCES Buyer(Buyer_id)
+);
