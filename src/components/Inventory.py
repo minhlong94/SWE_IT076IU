@@ -1,48 +1,46 @@
-from src.components.Item import Item
+import sqlite3
 
 
-class Inventory:
-    """Inventory is where we store and manage every product we have imported, and supply items for the transactions.
+def insert(connection, inventory_id, inventory_name):
+    """Add a new inventory to the database.
 
     Args:
-        inventory_id (str): is used for identifying the inventory.
-
-    Raises:
-        TypeError: an error occurred when inventory_id is empty or None.
-
-    Attributes:
-        inventory_id: where we store inventory id.
-        items: a dictionary mapping pairs of item id (key) and quantity (value).
+        connection (sqlite3.Connection)
+        inventory_id (str)
+        inventory_name (str)
     """
 
-    def __init__(self, inventory_id):
-        if not inventory_id:
-            raise TypeError("Argument 'inventory_id' is required!")
+    if not inventory_id:
+        raise TypeError("Argument 'inventory_id' is required!")
+    if not inventory_name:
+        raise TypeError("Argument 'inventory_name' is required!")
 
-        self.inventory_id = inventory_id
-        self.items = dict()
+    cur = connection.cursor()
+    cur.execute('''INSERT INTO Inventory (inventoryID, inventoryName) VALUES (?,?)''', (inventory_id, inventory_name))
+    connection.commit()
 
-    def add_item_to_inventory(self, item, quantity):
-        """Adds an item to the inventory.
 
-        Args:
-            item (Item)
-            quantity (int)
-        """
+def delete_by_id(connection, inventory_id):
+    if not inventory_id:
+        raise TypeError("Argument 'inventory_id' is required!")
 
-        self.items.update({item.item_id: quantity})
+    cur = connection.cursor()
+    cur.execute('''DELETE FROM Inventory WHERE inventoryID = ?''', inventory_id)
+    connection.commit()
 
-    def remove_item_from_inventory(self, item):
-        """Removes an item from the inventory.
 
-        Args:
-            item (Item)
-        """
+def delete_by_name(connection, inventory_name):
+    if not inventory_name:
+        raise TypeError("Argument 'inventory_name' is required!")
 
-        self.items.pop(item.item_id, None)
+    cur = connection.cursor()
+    cur.execute('''DELETE FROM Inventory WHERE inventoryName = ?''', inventory_name)
+    connection.commit()
 
-    def add_quantity(self, item, quantity):
-        pass
 
-    def remove_quantity(self, item, quantity):
-        pass
+def search_by_id(connection, inventory_id):
+    if not inventory_id:
+        raise TypeError("Argument 'inventory_id' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Inventory WHERE inventoryID = ?''', inventory_id)
