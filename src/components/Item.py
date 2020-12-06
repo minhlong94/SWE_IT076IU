@@ -1,28 +1,54 @@
-class Item:
-    """Class Item is where we define product's info in our system.
+import sqlite3
+
+
+def insert(connection, item_id, item_name):
+    """Add a new item to the database.
 
     Args:
-        item_id (str): is used for identifying item.
-        item_name (str): is the name of the item.
-        category_id (str): is used for specifying the category of the item.
-
-    Raises:
-        TypeError: if item_id, item_name or category_id is empty or None.
-
-    Attributes:
-        item_id: where we store item_id.
-        item_name: where we store item_name.
-        category_id: where we store category_id.
+        connection (sqlite3.Connection)
+        item_id (str)
+        item_name (str)
     """
 
-    def __init__(self, item_id, item_name, category_id):
-        if not item_id:
-            raise TypeError("Argument 'item_id' is required!")
-        if not item_name:
-            raise TypeError("Argument 'item_name' is required!")
-        if not category_id:
-            raise TypeError("Argument 'category_id' is required!")
+    if not item_id:
+        raise TypeError("Argument 'item_id' is required!")
+    if not item_name:
+        raise TypeError("Argument 'item_name' is required!")
 
-        self.item_id = item_id
-        self.item_name = item_name
-        self.category_id = category_id
+    cur = connection.cursor()
+    cur.execute('''INSERT INTO Item (itemID, itemName) VALUES (?,?)''', (item_id, item_name))
+    connection.commit()
+
+
+def delete_by_id(connection, item_id):
+    if not item_id:
+        raise TypeError("Argument 'item_id' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''DELETE FROM Item WHERE itemID = ?''', (item_id,))
+    connection.commit()
+
+
+def delete_by_name(connection, item_name):
+    if not item_name:
+        raise TypeError("Argument 'item_name' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''DELETE FROM Item WHERE itemName = ?''', (item_name,))
+    connection.commit()
+
+
+def search_by_id(connection, item_id):
+    if not item_id:
+        raise TypeError("Argument 'item_id' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Item WHERE itemID LIKE ?''', ('%' + item_id + '%',))
+
+
+def search_by_name(connection, item_name):
+    if not item_name:
+        raise TypeError("Argument 'item_name' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Item WHERE itemName LIKE ?''', ('%' + item_name + '%',))

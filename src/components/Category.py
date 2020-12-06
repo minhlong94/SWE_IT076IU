@@ -25,7 +25,7 @@ def delete_by_id(connection, category_id):
         raise TypeError("Argument 'category_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Category WHERE categoryID = ?''', category_id)
+    cur.execute('''DELETE FROM Category WHERE categoryID = ?''', (category_id,))
     connection.commit()
 
 
@@ -34,7 +34,7 @@ def delete_by_name(connection, category_name):
         raise TypeError("Argument 'category_name' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Category WHERE categoryName = ?''', category_name)
+    cur.execute('''DELETE FROM Category WHERE categoryName = ?''', (category_name,))
     connection.commit()
 
 
@@ -43,4 +43,12 @@ def search_by_id(connection, category_id):
         raise TypeError("Argument 'category_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Category WHERE categoryID = ?''', category_id)
+    cur.execute('''SELECT * FROM Category WHERE categoryID LIKE ?''', ('%' + category_id + '%',))
+
+
+def search_by_name(connection, category_name):
+    if not category_name:
+        raise TypeError("Argument 'category_name' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Category WHERE categoryName LIKE ?''', ('%' + category_name + '%',))

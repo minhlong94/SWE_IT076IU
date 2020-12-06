@@ -25,7 +25,7 @@ def delete_by_id(connection, buyer_id):
         raise TypeError("Argument 'buyer_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Buyer WHERE buyerID = ?''', buyer_id)
+    cur.execute('''DELETE FROM Buyer WHERE buyerID = ?''', (buyer_id,))
     connection.commit()
 
 
@@ -34,7 +34,7 @@ def delete_by_name(connection, buyer_name):
         raise TypeError("Argument 'buyer_name' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Buyer WHERE buyerName = ?''', buyer_name)
+    cur.execute('''DELETE FROM Buyer WHERE buyerName = ?''', (buyer_name,))
     connection.commit()
 
 
@@ -43,4 +43,12 @@ def search_by_id(connection, buyer_id):
         raise TypeError("Argument 'buyer_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Buyer WHERE buyerID = ?''', buyer_id)
+    cur.execute('''SELECT * FROM Buyer WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
+
+
+def search_by_name(connection, buyer_name):
+    if not buyer_name:
+        raise TypeError("Argument 'buyer_name' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Buyer WHERE buyerName LIKE ?''', ('%' + buyer_name + '%',))

@@ -25,7 +25,7 @@ def delete_by_id(connection, inventory_id):
         raise TypeError("Argument 'inventory_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Inventory WHERE inventoryID = ?''', inventory_id)
+    cur.execute('''DELETE FROM Inventory WHERE inventoryID = ?''', (inventory_id,))
     connection.commit()
 
 
@@ -34,7 +34,7 @@ def delete_by_name(connection, inventory_name):
         raise TypeError("Argument 'inventory_name' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Inventory WHERE inventoryName = ?''', inventory_name)
+    cur.execute('''DELETE FROM Inventory WHERE inventoryName = ?''', (inventory_name,))
     connection.commit()
 
 
@@ -43,4 +43,12 @@ def search_by_id(connection, inventory_id):
         raise TypeError("Argument 'inventory_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Inventory WHERE inventoryID = ?''', inventory_id)
+    cur.execute('''SELECT * FROM Inventory WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
+
+
+def search_by_name(connection, inventory_name):
+    if not inventory_name:
+        raise TypeError("Argument 'inventory_name' is required!")
+
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Inventory WHERE inventoryName LIKE ?''', ('%' + inventory_name + '%',))
