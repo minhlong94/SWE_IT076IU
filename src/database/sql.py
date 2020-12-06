@@ -39,7 +39,7 @@ cur.execute('''DROP TABLE IF EXISTS Imports''')
 cur.execute('''CREATE TABLE Imports
 (
   importID VARCHAR(50) NOT NULL,
-  importDate DATE NOT NULL,
+  importDate DATETIME NOT NULL,
   buyerID VARCHAR(50) NOT NULL,
   inventoryID VARCHAR(50) NOT NULL,
   PRIMARY KEY (importID),
@@ -51,7 +51,7 @@ cur.execute('''DROP TABLE IF EXISTS Transactions''')
 cur.execute('''CREATE TABLE Transactions
 (
   transactionID VARCHAR(50) NOT NULL,
-  createDate DATE NOT NULL,
+  createDate DATETIME NOT NULL,
   transactionStatus VARCHAR(20) NOT NULL,
   customerID VARCHAR(50) NOT NULL,
   inventoryID VARCHAR(50) NOT NULL,
