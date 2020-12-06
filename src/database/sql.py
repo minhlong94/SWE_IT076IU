@@ -1,32 +1,42 @@
-CREATE TABLE Customer
+import sqlite3
+
+con = sqlite3.connect("database.db")
+cur = con.cursor()
+
+cur.execute('''DROP TABLE IF EXISTS Customer''')
+cur.execute('''CREATE TABLE Customer
 (
   customerID VARCHAR NOT NULL,
   customerName VARCHAR NOT NULL,
   PRIMARY KEY (customerID)
-);
+)''')
 
-CREATE TABLE Category
+cur.execute('''DROP TABLE IF EXISTS Category''')
+cur.execute('''CREATE TABLE Category
 (
   categoryID VARCHAR NOT NULL,
   categoryName VARCHAR NOT NULL,
   PRIMARY KEY (categoryID)
-);
+)''')
 
-CREATE TABLE Buyer
+cur.execute('''DROP TABLE IF EXISTS Buyer''')
+cur.execute('''CREATE TABLE Buyer
 (
   buyerID VARCHAR NOT NULL,
   buyerName VARCHAR NOT NULL,
   PRIMARY KEY (buyerID)
-);
+)''')
 
-CREATE TABLE Inventory
+cur.execute('''DROP TABLE IF EXISTS Inventory''')
+cur.execute('''CREATE TABLE Inventory
 (
   inventoryID VARCHAR NOT NULL,
   inventoryName VARCHAR NOT NULL,
   PRIMARY KEY (inventoryID)
-);
+)''')
 
-CREATE TABLE Imports
+cur.execute('''DROP TABLE IF EXISTS Imports''')
+cur.execute('''CREATE TABLE Imports
 (
   importDate DATE NOT NULL,
   importID VARCHAR NOT NULL,
@@ -35,9 +45,10 @@ CREATE TABLE Imports
   PRIMARY KEY (importID),
   FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID),
   FOREIGN KEY (buyerID) REFERENCES Buyer(buyerID)
-);
+)''')
 
-CREATE TABLE Transactions
+cur.execute('''DROP TABLE IF EXISTS Transactions''')
+cur.execute('''CREATE TABLE Transactions
 (
   transactionID VARCHAR NOT NULL,
   createDate DATE NOT NULL,
@@ -47,9 +58,10 @@ CREATE TABLE Transactions
   PRIMARY KEY (transactionID),
   FOREIGN KEY (customerID) REFERENCES Customer(customerID),
   FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID)
-);
+)''')
 
-CREATE TABLE Item
+cur.execute('''DROP TABLE IF EXISTS Item''')
+cur.execute('''CREATE TABLE Item
 (
   itemName VARCHAR NOT NULL,
   itemID VARCHAR NOT NULL,
@@ -59,9 +71,10 @@ CREATE TABLE Item
   PRIMARY KEY (itemID),
   FOREIGN KEY (categoryID) REFERENCES Category(categoryID),
   FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID)
-);
+)''')
 
-CREATE TABLE TransactionsDetail
+cur.execute('''DROP TABLE IF EXISTS TransactionsDetail''')
+cur.execute('''CREATE TABLE TransactionsDetail
 (
   transactionAmount INT NOT NULL,
   transactionID VARCHAR NOT NULL,
@@ -69,9 +82,10 @@ CREATE TABLE TransactionsDetail
   PRIMARY KEY (transactionID),
   FOREIGN KEY (transactionID) REFERENCES Transactions(transactionID),
   FOREIGN KEY (itemID) REFERENCES Item(itemID)
-);
+)''')
 
-CREATE TABLE ImportsDetail
+cur.execute('''DROP TABLE IF EXISTS ImportsDetail''')
+cur.execute('''CREATE TABLE ImportsDetail
 (
   importAmount INT NOT NULL,
   itemID VARCHAR NOT NULL,
@@ -79,4 +93,9 @@ CREATE TABLE ImportsDetail
   PRIMARY KEY (itemID, importID),
   FOREIGN KEY (itemID) REFERENCES Item(itemID),
   FOREIGN KEY (importID) REFERENCES Imports(importID)
-);
+)''')
+
+con.commit()
+
+cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+print(cur.fetchall())
