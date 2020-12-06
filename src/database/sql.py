@@ -51,7 +51,7 @@ cur.execute('''DROP TABLE IF EXISTS Transactions''')
 cur.execute('''CREATE TABLE Transactions
 (
   transactionID VARCHAR(50) NOT NULL,
-  createDate DATETIME NOT NULL,
+  transactionDate DATETIME NOT NULL,
   transactionStatus VARCHAR(20) NOT NULL,
   customerID VARCHAR(50) NOT NULL,
   inventoryID VARCHAR(50) NOT NULL,

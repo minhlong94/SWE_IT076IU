@@ -40,7 +40,7 @@ CREATE TABLE Imports
 CREATE TABLE Transactions
 (
   transactionID VARCHAR NOT NULL,
-  createDate DATE NOT NULL,
+  transactionDate DATE NOT NULL,
   status VARCHAR NOT NULL,
   customerID VARCHAR NOT NULL,
   inventoryID VARCHAR NOT NULL,
