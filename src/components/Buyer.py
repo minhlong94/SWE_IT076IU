@@ -43,7 +43,7 @@ def search_by_id(connection, buyer_id):
         raise TypeError("Argument 'buyer_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Buyer WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
+    return cur.execute('''SELECT * FROM Buyer WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
 
 
 def search_by_name(connection, buyer_name):
@@ -51,4 +51,4 @@ def search_by_name(connection, buyer_name):
         raise TypeError("Argument 'buyer_name' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Buyer WHERE buyerName LIKE ?''', ('%' + buyer_name + '%',))
+    return cur.execute('''SELECT * FROM Buyer WHERE buyerName LIKE ?''', ('%' + buyer_name + '%',))

@@ -43,7 +43,7 @@ def search_by_id(connection, inventory_id):
         raise TypeError("Argument 'inventory_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Inventory WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
+    return cur.execute('''SELECT * FROM Inventory WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
 
 
 def search_by_name(connection, inventory_name):
@@ -51,4 +51,4 @@ def search_by_name(connection, inventory_name):
         raise TypeError("Argument 'inventory_name' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Inventory WHERE inventoryName LIKE ?''', ('%' + inventory_name + '%',))
+    return cur.execute('''SELECT * FROM Inventory WHERE inventoryName LIKE ?''', ('%' + inventory_name + '%',))

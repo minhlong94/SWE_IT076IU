@@ -43,7 +43,7 @@ def search_by_id(connection, category_id):
         raise TypeError("Argument 'category_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Category WHERE categoryID LIKE ?''', ('%' + category_id + '%',))
+    return cur.execute('''SELECT * FROM Category WHERE categoryID LIKE ?''', ('%' + category_id + '%',))
 
 
 def search_by_name(connection, category_name):
@@ -51,4 +51,4 @@ def search_by_name(connection, category_name):
         raise TypeError("Argument 'category_name' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Category WHERE categoryName LIKE ?''', ('%' + category_name + '%',))
+    return cur.execute('''SELECT * FROM Category WHERE categoryName LIKE ?''', ('%' + category_name + '%',))

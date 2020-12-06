@@ -18,6 +18,7 @@ def insert(connection, customer_id, customer_name):
     cur = connection.cursor()
     cur.execute('''INSERT INTO Customer (customerID, customerName) VALUES (?,?)''', (customer_id, customer_name))
     connection.commit()
+    return cur.lastrowid
 
 
 def delete_by_id(connection, customer_id):
@@ -43,7 +44,7 @@ def search_by_id(connection, customer_id):
         raise TypeError("Argument 'customer_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Customer WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
+    return cur.execute('''SELECT * FROM Customer WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
 
 
 def search_by_name(connection, customer_name):
@@ -51,4 +52,4 @@ def search_by_name(connection, customer_name):
         raise TypeError("Argument 'customer_name' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Customer WHERE customerName LIKE ?''', ('%' + customer_name + '%',))
+    return cur.execute('''SELECT * FROM Customer WHERE customerName LIKE ?''', ('%' + customer_name + '%',))

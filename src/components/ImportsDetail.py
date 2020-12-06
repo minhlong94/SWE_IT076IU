@@ -17,4 +17,4 @@ def search_by_import_id(connection, import_id):
         raise TypeError("Argument 'import_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM ImportsDetail WHERE importID LIKE ?''', ('%' + import_id + '%',))
+    return cur.execute('''SELECT * FROM ImportsDetail WHERE importID LIKE ?''', ('%' + import_id + '%',))

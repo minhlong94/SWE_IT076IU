@@ -17,4 +17,4 @@ def search_by_transaction_id(connection, transaction_id):
         raise TypeError("Argument 'transaction_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM TransactionsDetail WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
+    return cur.execute('''SELECT * FROM TransactionsDetail WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))

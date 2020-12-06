@@ -41,7 +41,7 @@ def search_by_id(connection, import_id):
         raise TypeError("Argument 'import_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Imports WHERE importID LIKE ?''', ('%' + import_id + '%',))
+    return cur.execute('''SELECT * FROM Imports WHERE importID LIKE ?''', ('%' + import_id + '%',))
 
 
 def search_by_date(connection, import_date):
@@ -49,7 +49,7 @@ def search_by_date(connection, import_date):
         raise TypeError("Argument 'import_date' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Imports WHERE importDate LIKE ?''', ('%' + import_date + '%',))
+    return cur.execute('''SELECT * FROM Imports WHERE importDate LIKE ?''', ('%' + import_date + '%',))
 
 
 def search_by_buyer_id(connection, buyer_id):
@@ -57,7 +57,7 @@ def search_by_buyer_id(connection, buyer_id):
         raise TypeError("Argument 'buyer_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Imports WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
+    return cur.execute('''SELECT * FROM Imports WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
 
 
 def search_by_inventory_id(connection, inventory_id):
@@ -65,4 +65,4 @@ def search_by_inventory_id(connection, inventory_id):
         raise TypeError("Argument 'inventory_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Imports WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
+    return cur.execute('''SELECT * FROM Imports WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))

@@ -46,7 +46,7 @@ def search_by_id(connection, transaction_id):
         raise TypeError("Argument 'transaction_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Transactions WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
+    return cur.execute('''SELECT * FROM Transactions WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
 
 
 def search_by_date(connection, transaction_date):
@@ -54,7 +54,7 @@ def search_by_date(connection, transaction_date):
         raise TypeError("Argument 'transaction_date' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Transactions WHERE transactionDate LIKE ?''', ('%' + transaction_date + '%',))
+    return cur.execute('''SELECT * FROM Transactions WHERE transactionDate LIKE ?''', ('%' + transaction_date + '%',))
 
 
 def search_by_status(connection, transaction_status):
@@ -62,7 +62,7 @@ def search_by_status(connection, transaction_status):
         raise TypeError("Argument 'transaction_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Transactions WHERE transactionStatus LIKE ?''', ('%' + transaction_status + '%',))
+    return cur.execute('''SELECT * FROM Transactions WHERE transactionStatus LIKE ?''', ('%' + transaction_status + '%',))
 
 
 def search_by_customer_id(connection, customer_id):
@@ -70,7 +70,7 @@ def search_by_customer_id(connection, customer_id):
         raise TypeError("Argument 'customer_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Transactions WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
+    return cur.execute('''SELECT * FROM Transactions WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
 
 
 def search_by_inventory_id(connection, inventory_id):
@@ -78,4 +78,4 @@ def search_by_inventory_id(connection, inventory_id):
         raise TypeError("Argument 'inventory_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Transactions WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
+    return cur.execute('''SELECT * FROM Transactions WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
