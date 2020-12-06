@@ -65,7 +65,7 @@ def search_by_status(connection, transaction_status):
     cur.execute('''SELECT * FROM Transactions WHERE transactionStatus LIKE ?''', ('%' + transaction_status + '%',))
 
 
-def search_by_customer(connection, customer_id):
+def search_by_customer_id(connection, customer_id):
     if not customer_id:
         raise TypeError("Argument 'customer_id' is required!")
 
@@ -73,7 +73,7 @@ def search_by_customer(connection, customer_id):
     cur.execute('''SELECT * FROM Transactions WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
 
 
-def search_by_inventory(connection, inventory_id):
+def search_by_inventory_id(connection, inventory_id):
     if not inventory_id:
         raise TypeError("Argument 'inventory_id' is required!")
 
