@@ -4,5 +4,5 @@ from src.components import \
     Customer, \
     Item, \
     Inventory, \
-    Import, \
-    Transaction
+    Imports, \
+    Transactions

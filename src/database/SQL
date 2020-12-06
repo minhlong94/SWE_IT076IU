@@ -41,7 +41,7 @@ CREATE TABLE Transactions
 (
   transactionID VARCHAR NOT NULL,
   transactionDate DATE NOT NULL,
-  status VARCHAR NOT NULL,
+  transactionStatus VARCHAR NOT NULL,
   customerID VARCHAR NOT NULL,
   inventoryID VARCHAR NOT NULL,
   PRIMARY KEY (transactionID),
