@@ -5,4 +5,6 @@ from src.components import \
     Item, \
     Inventory, \
     Imports, \
-    Transactions
+    ImportsDetail, \
+    Transactions, \
+    TransactionsDetail
