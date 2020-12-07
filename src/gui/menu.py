@@ -25,7 +25,7 @@ class Menu:
         self.connection = Database.create_connection("src/database/database.db")
         self.select_box = st.sidebar.empty()
         self.text = "Choose between viewing table or viewing profit plot: "
-        self.options = ["Search", "Add", "Remove", "View table", "View profit plot"]
+        self.options = ["Search", "Add", "Remove", "View table", "View profit plot", "Export"]
         self.current_option = ""
         self.database = Database.Database(self.connection)
         self.plot = Plot()
@@ -47,3 +47,6 @@ class Menu:
             self.table.show_dataframe()
         elif self.current_option == "View profit plot":
             self.plot.plot()
+        elif self.current_option == "Export":
+            if st.button("Export"):
+                Database.export_data(self.connection, "src/data")

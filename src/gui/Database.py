@@ -22,10 +22,9 @@ class Database:
         if self.current_option == "Customer":
             customer_id = datetime.now().strftime('%Y%m%d-%H%M%S-') + str(uuid4())
             customer_name = st.text_input("Input customer name: ", value="")
-            if st.button("Search customer") and customer_name != "":
-                data = components.Customer.search_by_name(self.connection, customer_name)
-                df = pd.DataFrame(data.fetchall(), columns=['Customer ID', 'Customer name'])
-                st.write(df)
+            data = components.Customer.search_by_name(self.connection, customer_name)
+            df = pd.DataFrame(data.fetchall(), columns=['Customer ID', 'Customer name'])
+            st.write(df)
 
         elif self.current_option == "Category":
             pass
@@ -112,3 +111,25 @@ def create_connection(db_file):
     except sqlite3.Error as err:
         print(err)
     return connection
+
+
+def export_data(connection, export_path):
+    import csv
+
+    try:
+        db_list = []
+        for db_name in connection.cursor().execute("SELECT name FROM sqlite_master WHERE type = 'table'"):
+            db_list.append(db_name[0])
+        for table in db_list:
+            # Export data into CSV file
+            print(f"Exporting table '{table}'...\n")
+            cursor = connection.cursor()
+            cursor.execute(f"SELECT * FROM {table}")
+            with open(f"{export_path}/{table}.csv", "w+", encoding='utf-8') as csv_file:
+                csv_writer = csv.writer(csv_file, delimiter="\t")
+                csv_writer.writerow([i[0] for i in cursor.description])
+                csv_writer.writerows(cursor)
+            print(f"Data exported Successfully into {export_path}/{table}.csv\n")
+
+    except sqlite3.Error as err:
+        print(err)

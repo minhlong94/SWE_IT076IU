@@ -37,9 +37,9 @@ def delete_by_name(connection, customer_name):
     if not customer_name:
         raise TypeError("Argument 'customer_name' is required!")
 
-    customer = search_by_name(connection, customer_name).fetchall()
+    cur = connection.cursor()
+    customer = cur.execute('''SELECT * FROM Customer WHERE customerName = ?''', (customer_name,))
     if customer:
-        cur = connection.cursor()
         cur.execute('''DELETE FROM Customer WHERE customerName = ?''', (customer_name,))
         connection.commit()
     return customer
