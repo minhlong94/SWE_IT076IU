@@ -1,18 +1,19 @@
-import streamlit as st
-from src.gui.main_page import MainPage
-from src.gui.menu import Menu
-import bcrypt
 import base64
 import hashlib
+
+import bcrypt
+import streamlit as st
+
+from src.gui.main_page import MainPage
+from src.gui.menu import Menu
 
 
 def main():
     with open("src/encryption/hash_pw.txt", "rb") as f:
         hashed_password = f.read()
-        f.close()
-    st.set_page_config(  # Alternate names: setup_page, page, layout
-        layout="wide"
-    )
+
+    st.set_page_config(page_title="Wholesale Management System", layout="wide")
+
     main_page = MainPage()
     main_page.call()
     st.sidebar.title("LOGIN SECTION")

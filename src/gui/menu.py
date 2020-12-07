@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.gui import Database
+from src.gui.Database import Database
 
 from src.gui.plot import Plot
 from src.gui.table import Table
@@ -22,12 +22,11 @@ class Menu:
     menu.display_table() => Display the table (as DataFrame)
     """
     def __init__(self):
-        self.connection = Database.create_connection("src/database/database.db")
         self.select_box = st.sidebar.empty()
         self.text = "Choose an option: "
         self.options = ["Search", "Add", "Remove", "View table", "View profit plot"]
         self.current_option = ""
-        self.database = Database.Database(self.connection)
+        self.database = Database("src/database/database.db")
         self.plot = Plot()
         self.table = Table()
 
@@ -39,7 +38,7 @@ class Menu:
 
         st.sidebar.write("Export database to csv: ")
         if st.sidebar.button("Export"):
-            Database.export_data(self.connection, "src/data")
+            self.database.export_data("src/data")
         
         self.current_option = self.select_box.selectbox(self.text, self.options)
         if self.current_option == "Search":
