@@ -36,6 +36,11 @@ class Menu:
 
         Display options as select box, either View table or View profit plot
         """
+
+        st.sidebar.write("Export database to csv: ")
+        if st.sidebar.button("Export"):
+            Database.export_data(self.connection, "src/data")
+        
         self.current_option = self.select_box.selectbox(self.text, self.options)
         if self.current_option == "Search":
             self.database.show_search()
@@ -47,7 +52,3 @@ class Menu:
             self.table.show_dataframe()
         elif self.current_option == "View profit plot":
             self.plot.plot()
-
-        st.sidebar.write("Export database to csv: ")
-        if st.sidebar.button("Export"):
-            Database.export_data(self.connection, "src/data")
