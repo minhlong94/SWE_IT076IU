@@ -52,3 +52,7 @@ def search_by_name(connection, buyer_name):
 
     cur = connection.cursor()
     return cur.execute('''SELECT * FROM Buyer WHERE buyerName LIKE ?''', ('%' + buyer_name + '%',))
+
+
+def get_all(connection):
+    return connection.cursor().execute('''SELECT * FROM Buyer''')

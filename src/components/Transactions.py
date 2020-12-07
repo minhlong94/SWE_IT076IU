@@ -79,3 +79,7 @@ def search_by_inventory_id(connection, inventory_id):
 
     cur = connection.cursor()
     return cur.execute('''SELECT * FROM Transactions WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
+
+
+def get_all(connection):
+    return connection.cursor().execute('''SELECT * FROM Transactions''')

@@ -52,3 +52,7 @@ def search_by_name(connection, item_name):
 
     cur = connection.cursor()
     return cur.execute('''SELECT * FROM Item WHERE itemName LIKE ?''', ('%' + item_name + '%',))
+
+
+def get_all(connection):
+    return connection.cursor().execute('''SELECT * FROM Item''')

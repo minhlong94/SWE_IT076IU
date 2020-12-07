@@ -18,3 +18,7 @@ def search_by_import_id(connection, import_id):
 
     cur = connection.cursor()
     return cur.execute('''SELECT * FROM ImportsDetail WHERE importID LIKE ?''', ('%' + import_id + '%',))
+
+
+def get_all(connection):
+    return connection.cursor().execute('''SELECT * FROM ImportsDetail''')

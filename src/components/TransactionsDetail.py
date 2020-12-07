@@ -18,3 +18,7 @@ def search_by_transaction_id(connection, transaction_id):
 
     cur = connection.cursor()
     return cur.execute('''SELECT * FROM TransactionsDetail WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
+
+
+def get_all(connection):
+    return connection.cursor().execute('''SELECT * FROM TransactionsDetail''')

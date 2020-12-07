@@ -52,3 +52,7 @@ def search_by_name(connection, inventory_name):
 
     cur = connection.cursor()
     return cur.execute('''SELECT * FROM Inventory WHERE inventoryName LIKE ?''', ('%' + inventory_name + '%',))
+
+
+def get_all(connection):
+    return connection.cursor().execute('''SELECT * FROM Inventory''')
