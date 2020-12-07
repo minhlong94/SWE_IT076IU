@@ -1,6 +1,7 @@
 import sqlite3
+import hashlib
 from datetime import datetime
-from uuid import uuid4
+from uuid import uuid1, uuid4
 
 import pandas as pd
 import streamlit as st
@@ -25,93 +26,115 @@ class Database:
         self.current_option = ""
 
     def show_search(self):
-        # Options
-        self.current_option = st.selectbox("Select table to add data", self.tables)
+        with st.beta_container():
+            self.current_option = st.selectbox("Select table to add data", self.tables)
 
-        if self.current_option == "Customer":
-            customer_id = datetime.now().strftime('%Y%m%d-%H%M%S-') + str(uuid4())
-            customer_name = st.text_input("Input customer name: ", value="")
-            if customer_name:
-                data = components.Customer.search_by_name(self.connection, customer_name)
-                df = pd.DataFrame(data.fetchall(), columns=['Customer ID', 'Customer name'])
-                st.write(df)
+            if self.current_option == "Customer":
+                customer_name = st.text_input("Input customer name: ", value="")
+                if customer_name:
+                    data = components.Customer.search_by_name(self.connection, customer_name)
+                    df = pd.DataFrame(data.fetchall(), columns=['Customer ID', 'Customer name'])
+                    st.write(df)
 
-        elif self.current_option == "Category":
-            pass
+            elif self.current_option == "Category":
+                pass
 
-        elif self.current_option == "Buyer":
-            pass
+            elif self.current_option == "Buyer":
+                pass
 
-        elif self.current_option == "Inventory":
-            pass
+            elif self.current_option == "Inventory":
+                pass
 
-        elif self.current_option == "Imports":
-            pass
+            elif self.current_option == "Imports":
+                pass
 
-        elif self.current_option == "Transactions":
-            pass
+            elif self.current_option == "Transactions":
+                pass
 
-        elif self.current_option == "Item":
-            pass
+            elif self.current_option == "Item":
+                pass
 
     def show_add(self):
-        self.current_option = st.selectbox("Select table to search data", self.tables)
+        with st.beta_container():
+            self.current_option = st.selectbox("Select table to search data", self.tables)
 
-        if self.current_option == "Customer":
-            customer_id = datetime.now().strftime('%Y%m%d-%H%M%S-') + str(uuid4())
-            customer_name = st.text_input("Input customer name: ", value="")
-            if st.button("Add customer"):
-                check = components.Customer.insert(self.connection, customer_id, customer_name)
-                if check is None:
-                    st.write("Error!")
-                else:
-                    st.write("Customer added successfully!")
+            if self.current_option == "Customer":
+                customer_name = st.text_input("Input customer name: ", value="")
+                customer_id = "CUSTOMER-ID-" + hashlib.md5(customer_name.encode()).hexdigest() + "-" + str(uuid1())
+                if st.button("Add customer"):
+                    check = components.Customer.insert(self.connection, customer_id, customer_name)
+                    if check is None:
+                        st.error("Error!")
+                    else:
+                        st.success("Customer was added successfully!")
 
-        elif self.current_option == "Category":
-            pass
+            elif self.current_option == "Category":
+                category_name = st.text_input("Input category name: ", value="")
+                category_id = "CATEGORY-ID-" + hashlib.md5(category_name.encode()).hexdigest()
+                if st.button("Add category"):
+                    check = components.Category.insert(self.connection, category_id, category_name)
+                    if check is None:
+                        st.error("Error!")
+                    else:
+                        st.success("Category was added successfully!")
 
-        elif self.current_option == "Buyer":
-            pass
+            elif self.current_option == "Buyer":
+                buyer_name = st.text_input("Input buyer name: ", value="")
+                buyer_id = "BUYER-ID-" + hashlib.md5(buyer_name.encode()).hexdigest()
+                if st.button("Add category"):
+                    check = components.Category.insert(self.connection, buyer_id, buyer_name)
+                    if check is None:
+                        st.error("Error!")
+                    else:
+                        st.success("Buyer was added successfully!")
 
-        elif self.current_option == "Inventory":
-            pass
+            elif self.current_option == "Inventory":
+                inventory_name = st.text_input("Input inventory name: ", value="")
+                inventory_id = "INVENTORY-ID-" + hashlib.md5(inventory_name.encode()).hexdigest()
+                if st.button("Add category"):
+                    check = components.Category.insert(self.connection, inventory_id, inventory_name)
+                    if check is None:
+                        st.error("Error!")
+                    else:
+                        st.success("Inventory was added successfully!")
 
-        elif self.current_option == "Imports":
-            pass
+            elif self.current_option == "Imports":
+                pass
 
-        elif self.current_option == "Transactions":
-            pass
+            elif self.current_option == "Transactions":
+                pass
 
-        elif self.current_option == "Item":
-            pass
+            elif self.current_option == "Item":
+                pass
 
     def show_remove(self):
-        self.current_option = st.selectbox("Select table to search data", self.tables)
+        with st.beta_container():
+            self.current_option = st.selectbox("Select table to search data", self.tables)
 
-        if self.current_option == "Customer":
-            input_value = st.text_input("Input customer id or name: ", value="")
-            if st.button("Remove customer") and input != "":
-                components.Customer.delete_by_id(self.connection, input_value)
-                components.Customer.delete_by_name(self.connection, input_value)
+            if self.current_option == "Customer":
+                input_value = st.text_input("Input customer id or name: ", value="")
+                if st.button("Remove customer") and input != "":
+                    components.Customer.delete_by_id(self.connection, input_value)
+                    components.Customer.delete_by_name(self.connection, input_value)
 
 
-        elif self.current_option == "Category":
-            pass
+            elif self.current_option == "Category":
+                pass
 
-        elif self.current_option == "Buyer":
-            pass
+            elif self.current_option == "Buyer":
+                pass
 
-        elif self.current_option == "Inventory":
-            pass
+            elif self.current_option == "Inventory":
+                pass
 
-        elif self.current_option == "Imports":
-            pass
+            elif self.current_option == "Imports":
+                pass
 
-        elif self.current_option == "Transactions":
-            pass
+            elif self.current_option == "Transactions":
+                pass
 
-        elif self.current_option == "Item":
-            pass
+            elif self.current_option == "Item":
+                pass
 
     def export_data(self, export_path):
         import csv
