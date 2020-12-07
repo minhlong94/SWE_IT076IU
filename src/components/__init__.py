@@ -3,7 +3,7 @@ from src.components import \
     Category, \
     Customer, \
     Item, \
-    Inventory, \
+    Shop, \
     Imports, \
     ImportsDetail, \
     Transactions, \

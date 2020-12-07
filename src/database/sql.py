@@ -27,12 +27,12 @@ cur.execute('''CREATE TABLE Buyer
   PRIMARY KEY (buyerID)
 )''')
 
-cur.execute('''DROP TABLE IF EXISTS Inventory''')
-cur.execute('''CREATE TABLE Inventory
+cur.execute('''DROP TABLE IF EXISTS Shop''')
+cur.execute('''CREATE TABLE Shop
 (
-  inventoryID VARCHAR(50) NOT NULL,
-  inventoryName VARCHAR(500) NOT NULL,
-  PRIMARY KEY (inventoryID)
+  shopID VARCHAR(50) NOT NULL,
+  shopName VARCHAR(500) NOT NULL,
+  PRIMARY KEY (shopID)
 )''')
 
 cur.execute('''DROP TABLE IF EXISTS Imports''')
@@ -41,10 +41,10 @@ cur.execute('''CREATE TABLE Imports
   importID VARCHAR(50) NOT NULL,
   importDate DATETIME NOT NULL,
   buyerID VARCHAR(50) NOT NULL,
-  inventoryID VARCHAR(50) NOT NULL,
+  shopID VARCHAR(50) NOT NULL,
   PRIMARY KEY (importID),
   FOREIGN KEY (buyerID) REFERENCES Buyer(buyerID),
-  FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID)
+  FOREIGN KEY (shopID) REFERENCES Shop(shopID)
 )''')
 
 cur.execute('''DROP TABLE IF EXISTS Transactions''')
@@ -54,10 +54,10 @@ cur.execute('''CREATE TABLE Transactions
   transactionDate DATETIME NOT NULL,
   transactionStatus VARCHAR(20) NOT NULL,
   customerID VARCHAR(50) NOT NULL,
-  inventoryID VARCHAR(50) NOT NULL,
+  shopID VARCHAR(50) NOT NULL,
   PRIMARY KEY (transactionID),
   FOREIGN KEY (customerID) REFERENCES Customer(customerID),
-  FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID)
+  FOREIGN KEY (shopID) REFERENCES Shop(shopID)
 )''')
 
 cur.execute('''DROP TABLE IF EXISTS Item''')
@@ -67,10 +67,10 @@ cur.execute('''CREATE TABLE Item
   itemName VARCHAR(500) NOT NULL,
   quantity INT NOT NULL,
   categoryID VARCHAR(50) NOT NULL,
-  inventoryID VARCHAR(50) NOT NULL,
+  shopID VARCHAR(50) NOT NULL,
   PRIMARY KEY (itemID),
   FOREIGN KEY (categoryID) REFERENCES Category(categoryID),
-  FOREIGN KEY (inventoryID) REFERENCES Inventory(inventoryID)
+  FOREIGN KEY (shopID) REFERENCES Shop(shopID)
 )''')
 
 cur.execute('''DROP TABLE IF EXISTS TransactionsDetail''')

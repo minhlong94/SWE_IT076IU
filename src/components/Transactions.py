@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def insert(connection, transaction_id, transaction_date, transaction_status, customer_id, inventory_id):
+def insert(connection, transaction_id, transaction_date, transaction_status, customer_id, shop_id):
     """Add a new transaction to the database.
 
     Args:
@@ -10,7 +10,7 @@ def insert(connection, transaction_id, transaction_date, transaction_status, cus
         transaction_date (datetime)
         transaction_status (str)
         customer_id (str)
-        inventory_id (str)
+        shop_id (str)
     """
 
     if not transaction_id:
@@ -21,14 +21,14 @@ def insert(connection, transaction_id, transaction_date, transaction_status, cus
         raise ValueError("Argument 'transaction_status' must be either 'PENDING' or 'COMPLETED'!")
     if not customer_id:
         raise TypeError("Argument 'customer_id' is required!")
-    if not inventory_id:
-        raise TypeError("Argument 'inventory_id' is required!")
+    if not shop_id:
+        raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
     cur.execute(
-        '''INSERT INTO Transactions (transactionID, transactionDate, transactionStatus, customerID, inventoryID) 
+        '''INSERT INTO Transactions (transactionID, transactionDate, transactionStatus, customerID, shopID) 
         VALUES (?,?,?,?,?)''',
-        (transaction_id, transaction_date, transaction_status, customer_id, inventory_id))
+        (transaction_id, transaction_date, transaction_status, customer_id, shop_id))
     connection.commit()
 
 
@@ -73,12 +73,12 @@ def search_by_customer_id(connection, customer_id):
     return cur.execute('''SELECT * FROM Transactions WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
 
 
-def search_by_inventory_id(connection, inventory_id):
-    if not inventory_id:
-        raise TypeError("Argument 'inventory_id' is required!")
+def search_by_shop_id(connection, shop_id):
+    if not shop_id:
+        raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE inventoryID LIKE ?''', ('%' + inventory_id + '%',))
+    return cur.execute('''SELECT * FROM Transactions WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
 
 
 def get_all(connection):

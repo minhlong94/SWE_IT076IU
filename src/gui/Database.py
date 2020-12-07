@@ -42,7 +42,7 @@ class Database:
             elif self.current_option == "Buyer":
                 pass
 
-            elif self.current_option == "Inventory":
+            elif self.current_option == "Shop":
                 pass
 
             elif self.current_option == "Imports":
@@ -88,15 +88,15 @@ class Database:
                     else:
                         st.success("Buyer was added successfully!")
 
-            elif self.current_option == "Inventory":
-                inventory_name = st.text_input("Input inventory name: ", value="")
-                inventory_id = "INVENTORY-ID-" + hashlib.md5(inventory_name.encode()).hexdigest()
+            elif self.current_option == "Shop":
+                shop_name = st.text_input("Input shop name: ", value="")
+                shop_id = "SHOP-ID-" + hashlib.md5(shop_name.encode()).hexdigest()
                 if st.button("Add category"):
-                    check = components.Category.insert(self.connection, inventory_id, inventory_name)
+                    check = components.Category.insert(self.connection, shop_id, shop_name)
                     if check is None:
                         st.error("Error!")
                     else:
-                        st.success("Inventory was added successfully!")
+                        st.success("shop was added successfully!")
 
             elif self.current_option == "Imports":
                 pass
@@ -124,7 +124,7 @@ class Database:
             elif self.current_option == "Buyer":
                 pass
 
-            elif self.current_option == "Inventory":
+            elif self.current_option == "Shop":
                 pass
 
             elif self.current_option == "Imports":
