@@ -16,21 +16,21 @@ if not os.path.exists("database.db"):
       PRIMARY KEY (customerID)
     )''')
 
-    cur.execute('''DROP TABLE IF EXISTS Category''')
-    cur.execute('''CREATE TABLE Category
+    cur.execute('''DROP TABLE IF EXISTS ItemCategory''')
+    cur.execute('''CREATE TABLE ItemCategory
     (
       categoryID VARCHAR(50) NOT NULL,
       categoryName VARCHAR(500) NOT NULL,
       PRIMARY KEY (categoryID)
     )''')
 
-    cur.execute('''DROP TABLE IF EXISTS Buyer''')
-    cur.execute('''CREATE TABLE Buyer
-    (
-      buyerID VARCHAR(50) NOT NULL,
-      buyerName VARCHAR(500) NOT NULL,
-      PRIMARY KEY (buyerID)
-    )''')
+    # cur.execute('''DROP TABLE IF EXISTS Buyer''')
+    # cur.execute('''CREATE TABLE Buyer
+    # (
+    #   buyerID VARCHAR(50) NOT NULL,
+    #   buyerName VARCHAR(500) NOT NULL,
+    #   PRIMARY KEY (buyerID)
+    # )''')
 
     cur.execute('''DROP TABLE IF EXISTS Shop''')
     cur.execute('''CREATE TABLE Shop
@@ -40,15 +40,13 @@ if not os.path.exists("database.db"):
       PRIMARY KEY (shopID)
     )''')
 
-    cur.execute('''DROP TABLE IF EXISTS Imports''')
-    cur.execute('''CREATE TABLE Imports
+    cur.execute('''DROP TABLE IF EXISTS Import''')
+    cur.execute('''CREATE TABLE Import
     (
       importID VARCHAR(50) NOT NULL,
       importDate DATETIME NOT NULL,
-      buyerID VARCHAR(50) NOT NULL,
       shopID VARCHAR(50) NOT NULL,
       PRIMARY KEY (importID),
-      FOREIGN KEY (buyerID) REFERENCES Buyer(buyerID),
       FOREIGN KEY (shopID) REFERENCES Shop(shopID)
     )''')
 
@@ -74,12 +72,12 @@ if not os.path.exists("database.db"):
       categoryID VARCHAR(50) NOT NULL,
       shopID VARCHAR(50) NOT NULL,
       PRIMARY KEY (itemID),
-      FOREIGN KEY (categoryID) REFERENCES Category(categoryID),
+      FOREIGN KEY (categoryID) REFERENCES ItemCategory(categoryID),
       FOREIGN KEY (shopID) REFERENCES Shop(shopID)
     )''')
 
-    cur.execute('''DROP TABLE IF EXISTS TransactionsDetail''')
-    cur.execute('''CREATE TABLE TransactionsDetail
+    cur.execute('''DROP TABLE IF EXISTS TransactionDetail''')
+    cur.execute('''CREATE TABLE TransactionDetail
     (
       transactionID VARCHAR(50) NOT NULL,
       itemID VARCHAR(50) NOT NULL,
@@ -89,14 +87,14 @@ if not os.path.exists("database.db"):
       FOREIGN KEY (itemID) REFERENCES Item(itemID)
     )''')
 
-    cur.execute('''DROP TABLE IF EXISTS ImportsDetail''')
-    cur.execute('''CREATE TABLE ImportsDetail
+    cur.execute('''DROP TABLE IF EXISTS ImportDetail''')
+    cur.execute('''CREATE TABLE ImportDetail
     (
       importID VARCHAR(50) NOT NULL,
       itemID VARCHAR(50) NOT NULL,
       importAmount INT NOT NULL,
       PRIMARY KEY (itemID, importID),
-      FOREIGN KEY (importID) REFERENCES Imports(importID),
+      FOREIGN KEY (importID) REFERENCES Import(importID),
       FOREIGN KEY (itemID) REFERENCES Item(itemID)
     )''')
 

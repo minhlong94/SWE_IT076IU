@@ -22,7 +22,7 @@ def insert(connection, import_id, import_date, buyer_id, shop_id):
         raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''INSERT INTO Imports (importID, importDate, buyerID, shopID) VALUES (?,?,?,?)''',
+    cur.execute('''INSERT INTO Import (importID, importDate, buyerID, shopID) VALUES (?,?,?,?)''',
                 (import_id, import_date, buyer_id, shop_id))
     connection.commit()
 
@@ -32,7 +32,7 @@ def delete_by_id(connection, import_id):
         raise TypeError("Argument 'import_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Imports WHERE importID = ?''', (import_id,))
+    cur.execute('''DELETE FROM Import WHERE importID = ?''', (import_id,))
     connection.commit()
 
 
@@ -41,7 +41,7 @@ def search_by_id(connection, import_id):
         raise TypeError("Argument 'import_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE importID LIKE ?''', ('%' + import_id + '%',))
+    return cur.execute('''SELECT * FROM Import WHERE importID LIKE ?''', ('%' + import_id + '%',))
 
 
 def search_by_date(connection, import_date):
@@ -49,7 +49,7 @@ def search_by_date(connection, import_date):
         raise TypeError("Argument 'import_date' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE importDate LIKE ?''', ('%' + import_date + '%',))
+    return cur.execute('''SELECT * FROM Import WHERE importDate LIKE ?''', ('%' + import_date + '%',))
 
 
 def search_by_buyer_id(connection, buyer_id):
@@ -57,7 +57,7 @@ def search_by_buyer_id(connection, buyer_id):
         raise TypeError("Argument 'buyer_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
+    return cur.execute('''SELECT * FROM Import WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
 
 
 def search_by_shop_id(connection, shop_id):
@@ -65,8 +65,8 @@ def search_by_shop_id(connection, shop_id):
         raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
+    return cur.execute('''SELECT * FROM Import WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
 
 
 def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM Imports''')
+    return connection.cursor().execute('''SELECT * FROM Import''')

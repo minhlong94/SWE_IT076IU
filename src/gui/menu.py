@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.gui.Database import Database
+from src.gui.database import Database
 
 from src.gui.plot import Plot
 from src.gui.table import Table
@@ -35,10 +35,10 @@ class Menu:
 
         Display options as select box, either View table or View profit plot
         """
-
-        st.sidebar.write("Export database to csv: ")
-        if st.sidebar.button("Export"):
-            self.database.export_data("src/data")
+        #
+        # st.sidebar.write("Export database to csv: ")
+        # if st.sidebar.button("Export"):
+        #     self.database.export_data("src/data")
         
         self.current_option = self.select_box.selectbox(self.text, self.options)
         if self.current_option == "Search":

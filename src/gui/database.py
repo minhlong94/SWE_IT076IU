@@ -72,7 +72,7 @@ class Database:
                 category_name = st.text_input("Input category name: ", value="")
                 category_id = "CATEGORY-ID-" + hashlib.md5(category_name.encode()).hexdigest()
                 if st.button("Add category"):
-                    check = components.Category.insert(self.connection, category_id, category_name)
+                    check = components.ItemCategory.insert(self.connection, category_id, category_name)
                     if check is None:
                         st.error("Error!")
                     else:
@@ -82,7 +82,7 @@ class Database:
                 buyer_name = st.text_input("Input buyer name: ", value="")
                 buyer_id = "BUYER-ID-" + hashlib.md5(buyer_name.encode()).hexdigest()
                 if st.button("Add category"):
-                    check = components.Category.insert(self.connection, buyer_id, buyer_name)
+                    check = components.ItemCategory.insert(self.connection, buyer_id, buyer_name)
                     if check is None:
                         st.error("Error!")
                     else:
@@ -92,7 +92,7 @@ class Database:
                 shop_name = st.text_input("Input shop name: ", value="")
                 shop_id = "SHOP-ID-" + hashlib.md5(shop_name.encode()).hexdigest()
                 if st.button("Add category"):
-                    check = components.Category.insert(self.connection, shop_id, shop_name)
+                    check = components.ItemCategory.insert(self.connection, shop_id, shop_name)
                     if check is None:
                         st.error("Error!")
                     else:
@@ -116,7 +116,6 @@ class Database:
                 if st.button("Remove customer") and input != "":
                     components.Customer.delete_by_id(self.connection, input_value)
                     components.Customer.delete_by_name(self.connection, input_value)
-
 
             elif self.current_option == "Category":
                 pass

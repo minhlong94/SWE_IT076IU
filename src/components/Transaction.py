@@ -26,7 +26,7 @@ def insert(connection, transaction_id, transaction_date, transaction_status, cus
 
     cur = connection.cursor()
     cur.execute(
-        '''INSERT INTO Transactions (transactionID, transactionDate, transactionStatus, customerID, shopID) 
+        '''INSERT INTO "Transaction" (transactionID, transactionDate, transactionStatus, customerID, shopID) 
         VALUES (?,?,?,?,?)''',
         (transaction_id, transaction_date, transaction_status, customer_id, shop_id))
     connection.commit()
@@ -37,7 +37,7 @@ def delete_by_id(connection, transaction_id):
         raise TypeError("Argument 'transaction_id' is required!")
 
     cur = connection.cursor()
-    cur.execute('''DELETE FROM Transactions WHERE transactionID = ?''', (transaction_id,))
+    cur.execute('''DELETE FROM "Transaction" WHERE transactionID = ?''', (transaction_id,))
     connection.commit()
 
 
@@ -46,7 +46,7 @@ def search_by_id(connection, transaction_id):
         raise TypeError("Argument 'transaction_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
+    return cur.execute('''SELECT * FROM "Transaction" WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
 
 
 def search_by_date(connection, transaction_date):
@@ -54,7 +54,7 @@ def search_by_date(connection, transaction_date):
         raise TypeError("Argument 'transaction_date' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE transactionDate LIKE ?''', ('%' + transaction_date + '%',))
+    return cur.execute('''SELECT * FROM "Transaction" WHERE transactionDate LIKE ?''', ('%' + transaction_date + '%',))
 
 
 def search_by_status(connection, transaction_status):
@@ -62,7 +62,7 @@ def search_by_status(connection, transaction_status):
         raise TypeError("Argument 'transaction_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE transactionStatus LIKE ?''', ('%' + transaction_status + '%',))
+    return cur.execute('''SELECT * FROM "Transaction" WHERE transactionStatus LIKE ?''', ('%' + transaction_status + '%',))
 
 
 def search_by_customer_id(connection, customer_id):
@@ -70,7 +70,7 @@ def search_by_customer_id(connection, customer_id):
         raise TypeError("Argument 'customer_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
+    return cur.execute('''SELECT * FROM "Transaction" WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
 
 
 def search_by_shop_id(connection, shop_id):
@@ -78,8 +78,8 @@ def search_by_shop_id(connection, shop_id):
         raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
+    return cur.execute('''SELECT * FROM "Transaction" WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
 
 
 def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM Transactions''')
+    return connection.cursor().execute('''SELECT * FROM "Transaction"''')

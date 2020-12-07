@@ -1,10 +1,10 @@
 from src.components import \
     Buyer, \
-    Category, \
+    ItemCategory, \
     Customer, \
     Item, \
     Shop, \
-    Imports, \
-    ImportsDetail, \
-    Transactions, \
-    TransactionsDetail
+    Import, \
+    ImportDetail, \
+    Transaction, \
+    TransactionDetail

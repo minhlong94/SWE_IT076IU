@@ -7,7 +7,7 @@ def insert(connection, import_id, item_id, import_amount):
         raise TypeError("Argument 'import_id' must be a non-negative integer!")
 
     cur = connection.cursor()
-    cur.execute('''INSERT INTO ImportsDetail (importID, itemID, importAmount) VALUES (?,?,?)''',
+    cur.execute('''INSERT INTO ImportDetail (importID, itemID, importAmount) VALUES (?,?,?)''',
                 (import_id, item_id, import_amount))
     connection.commit()
 
@@ -17,8 +17,8 @@ def search_by_import_id(connection, import_id):
         raise TypeError("Argument 'import_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM ImportsDetail WHERE importID LIKE ?''', ('%' + import_id + '%',))
+    return cur.execute('''SELECT * FROM ImportDetail WHERE importID LIKE ?''', ('%' + import_id + '%',))
 
 
 def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM ImportsDetail''')
+    return connection.cursor().execute('''SELECT * FROM ImportDetail''')
