@@ -11,7 +11,7 @@ from src import components
 class Database:
     def __init__(self, connection):
         self.connection = connection
-        self.options = [i[0] for i in
+        self.options = [table[0] for table in
                         connection.cursor().execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
         self.current_option = ""
 
@@ -22,9 +22,10 @@ class Database:
         if self.current_option == "Customer":
             customer_id = datetime.now().strftime('%Y%m%d-%H%M%S-') + str(uuid4())
             customer_name = st.text_input("Input customer name: ", value="")
-            data = components.Customer.search_by_name(self.connection, customer_name)
-            df = pd.DataFrame(data.fetchall(), columns=['Customer ID', 'Customer name'])
-            st.write(df)
+            if customer_name:
+                data = components.Customer.search_by_name(self.connection, customer_name)
+                df = pd.DataFrame(data.fetchall(), columns=['Customer ID', 'Customer name'])
+                st.write(df)
 
         elif self.current_option == "Category":
             pass
@@ -117,10 +118,10 @@ def export_data(connection, export_path):
     import csv
 
     try:
-        db_list = []
-        for db_name in connection.cursor().execute("SELECT name FROM sqlite_master WHERE type = 'table'"):
-            db_list.append(db_name[0])
-        for table in db_list:
+        tables = [table[0] for table in
+                  connection.cursor().execute("SELECT name FROM sqlite_master WHERE type = 'table'")]
+
+        for table in tables:
             # Export data into CSV file
             print(f"Exporting table '{table}'...\n")
             cursor = connection.cursor()
