@@ -1,10 +1,10 @@
 import io
-import os
-import pandas_profiling as pp
+
+import hiplot as hip
 import pandas as pd
+import pandas_profiling as pp
 import streamlit as st
 import streamlit.components.v1 as components
-import hiplot as hip
 
 
 class Table:
@@ -29,7 +29,9 @@ class Table:
     table.show_dataframe() => Show options and the selected DataFrame.
 
     """
-    def __init__(self):
+
+    def __init__(self, connection):
+        self.connection = connection
         self.show_df = None
         self.profile_df = None
         self.limit_rows = 100000
@@ -37,13 +39,14 @@ class Table:
         self.dataframe = st.empty()
         self.text = "Choose the DataFrame (table) you want to display. " \
                     "The viewer is limited to {} rows.".format(self.limit_rows)
-        self.data_path = "src/data"
+        self.data_path = "src/data/dummy"
         self.profile_report = None
 
     def show_dataframe(self, minimal=True):
         with st.beta_container():
             # Options
-            options = os.listdir(self.data_path)
+            options = [table[0] for table in self.connection.cursor().execute(
+                "SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
             table = st.selectbox(self.text, options, index=3)
             st.info(f"Note: due to limited output size, the displayed DataFrame is limited to the first "
                     f"{self.limit_rows} rows only.\n\nHowever, the Pandas Profiling Report "
@@ -51,7 +54,7 @@ class Table:
 
             col1, col2 = st.beta_columns(2)
             with col1:
-                df = pd.read_csv(os.path.join(self.data_path, table))
+                df = pd.read_sql(f"SELECT * FROM {table}", self.connection)
                 self.show_df = df.head(self.limit_rows)  # Only shows limited rows
                 self.profile_df = df
 

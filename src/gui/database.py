@@ -8,7 +8,7 @@ import streamlit as st
 from src.components import *
 
 
-def _create_connection(db_file):
+def create_connection(db_file):
     from src import database
 
     database.create_database(db_file)
@@ -22,8 +22,8 @@ def _create_connection(db_file):
 
 
 class Database:
-    def __init__(self, db_file):
-        self.connection = _create_connection(db_file)
+    def __init__(self, connection):
+        self.connection = connection
         self.current_option = ""
         self.tables = [table[0] for table in self.connection.cursor().execute(
             "SELECT name FROM sqlite_master WHERE type='table';").fetchall()]

@@ -1,7 +1,6 @@
 import streamlit as st
 
-from src.gui.database import Database
-
+from src.gui.database import Database, create_connection
 from src.gui.plot import Plot
 from src.gui.table import Table
 
@@ -22,13 +21,14 @@ class Menu:
     menu.display_table() => Display the table (as DataFrame)
     """
     def __init__(self):
+        self.connection = create_connection("src/database/database.db")
         self.select_box = st.sidebar.empty()
         self.text = "Choose an option: "
         self.options = ["Search", "Add", "Remove", "View table", "View profit plot"]
         self.current_option = ""
-        self.database = Database("src/database/database.db")
+        self.database = Database(self.connection)
         self.plot = Plot()
-        self.table = Table()
+        self.table = Table(self.connection)
 
     def display_option(self):
         """Display options as select box
