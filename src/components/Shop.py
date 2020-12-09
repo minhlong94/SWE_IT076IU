@@ -37,15 +37,15 @@ def search_by_id(connection, shop_id):
         raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Shop WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
+    return cur.execute('''SELECT * FROM Shop WHERE shopID LIKE ?''', ('%' + shop_id + '%',)).fetchall()
 
 
 def search_by_name(connection, shop_name="", show_columns=None):
     cur = connection.cursor()
     if not show_columns:
-        return cur.execute('''SELECT * FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',))
+        return cur.execute('''SELECT * FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',)).fetchall()
     columns = ", ".join(show_columns)
-    return cur.execute(f'''SELECT {columns} FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',))
+    return cur.execute(f'''SELECT {columns} FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',)).fetchall()
 
 
 def get_all(connection):

@@ -46,16 +46,17 @@ def search_by_id(connection, category_id):
         raise TypeError("Argument 'category_id' is required!")
 
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM ItemCategory WHERE categoryID LIKE ?''', ('%' + category_id + '%',))
+    return cur.execute('''SELECT * FROM ItemCategory WHERE categoryID LIKE ?''', ('%' + category_id + '%',)).fetchall()
 
 
 def search_by_name(connection, category_name="", show_columns=None):
     cur = connection.cursor()
     if not show_columns:
-        return cur.execute('''SELECT * FROM ItemCategory WHERE categoryName LIKE ?''', ('%' + category_name + '%',))
+        return cur.execute('''SELECT * FROM ItemCategory WHERE categoryName LIKE ?''',
+                           ('%' + category_name + '%',)).fetchall()
     columns = ", ".join(show_columns)
     return cur.execute(f'''SELECT {columns} FROM ItemCategory WHERE categoryName LIKE ?''',
-                       ('%' + category_name + '%',))
+                       ('%' + category_name + '%',)).fetchall()
 
 
 def get_all(connection):
