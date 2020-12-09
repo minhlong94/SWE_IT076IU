@@ -46,7 +46,7 @@ class Database:
                 if st.button("Search"):
                     with st.beta_expander("Show Customer with selected column(s)"):
                         data = Customer.search_by_name(self.connection, customer_name, columns)
-                        st.write(pd.DataFrame.from_records(data.fetchall(), columns=columns)[:1000])
+                        st.dataframe(pd.DataFrame.from_records(data.fetchall(), columns=columns)[:1000])
 
             elif self.current_option == "ItemCategory":
                 pass
@@ -77,12 +77,12 @@ class Database:
                     check = Customer.insert(self.connection, customer_id, customer_name)
                     with st.spinner("Adding customer..."):
                         if check is None:
-                            st.error("Error when adding customer!")
+                            st.exception("Error when adding customer!")
                             st.stop()
                         else:
                             st.success("Customer was added successfully!")
                             data = Customer.search_by_id(self.connection, customer_id)
-                            st.write(pd.DataFrame.from_records(data.fetchall(), columns=self.customer_columns))
+                            st.dataframe(pd.DataFrame.from_records(data.fetchall(), columns=self.customer_columns))
 
             elif self.current_option == "ItemCategory":
                 category_name = st.text_input("Input ItemCategory name: ", value="")
@@ -90,7 +90,7 @@ class Database:
                 if st.button("Add ItemCategory"):
                     check = ItemCategory.insert(self.connection, category_id, category_name)
                     if check is None:
-                        st.error("Error!")
+                        st.exception("Error!")
                         st.stop()
                     else:
                         st.success("ItemCategory was added successfully!")
@@ -101,7 +101,7 @@ class Database:
                 if st.button("Add ItemCategory"):
                     check = ItemCategory.insert(self.connection, buyer_id, buyer_name)
                     if check is None:
-                        st.error("Error!")
+                        st.exception("Error!")
                         st.stop()
                     else:
                         st.success("Buyer was added successfully!")
@@ -112,7 +112,7 @@ class Database:
                 if st.button("Add ItemCategory"):
                     check = ItemCategory.insert(self.connection, shop_id, shop_name)
                     if check is None:
-                        st.error("Error!")
+                        st.exception("Error!")
                         st.stop()
                     else:
                         st.success("shop was added successfully!")
