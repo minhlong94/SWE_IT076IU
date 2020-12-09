@@ -1,6 +1,5 @@
 import base64
 import hashlib
-from time import sleep
 
 import bcrypt
 import streamlit as st
