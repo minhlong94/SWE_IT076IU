@@ -30,28 +30,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Finish HiPlot view. Plot now supports multiple Shop IDs.">
+    <list default="true" id="3f6cb3af-9183-42b7-9014-1482290a8518" name="Default Changelist" comment="Change DB and add data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buyer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Buyer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Category.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ItemCategory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Imports.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Import.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ImportsDetail.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ImportDetail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Transactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Transaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TransactionsDetail.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TransactionDetail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Buyer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Category.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Customer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Imports.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/ImportsDetail.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Inventory.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Item.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Transactions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/TransactionsDetail.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/database.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/sql.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/sql.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/menu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -335,7 +315,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606735376798</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Change DB and add data">
+      <created>1607329474287</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1607329474287</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,7 +376,8 @@
     <MESSAGE value="Refactor code" />
     <MESSAGE value="Add HiPlot to view table, doing profit comparison" />
     <MESSAGE value="Finish HiPlot view. Plot now supports multiple Shop IDs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish HiPlot view. Plot now supports multiple Shop IDs." />
+    <MESSAGE value="Change DB and add data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change DB and add data" />
   </component>
   <component name="WindowStateProjectService">
     <state x="209" y="337" width="1492" height="365" key="#SQL_Dialects" timestamp="1606406703986">
@@ -414,26 +402,26 @@
     </state>
     <state x="530" y="131" width="530" height="598" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1603631520144" />
     <state x="517" y="149" width="530" height="598" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607329239281" />
-    <state width="1870" height="329" key="GridCell.Tab.0.bottom" timestamp="1607329369116">
+    <state width="1870" height="329" key="GridCell.Tab.0.bottom" timestamp="1607330073187">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1550" height="254" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1603642175548" />
-    <state width="1870" height="329" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607329369116" />
-    <state width="1870" height="329" key="GridCell.Tab.0.center" timestamp="1607329369115">
+    <state width="1870" height="329" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607330073187" />
+    <state width="1870" height="329" key="GridCell.Tab.0.center" timestamp="1607330073180">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1550" height="254" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1603642175548" />
-    <state width="1870" height="329" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607329369115" />
-    <state width="1870" height="329" key="GridCell.Tab.0.left" timestamp="1607329369114">
+    <state width="1870" height="329" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607330073180" />
+    <state width="1870" height="329" key="GridCell.Tab.0.left" timestamp="1607330073179">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1550" height="254" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1603642175548" />
-    <state width="1870" height="329" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607329369114" />
-    <state width="1870" height="329" key="GridCell.Tab.0.right" timestamp="1607329369116">
+    <state width="1870" height="329" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607330073179" />
+    <state width="1870" height="329" key="GridCell.Tab.0.right" timestamp="1607330073186">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1550" height="254" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1603642175548" />
-    <state width="1870" height="329" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607329369116" />
+    <state width="1870" height="329" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607330073186" />
     <state x="695" y="62" width="507" height="893" key="RollbackChangesDialog" timestamp="1606720205720">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -447,11 +435,11 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="649" y="338" width="292" height="175" key="VCS.ChangelistChooser/0.0.1600.860@0.0.1600.860" timestamp="1601199167757" />
-    <state x="474" y="195" width="1000" height="664" key="Vcs.Push.Dialog.v2" timestamp="1606735379489">
+    <state x="462" y="188" width="1000" height="664" key="Vcs.Push.Dialog.v2" timestamp="1607329544269">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="395" y="161" width="800" height="530" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1605709856076" />
-    <state x="474" y="195" width="1000" height="664" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1606735379489" />
+    <state x="462" y="188" width="1000" height="664" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1607329544269" />
     <state x="839" y="382" width="387" height="316" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1607322466049">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
