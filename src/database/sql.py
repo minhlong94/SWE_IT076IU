@@ -40,8 +40,8 @@ if not os.path.exists("database.db"):
       PRIMARY KEY (shopID)
     )''')
 
-    cur.execute('''DROP TABLE IF EXISTS Import''')
-    cur.execute('''CREATE TABLE Import
+    cur.execute('''DROP TABLE IF EXISTS Imports''')
+    cur.execute('''CREATE TABLE Imports
     (
       importID VARCHAR(50) NOT NULL,
       importDate DATETIME NOT NULL,
@@ -94,7 +94,7 @@ if not os.path.exists("database.db"):
       itemID VARCHAR(50) NOT NULL,
       importAmount INT NOT NULL,
       PRIMARY KEY (itemID, importID),
-      FOREIGN KEY (importID) REFERENCES Import(importID),
+      FOREIGN KEY (importID) REFERENCES Imports(importID),
       FOREIGN KEY (itemID) REFERENCES Item(itemID)
     )''')
 
