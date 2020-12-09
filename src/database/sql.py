@@ -7,7 +7,7 @@ def create_database(db_file="src/database/database.db"):
 
         import sqlite3
 
-        con = sqlite3.connect("database.db")
+        con = sqlite3.connect(db_file)
         cur = con.cursor()
 
         cur.execute('''DROP TABLE IF EXISTS Customer''')
@@ -104,6 +104,7 @@ def create_database(db_file="src/database/database.db"):
 
         tables = [table[0] for table in con.cursor().execute(
             "SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+        print(tables)
 
         import streamlit
 
