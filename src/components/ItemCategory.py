@@ -18,6 +18,7 @@ def insert(connection, category_id, category_name):
     cur = connection.cursor()
     cur.execute('''INSERT INTO ItemCategory (categoryID, categoryName) VALUES (?,?)''', (category_id, category_name))
     connection.commit()
+    return cur.lastrowid
 
 
 def delete_by_id(connection, category_id):
@@ -25,8 +26,10 @@ def delete_by_id(connection, category_id):
         raise TypeError("Argument 'category_id' is required!")
 
     cur = connection.cursor()
+    removed = cur.execute('''SELECT * FROM ItemCategory WHERE categoryID = ?''', (category_id,))
     cur.execute('''DELETE FROM ItemCategory WHERE categoryID = ?''', (category_id,))
     connection.commit()
+    return removed
 
 
 def delete_by_name(connection, category_name):
@@ -46,13 +49,23 @@ def search_by_id(connection, category_id):
     return cur.execute('''SELECT * FROM ItemCategory WHERE categoryID LIKE ?''', ('%' + category_id + '%',))
 
 
-def search_by_name(connection, category_name):
-    if not category_name:
-        raise TypeError("Argument 'category_name' is required!")
-
+def search_by_name(connection, category_name="", show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM ItemCategory WHERE categoryName LIKE ?''', ('%' + category_name + '%',))
+    if not show_columns:
+        return cur.execute('''SELECT * FROM ItemCategory WHERE categoryName LIKE ?''', ('%' + category_name + '%',))
+    columns = ", ".join(show_columns)
+    return cur.execute(f'''SELECT {columns} FROM ItemCategory WHERE categoryName LIKE ?''',
+                       ('%' + category_name + '%',))
 
 
 def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM ItemCategory''')
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM ItemCategory''')
+    return cur.fetchall()
+
+
+def columns_names(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM ItemCategory LIMIT 0''')
+    names = [i[0] for i in cur.description]
+    return names

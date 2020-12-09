@@ -18,6 +18,7 @@ def insert(connection, shop_id, shop_name):
     cur = connection.cursor()
     cur.execute('''INSERT INTO Shop (shopID, shopName) VALUES (?,?)''', (shop_id, shop_name))
     connection.commit()
+    return cur.lastrowid
 
 
 def delete_by_id(connection, shop_id):
@@ -25,17 +26,10 @@ def delete_by_id(connection, shop_id):
         raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
+    removed = cur.execute('''SELECT * FROM Shop WHERE shopID = ?''', (shop_id,))
     cur.execute('''DELETE FROM Shop WHERE shopID = ?''', (shop_id,))
     connection.commit()
-
-
-def delete_by_name(connection, shop_name):
-    if not shop_name:
-        raise TypeError("Argument 'shop_name' is required!")
-
-    cur = connection.cursor()
-    cur.execute('''DELETE FROM Shop WHERE shopName = ?''', (shop_name,))
-    connection.commit()
+    return removed
 
 
 def search_by_id(connection, shop_id):
@@ -46,13 +40,22 @@ def search_by_id(connection, shop_id):
     return cur.execute('''SELECT * FROM Shop WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
 
 
-def search_by_name(connection, shop_name):
-    if not shop_name:
-        raise TypeError("Argument 'shop_name' is required!")
-
+def search_by_name(connection, shop_name="", show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',))
+    if not show_columns:
+        return cur.execute('''SELECT * FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',))
+    columns = ", ".join(show_columns)
+    return cur.execute(f'''SELECT {columns} FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',))
 
 
 def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM Shop''')
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Shop''')
+    return cur.fetchall()
+
+
+def columns_names(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Shop LIMIT 0''')
+    names = [i[0] for i in cur.description]
+    return names
