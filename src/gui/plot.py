@@ -5,41 +5,6 @@ import plotly.express as px
 import streamlit as st
 
 
-def _group_by(df, freq):
-    """Group DF by freq
-
-    Arguments:
-        df: pandas DataFrame. The DF that needs to group by column "date"
-        freq: string. Either "W-MON" (weekly group) or "M" (monthly group)
-
-    Returns:
-         profit_df: pandas DataFrame. The grouped DF by freq, with profit calculated.
-    """
-    df["date"] = pd.to_datetime(df["date"]) - pd.to_timedelta(7, unit="d")
-    profit_df = df.groupby([pd.Grouper(key="date", freq=freq), "shopID"])["profit"].sum() \
-        .reset_index() \
-        .sort_values("date")  # Group by week
-    return profit_df
-
-
-def _select_df_in_between(df, start_date, end_date, shop_ids):
-    """Get subset of DF that is between given dates
-
-    Arguments:
-         df: pandas DataFrame.
-         start_date (datetime.datetime): The start date to select
-         end_date (datetime.datetime): The end date to select. Start_date <= end_date
-         shop_ids (int): The shop_id to select
-    Returns:
-        selected_df: pandas DataFrame. Subset of the DF with the given condition
-    """
-
-    selected_df = df[(df["date"].between(start_date, end_date))
-                     & (df["shopID"].isin(shop_ids))]
-    selected_df["profit"] = selected_df["itemPrice"] * selected_df["transactionAmount"]
-    return selected_df
-
-
 class Plot:
     """Plot the profit
 
@@ -133,3 +98,38 @@ class Plot:
                 fig = px.line(profit_df, x="date", y="profit", title="Monthly" + plot_title,
                               template=self.template, color="shopID")  # Plotly
                 st.plotly_chart(fig)
+
+
+def _select_df_in_between(df, start_date, end_date, shop_ids):
+    """Get subset of DF that is between given dates
+
+    Arguments:
+         df: pandas DataFrame.
+         start_date (datetime.datetime): The start date to select
+         end_date (datetime.datetime): The end date to select. Start_date <= end_date
+         shop_ids (int): The shop_id to select
+    Returns:
+        selected_df: pandas DataFrame. Subset of the DF with the given condition
+    """
+
+    selected_df = df[(df["date"].between(start_date, end_date))
+                     & (df["shopID"].isin(shop_ids))]
+    selected_df["profit"] = selected_df["itemPrice"] * selected_df["transactionAmount"]
+    return selected_df
+
+
+def _group_by(df, freq):
+    """Group DF by freq
+
+    Arguments:
+        df: pandas DataFrame. The DF that needs to group by column "date"
+        freq: string. Either "W-MON" (weekly group) or "M" (monthly group)
+
+    Returns:
+         profit_df: pandas DataFrame. The grouped DF by freq, with profit calculated.
+    """
+    df["date"] = pd.to_datetime(df["date"]) - pd.to_timedelta(7, unit="d")
+    profit_df = df.groupby([pd.Grouper(key="date", freq=freq), "shopID"])["profit"].sum() \
+        .reset_index() \
+        .sort_values("date")  # Group by week
+    return profit_df
