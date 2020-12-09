@@ -58,7 +58,7 @@ class Plot:
             start_date = datetime.datetime.fromordinal(st.date_input("Start date", value=self.min_date,
                                                                      min_value=self.min_date,
                                                                      max_value=self.max_date, key="start").toordinal())
-            end_date = datetime.datetime.fromordinal(st.date_input("Start date", value=self.max_date,
+            end_date = datetime.datetime.fromordinal(st.date_input("End date", value=self.max_date,
                                                                    min_value=self.min_date,
                                                                    max_value=self.max_date, key="end").toordinal())
             shop_ids = st.multiselect("Select the SHOP ID: ", self.shop_ids)
