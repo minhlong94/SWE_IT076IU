@@ -285,20 +285,21 @@ class Database:
             elif self.current_option == "Item":
                 pass
 
-    def export_data(self, export_path):
+    def export_data(self, export_path="src/data/dummy"):
         import csv
 
-        try:
-            for table in self.tables:
-                # Export data into CSV file
-                st.info(f"Exporting table '{table}'...\n")
-                cursor = self.connection.cursor()
-                cursor.execute(f"SELECT * FROM {table}")
-                with open(f"{export_path}/{table}.csv", "w+", encoding='utf-8') as csv_file:
-                    csv_writer = csv.writer(csv_file, delimiter="\t")
-                    csv_writer.writerow([i[0] for i in cursor.description])
-                    csv_writer.writerows(cursor)
-                st.success(f"Data exported Successfully into {export_path}/{table}.csv\n")
+        if st.button("Start exporting data"):
+            try:
+                for table in self.tables:
+                    # Export data into CSV file
+                    st.info(f"Exporting table '{table}'...\n")
+                    cursor = self.connection.cursor()
+                    cursor.execute(f"SELECT * FROM {table}")
+                    with open(f"{export_path}/{table}.csv", "w+", encoding="utf-8") as csv_file:
+                        csv_writer = csv.writer(csv_file, delimiter="\t")
+                        csv_writer.writerow([i[0] for i in cursor.description])
+                        csv_writer.writerows(cursor)
+                    st.success(f"Data exported Successfully into {export_path}/{table}.csv\n")
 
-        except sqlite3.Error as err:
-            print(err)
+            except sqlite3.Error as err:
+                print(err)
