@@ -1,8 +1,43 @@
-import streamlit as st
-import pandas as pd
-import os
 import datetime
+
+import pandas as pd
 import plotly.express as px
+import streamlit as st
+
+
+def _group_by(df, freq):
+    """Group DF by freq
+
+    Arguments:
+        df: pandas DataFrame. The DF that needs to group by column "date"
+        freq: string. Either "W-MON" (weekly group) or "M" (monthly group)
+
+    Returns:
+         profit_df: pandas DataFrame. The grouped DF by freq, with profit calculated.
+    """
+    df["transactionDate"] = pd.to_datetime(df["transactionDate"]) - pd.to_timedelta(7, unit="d")
+    profit_df = df.groupby([pd.Grouper(key="transactionDate", freq=freq), "shopID"])["profit"].sum() \
+        .reset_index() \
+        .sort_values("transactionDate")  # Group by week
+    return profit_df
+
+
+def _select_df_in_between(df, start_date, end_date, shop_ids):
+    """Get subset of DF that is between given dates
+
+    Arguments:
+         df: pandas DataFrame.
+         start_date (datetime.datetime): The start date to select
+         end_date (datetime.datetime): The end date to select. Start_date <= end_date
+         shop_ids (int): The shop_id to select
+    Returns:
+        selected_df: pandas DataFrame. Subset of the DF with the given condition
+    """
+
+    selected_df = df[(df["transactionDate"].between(start_date, end_date))
+                     & (df["shopID"].isin(shop_ids))]
+    selected_df["profit"] = selected_df["itemPrice"] * selected_df["transactionAmount"]
+    return selected_df
 
 
 class Plot:
@@ -27,16 +62,20 @@ class Plot:
         plot.plot()
     """
 
-    def __init__(self, sales_df="sales.csv", shop_df="shops.csv"):
-        df = pd.read_csv(os.path.join("src/data/", sales_df))
-        df["date"] = pd.to_datetime(df["date"])
-        shops = pd.read_csv(os.path.join("src/data/", shop_df))
-        self.df = df
-        self.shop_df = shops
+    def __init__(self, connection, sales_df="sales.csv"):
+        self.connection = connection
+        # self.df = pd.read_csv(os.path.join("src/data/", sales_df))
+        self.df = pd.read_sql('''
+            SELECT t.transactionDate, t.shopID, td.itemID, td.itemPrice, td.transactionAmount 
+            FROM Transactions t, TransactionDetail td 
+            WHERE t.transactionID = td.transactionID 
+        ''', self.connection)
+        self.df["transactionDate"] = pd.to_datetime(self.df["transactionDate"])
+        self.shop_df = pd.read_sql("SELECT * FROM Shop", self.connection)
         self.datetime_format = "%d-%m-%Y"
-        self.min_date = self.df["date"].min()
-        self.max_date = self.df["date"].max()
-        self.shop_ids = shops["shop_id"].unique()
+        self.min_date = self.df["transactionDate"].min()
+        self.max_date = self.df["transactionDate"].max()
+        self.shop_ids = self.shop_df["shopID"].unique()
         self.num_days_to_plot_week = 90
         self.template = "plotly"
 
@@ -62,7 +101,8 @@ class Plot:
                                                                    min_value=self.min_date,
                                                                    max_value=self.max_date, key="end").toordinal())
             shop_ids = st.multiselect("Select the SHOP ID: ", self.shop_ids)
-            st.dataframe(self.shop_df)  # Show the sample DF
+            with st.beta_expander("Show shop"):
+                st.dataframe(self.shop_df)  # Show the sample DF
 
             # While multiselect is None
             while not shop_ids:
@@ -77,52 +117,19 @@ class Plot:
 
             days_in_between = end_date - start_date  # Get days in between
 
-            selected_df = self._select_df_in_between(self.df, start_date, end_date, shop_ids)
+            selected_df = _select_df_in_between(self.df, start_date, end_date, shop_ids)
             plot_title = " profit of shop {} from {} to {}".format(shop_ids, start_date.date(), end_date.date())
 
             if days_in_between.days <= self.num_days_to_plot_week:
                 st.info("Plotting profit by week")
-                profit_df = self._group_by(selected_df, "W-MON")
+                profit_df = _group_by(selected_df, "W-MON")
                 st.dataframe(profit_df)
-                fig = px.line(profit_df, x="date", y="profit",
+                fig = px.line(profit_df, x="transactionDate", y="profit",
                               title="Weekly" + plot_title, template=self.template)  # Plotly line chart
                 st.plotly_chart(fig)
             else:
                 st.info("Plotting profit by month")
-                profit_df = self._group_by(selected_df, "M")
-                fig = px.line(profit_df, x="date", y="profit",
-                              title="Monthly" + plot_title, template=self.template, color="shop_id")  # Plotly
+                profit_df = _group_by(selected_df, "M")
+                fig = px.line(profit_df, x="transactionDate", y="profit", title="Monthly" + plot_title,
+                              template=self.template, color="shopID")  # Plotly
                 st.plotly_chart(fig)
-
-    def _group_by(self, df, freq):
-        """Group DF by freq
-
-        Arguments:
-            df: pandas DataFrame. The DF that needs to group by column "date"
-            freq: string. Either "W-MON" (weekly group) or "M" (monthly group)
-
-        Returns:
-             profit_df: pandas DataFrame. The grouped DF by freq, with profit calculated.
-        """
-        df["date"] = pd.to_datetime(df["date"]) - pd.to_timedelta(7, unit="d")
-        profit_df = df.groupby([pd.Grouper(key="date", freq=freq), "shop_id"])["profit"].sum() \
-            .reset_index() \
-            .sort_values("date")  # Group by week
-        return profit_df
-
-    def _select_df_in_between(self, df, start_date, end_date, shop_ids):
-        """Get subset of DF that is between given dates
-
-        Arguments:
-             df: pandas DataFrame.
-             start_date: datetime.datetime. The start date to select
-             end_date: datettime.datetime. The end date to select. Start_date <= end_date
-             shop_id: int. The shop_id to select
-        Returns:
-            selected_df: pandas DataFrame. Subset of the DF with the given condition
-        """
-
-        selected_df = df[(df["date"].between(start_date, end_date))
-                         & (df["shop_id"].isin(shop_ids))]
-        selected_df["profit"] = selected_df["item_price"] * selected_df["item_cnt_day"]
-        return selected_df

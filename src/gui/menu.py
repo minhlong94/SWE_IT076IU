@@ -27,7 +27,7 @@ class Menu:
         self.options = ["Search", "Add", "Remove", "View table", "View profit plot", "Export to csv"]
         self.current_option = ""
         self.database = Database(self.connection)
-        self.plot = Plot()
+        self.plot = Plot(self.connection)
         self.table = Table(self.connection)
 
     def display_option(self):

@@ -295,8 +295,8 @@ class Database:
                     st.info(f"Exporting table '{table}'...\n")
                     cursor = self.connection.cursor()
                     cursor.execute(f"SELECT * FROM {table}")
-                    with open(f"{export_path}/{table}.csv", "w+", encoding="utf-8") as csv_file:
-                        csv_writer = csv.writer(csv_file, delimiter="\t")
+                    with open(f"{export_path}/{table}.csv", "w+", encoding="utf-8", newline="") as csv_file:
+                        csv_writer = csv.writer(csv_file, delimiter=",")
                         csv_writer.writerow([i[0] for i in cursor.description])
                         csv_writer.writerows(cursor)
                     st.success(f"Data exported Successfully into {export_path}/{table}.csv\n")

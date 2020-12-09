@@ -2,7 +2,7 @@ def create_database(db_file="src/database/database.db"):
     import os.path
 
     if not os.path.exists(db_file):
-        with open(db_file, 'w+'):
+        with open(db_file, 'x'):
             pass
 
         import sqlite3
@@ -83,6 +83,7 @@ def create_database(db_file="src/database/database.db"):
         (
           transactionID VARCHAR(50) NOT NULL,
           itemID VARCHAR(50) NOT NULL,
+          itemPrice DOUBLE NOT NULL,
           transactionAmount INT NOT NULL,
           PRIMARY KEY (transactionID),
           FOREIGN KEY (transactionID) REFERENCES Transactions(transactionID),
@@ -111,3 +112,6 @@ def create_database(db_file="src/database/database.db"):
         streamlit.write(f"database created with tables {tables}")
 
         con.close()
+
+
+# create_database("database.db")
