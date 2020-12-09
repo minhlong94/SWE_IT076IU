@@ -15,10 +15,10 @@ def _group_by(df, freq):
     Returns:
          profit_df: pandas DataFrame. The grouped DF by freq, with profit calculated.
     """
-    df["transactionDate"] = pd.to_datetime(df["transactionDate"]) - pd.to_timedelta(7, unit="d")
-    profit_df = df.groupby([pd.Grouper(key="transactionDate", freq=freq), "shopID"])["profit"].sum() \
+    df["date"] = pd.to_datetime(df["date"]) - pd.to_timedelta(7, unit="d")
+    profit_df = df.groupby([pd.Grouper(key="date", freq=freq), "shopID"])["profit"].sum() \
         .reset_index() \
-        .sort_values("transactionDate")  # Group by week
+        .sort_values("date")  # Group by week
     return profit_df
 
 
@@ -34,7 +34,7 @@ def _select_df_in_between(df, start_date, end_date, shop_ids):
         selected_df: pandas DataFrame. Subset of the DF with the given condition
     """
 
-    selected_df = df[(df["transactionDate"].between(start_date, end_date))
+    selected_df = df[(df["date"].between(start_date, end_date))
                      & (df["shopID"].isin(shop_ids))]
     selected_df["profit"] = selected_df["itemPrice"] * selected_df["transactionAmount"]
     return selected_df
@@ -69,12 +69,12 @@ class Plot:
             SELECT t.transactionDate, t.shopID, td.itemID, td.itemPrice, td.transactionAmount 
             FROM Transactions t, TransactionDetail td 
             WHERE t.transactionID = td.transactionID 
-        ''', self.connection)
-        self.df["transactionDate"] = pd.to_datetime(self.df["transactionDate"])
+        ''', self.connection).rename(columns={"transactionDate": "date"})
+        self.df["date"] = pd.to_datetime(self.df["date"])
         self.shop_df = pd.read_sql("SELECT * FROM Shop", self.connection)
         self.datetime_format = "%d-%m-%Y"
-        self.min_date = self.df["transactionDate"].min()
-        self.max_date = self.df["transactionDate"].max()
+        self.min_date = self.df["date"].min()
+        self.max_date = self.df["date"].max()
         self.shop_ids = self.shop_df["shopID"].unique()
         self.num_days_to_plot_week = 90
         self.template = "plotly"
@@ -124,12 +124,12 @@ class Plot:
                 st.info("Plotting profit by week")
                 profit_df = _group_by(selected_df, "W-MON")
                 st.dataframe(profit_df)
-                fig = px.line(profit_df, x="transactionDate", y="profit",
+                fig = px.line(profit_df, x="date", y="profit",
                               title="Weekly" + plot_title, template=self.template)  # Plotly line chart
                 st.plotly_chart(fig)
             else:
                 st.info("Plotting profit by month")
                 profit_df = _group_by(selected_df, "M")
-                fig = px.line(profit_df, x="transactionDate", y="profit", title="Monthly" + plot_title,
+                fig = px.line(profit_df, x="date", y="profit", title="Monthly" + plot_title,
                               template=self.template, color="shopID")  # Plotly
                 st.plotly_chart(fig)
