@@ -21,7 +21,7 @@ def login_section():
 def main():
     with open("src/encryption/check_login", "rb") as f:
         check_login = f.readline()
-    with open("src/encryption/hash_pw.txt", "rb") as f:
+    with open("src/encryption/hash_pw", "rb") as f:
         hashed_password = f.read()
 
     st.set_page_config(page_title="Wholesale Management System", layout="wide")
@@ -32,8 +32,7 @@ def main():
     if check_login != hashlib.md5("IS_LOGGED_IN".encode()).digest():
         input_password = login_section()
         if st.sidebar.button("Login"):
-            if not bcrypt.checkpw(base64.b64encode(hashlib.sha256(input_password.encode("utf8")).digest()),
-                                  hashed_password):
+            if not bcrypt.checkpw(base64.b64encode(hashlib.sha256(input_password.encode()).digest()), hashed_password):
                 st.sidebar.warning("Wrong password!")
                 st.stop()
             else:
