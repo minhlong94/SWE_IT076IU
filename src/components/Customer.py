@@ -25,11 +25,10 @@ def delete_by_id(connection, customer_id):
     if not customer_id:
         raise TypeError("Argument 'customer_id' is required!")
 
-    customer = search_by_id(connection, customer_id).fetchall()
-    if customer:
-        cur = connection.cursor()
-        cur.execute('''DELETE FROM Customer WHERE customerID = ?''', (customer_id,))
-        connection.commit()
+    cur = connection.cursor()
+    customer = cur.execute('''SELECT * FROM Customer WHERE customerID = ?''', (customer_id,))
+    cur.execute('''DELETE FROM Customer WHERE customerID = ?''', (customer_id,))
+    connection.commit()
     return customer
 
 
@@ -53,13 +52,16 @@ def search_by_id(connection, customer_id):
     return cur.execute('''SELECT * FROM Customer WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
 
 
-def search_by_name(connection, customer_name):
-    if not customer_name:
-        raise TypeError("Argument 'customer_name' is required!")
-
+def search_by_name(connection, customer_name="", show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Customer WHERE customerName LIKE ?''', ('%' + customer_name + '%',))
+    if not show_columns:
+        return cur.execute('''SELECT * FROM Customer WHERE customerName LIKE ?''', ('%' + customer_name + '%',))
+    columns = ", ".join(show_columns)
+    return cur.execute(f'''SELECT {columns} FROM Customer WHERE customerName LIKE ?''', ('%' + customer_name + '%',))
 
 
-def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM Customer''')
+def columns_names(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Customer LIMIT 0''')
+    names = [i[0] for i in cur.description]
+    return names
