@@ -9,39 +9,32 @@ import streamlit as st
 class Plot:
     """Plot the profit
 
+    Example:
+        >>> plot = Plot()
+        >>> plot.plot()
+
     Attributes:
-        self.df: pandas DataFrame. The sales DF.
-        self.shop_id: pandas DataFrame. The mapping from shop_id to shop_name
-        self.min_date = datetime.datetime. The min date in the sales df
-        self.max_date: datetime.datetime. The max date in the sales df
-        self.shop_ids: list of int. List of shop ids
-        self.num_days_to_plot_week: int, default 90. If days between start_date and end_date <90, do weekly plot, else
-            monthly plot
-        self.template: string, default "ggplot2". Plotly.express template.
+        df: pandas DataFrame. The sales DF.
+        shop_df: pandas DataFrame. The mapping from shop_id to shop_name
+        min_date = datetime.datetime. The min date in the sales df
+        max_date: datetime.datetime. The max date in the sales df
+        shop_ids: list of int. List of shop ids
+        num_days_to_plot_week: int, default 90.
+            If days between start_date and end_date <90, do weekly plot, else monthly plot
+        template: string, default "ggplot2". Plotly.express template.
 
     Arguments:
-        sales_df: string, default "sales.csv". Path to the sales csv file under src/data/...
-        shop_df: string, default "shops.csv". Path to the shops csv file under src/data/...
-
-    Sample usage:
-        plot = Plot()
-        plot.plot()
+        connection (sqlite3.Connection): connection to the database.
     """
 
     def __init__(self, connection):
         self.connection = connection
-        # self.df = pd.read_csv(os.path.join("src/data/", sales_df))
-        self.df = _load_sql_query('''
-            SELECT t.transactionDate, t.shopID, td.itemID, td.itemPrice, td.transactionAmount 
-            FROM Transactions t INNER JOIN TransactionDetail td 
-            ON t.transactionID = td.transactionID 
-        ''', self.connection).rename(columns={"transactionDate": "date"})
-        self.df["date"] = pd.to_datetime(self.df["date"])
-        self.shop_df = _load_sql_query("SELECT * FROM Shop", self.connection)
-        self.datetime_format = "%d-%m-%Y"
-        self.min_date = self.df["date"].min()
-        self.max_date = self.df["date"].max()
-        self.shop_ids = self.shop_df["shopID"].unique()
+        self.df = None
+        self.shop_df = None
+        self.min_date = None
+        self.max_date = None
+        self.shop_ids = None
+        self.datetime_format = "%Y-%m-%d"
         self.num_days_to_plot_week = 90
         self.template = "plotly"
 
@@ -53,10 +46,15 @@ class Plot:
         Group the selected DF by week or month depends on the condition, then use plotly.express to plot the line chart
 
         Raises:
-            AssertionError, if end_date < start_date
-        Return:
-            None
+            AssertionError: if end_date < start_date
         """
+
+        self.df = _load_df(self.connection).copy()
+        self.shop_df = _load_shop(self.connection).copy()
+        self.min_date = self.df["date"].min()
+        self.max_date = self.df["date"].max()
+        self.shop_ids = self.shop_df["shopID"].unique()
+
         with st.beta_container():
             # Options
             st.info("""
@@ -86,7 +84,7 @@ class Plot:
 
             days_in_between = end_date - start_date  # Get days in between
 
-            selected_df = _select_df_in_between(self.df, start_date, end_date, shop_ids)
+            selected_df = _select_df_in_between(self.df, start_date, end_date, shop_ids).copy()
             plot_title = " profit of shop {} from {} to {}".format(shop_ids, start_date.date(), end_date.date())
 
             if days_in_between.days <= self.num_days_to_plot_week:
@@ -105,10 +103,24 @@ class Plot:
 
 
 @st.cache(persist=True, hash_funcs={sqlite3.Connection: id})
-def _load_sql_query(query, connection):
+def _load_df(connection):
+    query = '''
+            SELECT t.transactionDate, t.shopID, td.itemID, td.itemPrice, td.transactionAmount 
+            FROM Transactions t INNER JOIN TransactionDetail td 
+            ON t.transactionID = td.transactionID 
+            '''
+    df = pd.read_sql_query(query, connection).rename(columns={"transactionDate": "date"})
+    df["date"] = pd.to_datetime(df["date"])
+    return df
+
+
+@st.cache(persist=True, hash_funcs={sqlite3.Connection: id})
+def _load_shop(connection):
+    query = '''SELECT * FROM Shop'''
     return pd.read_sql_query(query, connection)
 
 
+@st.cache(show_spinner=False)
 def _select_df_in_between(df, start_date, end_date, shop_ids):
     """Get subset of DF that is between given dates
 
@@ -127,6 +139,7 @@ def _select_df_in_between(df, start_date, end_date, shop_ids):
     return selected_df
 
 
+@st.cache(show_spinner=False)
 def _group_by(df, freq):
     """Group DF by freq
 
