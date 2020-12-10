@@ -82,4 +82,13 @@ def search_by_shop_id(connection, shop_id):
 
 
 def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM Transactions''')
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Transactions''')
+    return cur.fetchall()
+
+
+def columns_names(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM Transactions LIMIT 0''')
+    names = [i[0] for i in cur.description]
+    return names
