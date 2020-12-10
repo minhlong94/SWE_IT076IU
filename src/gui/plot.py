@@ -1,4 +1,5 @@
 import datetime
+import sqlite3
 
 import pandas as pd
 import plotly.express as px
@@ -27,16 +28,16 @@ class Plot:
         plot.plot()
     """
 
-    def __init__(self, connection, sales_df="sales.csv"):
+    def __init__(self, connection):
         self.connection = connection
         # self.df = pd.read_csv(os.path.join("src/data/", sales_df))
-        self.df = pd.read_sql('''
+        self.df = _load_sql_query('''
             SELECT t.transactionDate, t.shopID, td.itemID, td.itemPrice, td.transactionAmount 
-            FROM Transactions t, TransactionDetail td 
-            WHERE t.transactionID = td.transactionID 
+            FROM Transactions t INNER JOIN TransactionDetail td 
+            ON t.transactionID = td.transactionID 
         ''', self.connection).rename(columns={"transactionDate": "date"})
         self.df["date"] = pd.to_datetime(self.df["date"])
-        self.shop_df = pd.read_sql("SELECT * FROM Shop", self.connection)
+        self.shop_df = _load_sql_query("SELECT * FROM Shop", self.connection)
         self.datetime_format = "%d-%m-%Y"
         self.min_date = self.df["date"].min()
         self.max_date = self.df["date"].max()
@@ -98,6 +99,11 @@ class Plot:
                 fig = px.line(profit_df, x="date", y="profit", title="Monthly" + plot_title,
                               template=self.template, color="shopID")  # Plotly
                 st.plotly_chart(fig)
+
+
+@st.cache(persist=True, hash_funcs={sqlite3.Connection: id})
+def _load_sql_query(query, connection):
+    return pd.read_sql_query(query, connection)
 
 
 def _select_df_in_between(df, start_date, end_date, shop_ids):
