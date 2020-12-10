@@ -59,7 +59,10 @@ class Plot:
         """
         with st.beta_container():
             # Options
-            st.info("Please choose the start date and end date. Notice that start day should be less than end date")
+            st.info("""
+                Please choose the start date and end date. 
+                Please note that start day should be less than end date.
+            """)
             start_date = datetime.datetime.fromordinal(st.date_input("Start date", value=self.min_date,
                                                                      min_value=self.min_date,
                                                                      max_value=self.max_date, key="start").toordinal())
