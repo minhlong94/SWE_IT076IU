@@ -9,16 +9,16 @@ class Menu:
     """Menu
 
     Page that appears after successfully login. Includes a select box to ask user options.
+
+    Example:
+        >>> menu = Menu()
+        >>> menu.display_option() # Display the select box
+
     Attributes:
         select_box: streamlit container. The select box.
         text: string. The instruction for admin to choose.
         options: list of string. Available options
         current_option: string, default "". Current selection of the select box
-
-    Example usage:
-    menu = Menu()
-    menu.display_option() => Display the select box
-    menu.display_table() => Display the table (as DataFrame)
     """
     def __init__(self):
         self.connection = create_connection("src/database/database.db")
@@ -33,12 +33,14 @@ class Menu:
     def display_option(self):
         """Display options as select box
 
-        Display options as select box, either View table or View profit plot
+        Options:
+            Search: go to search page.\n
+            Add: go to add page.\n
+            Remove: go to remove page.\n
+            View table: here to view tables in the database.\n
+            View profit plot: view the plot of profit in a specific amount of time.\n
+            Export to csv: to export the data from the database to csv format.
         """
-        #
-        # st.sidebar.write("Export database to csv: ")
-        # if st.sidebar.button("Export"):
-        #     self.database.export_data("src/data")
         
         self.current_option = self.select_box.selectbox(self.text, self.options)
         if self.current_option == "Search":

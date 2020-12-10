@@ -40,13 +40,14 @@ class Plot:
 
     def plot(self):
         """Plot the profit
-        Get user's inputs: start_date, end_date and shop_id
-        Check if end_date >= start_day, raises AssertionError if False
-        Select in the DF that is between start_day and end_date and only contains shop_id
-        Group the selected DF by week or month depends on the condition, then use plotly.express to plot the line chart
+
+        Get user's inputs: start_date, end_date and shop_id.\n
+        Check if end_date >= start_day, raises AssertionError if False.\n
+        Select in the DF that is between start_day and end_date and only contains shop_id.\n
+        Group the selected DF by week or month depends on the condition, then use plotly.express to plot the line chart.
 
         Raises:
-            AssertionError: if end_date < start_date
+            AssertionError: if end_date is less than start_date
         """
 
         self.df = _load_df(self.connection).copy()
