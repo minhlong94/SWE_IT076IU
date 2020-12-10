@@ -1,11 +1,10 @@
-def create_database(db_file="src/database/database.db"):
+def create_database(db_file="src/database/database.db", csv_path="src/data/dummy"):
     import os.path
+    import sqlite3
 
     if not os.path.exists(db_file):
         with open(db_file, 'x'):
             pass
-
-        import sqlite3
 
         con = sqlite3.connect(db_file)
         cur = con.cursor()
@@ -102,16 +101,27 @@ def create_database(db_file="src/database/database.db"):
         )''')
 
         con.commit()
+        cur.close()
 
-        tables = [table[0] for table in con.cursor().execute(
-            "SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-        print(tables)
+        import_from_csv(con, csv_path)
+        con.commit()
 
-        import streamlit
-
-        streamlit.write(f"database created with tables {tables}")
-
+        print([i[0] for i in con.cursor().execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()])
         con.close()
 
 
-# create_database("database.db")
+def import_from_csv(connection, csv_path="src/data/dummy"):
+    import pandas
+    import os
+
+    try:
+        csv_files = os.listdir(csv_path)
+        for file in csv_files:
+            table_name = os.path.splitext(file)[0]
+            rows = pandas.read_csv(f"{csv_path}/{file}", sep=",", skipinitialspace=True)
+            print(rows.head())
+            df = pandas.DataFrame(rows)
+            print(df)
+            df.to_sql(table_name, connection, if_exists="append", index=False)
+    except ValueError as err:
+        print(err)
