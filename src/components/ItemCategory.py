@@ -41,8 +41,10 @@ def delete_by_name(connection, category_name):
     connection.commit()
 
 
-def search_by_id(connection, category_id=0, show_columns=None):
+def search_by_id(connection, category_id=None, show_columns=None):
     cur = connection.cursor()
+    if category_id is None:
+        return cur.execute('''SELECT * FROM ItemCategory LIMIT 0''').fetchall()
     if not show_columns:
         return cur.execute('''SELECT * FROM ItemCategory WHERE categoryID = ?''', (category_id,)).fetchall()
     columns = ", ".join(show_columns)

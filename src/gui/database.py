@@ -45,13 +45,21 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
-                customer_name = st.text_input("Input customer name: ", value="")
+                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                if choice == "id":
+                    customer_id = st.number_input("Input customer id: ", min_value=0,
+                                                  max_value=Customer.max_id(self.connection), value=0, step=1)
+                elif choice == "name":
+                    customer_name = st.text_input("Input customer name: ", value="")
                 columns = st.multiselect("Select columns to show: ", self.customer_columns)
                 if not columns:
                     columns = self.customer_columns
                 if st.button("Search"):
                     with st.beta_expander("Show customer with selected column(s)"):
-                        data = Customer.search_by_name(self.connection, customer_name, columns)
+                        if choice == "id":
+                            data = Customer.search_by_id(self.connection, customer_id, columns)
+                        elif choice == "name":
+                            data = Customer.search_by_name(self.connection, customer_name, columns)
                         st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
 
             elif self.current_option == "ItemCategory":
@@ -60,13 +68,21 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
-                category_name = st.text_input("Input category name: ", value="")
+                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                if choice == "id":
+                    category_id = st.number_input("Input category id: ", min_value=0,
+                                                  max_value=ItemCategory.max_id(self.connection), value=0, step=1)
+                elif choice == "name":
+                    category_name = st.text_input("Input category name: ", value="")
                 columns = st.multiselect("Select columns to search: ", self.category_columns)
                 if not columns:
                     columns = self.category_columns
                 if st.button("Search"):
                     with st.beta_expander("Show category with selected column(s)"):
-                        data = ItemCategory.search_by_name(self.connection, category_name, columns)
+                        if choice == "id":
+                            data = ItemCategory.search_by_id(self.connection, category_id, columns)
+                        elif choice == "name":
+                            data = ItemCategory.search_by_name(self.connection, category_name, columns)
                         st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
 
             elif self.current_option == "Buyer":
@@ -78,13 +94,21 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
-                shop_name = st.text_input("Input shop name: ", value="")
+                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                if choice == "id":
+                    shop_id = st.number_input("Input shop id: ", min_value=0,
+                                              max_value=Shop.max_id(self.connection), value=0, step=1)
+                elif choice == "name":
+                    shop_name = st.text_input("Input shop name: ", value="")
                 columns = st.multiselect("Select columns to show: ", self.shop_columns)
                 if not columns:
                     columns = self.shop_columns
                 if st.button("Search"):
                     with st.beta_expander("Show shop with selected column(s)"):
-                        data = Shop.search_by_name(self.connection, shop_name, columns)
+                        if choice == "id":
+                            data = Shop.search_by_id(self.connection, shop_id, columns)
+                        elif choice == "name":
+                            data = Shop.search_by_name(self.connection, shop_name, columns)
                         st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
 
             elif self.current_option == "Imports":
@@ -101,23 +125,31 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
-                item_name = st.text_input("Input item name: ", value="")
-                category_name = st.text_input("Input category name: ", value="")
-                shop_name = st.text_input("Input shop name: ", value="")
+                choice = st.selectbox("Search by id/name: ", options=['id', 'name', 'category', 'shop'])
+                if choice == "id":
+                    item_id = st.number_input("Input category id: ", min_value=0,
+                                              max_value=Item.max_id(self.connection), value=0, step=1)
+                elif choice == "name":
+                    item_name = st.text_input("Input item name: ", value="")
+                elif choice == "category":
+                    category_id = st.number_input("Input category id: ", min_value=0,
+                                                  max_value=ItemCategory.max_id(self.connection), value=0, step=1)
+                elif choice == "shop":
+                    shop_id = st.number_input("Input shop id: ", min_value=0,
+                                              max_value=Shop.max_id(self.connection), value=0, step=1)
                 columns = st.multiselect("Select columns to show: ", self.item_columns)
                 if not columns:
                     columns = self.item_columns
-                if st.button("Search by item name"):
+                if st.button("Search"):
                     with st.beta_expander("Show item with selected column(s)"):
-                        data = Item.search_by_name(self.connection, item_name, columns)
-                        st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
-                if st.button("Search by category name"):
-                    with st.beta_expander("Show item with selected column(s)"):
-                        data = Item.search_by_category_name(self.connection, category_name, columns)
-                        st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
-                if st.button("Search by shop name"):
-                    with st.beta_expander("Show item with selected column(s)"):
-                        data = Item.search_by_shop_name(self.connection, shop_name, columns)
+                        if choice == "id":
+                            data = Item.search_by_id(self.connection, item_id, columns)
+                        elif choice == "name":
+                            data = Item.search_by_name(self.connection, item_name, columns)
+                        elif choice == "category":
+                            data = Item.search_by_category_id(self.connection, category_id, columns)
+                        elif choice == "shop":
+                            data = Item.search_by_shop_id(self.connection, shop_id, columns)
                         st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
 
     def show_add(self):

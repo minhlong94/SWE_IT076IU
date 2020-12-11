@@ -32,8 +32,10 @@ def delete_by_id(connection, customer_id):
     return removed
 
 
-def search_by_id(connection, customer_id=0, show_columns=None):
+def search_by_id(connection, customer_id=None, show_columns=None):
     cur = connection.cursor()
+    if customer_id is None:
+        return cur.execute('''SELECT * FROM Customer LIMIT 0''').fetchall()
     if not show_columns:
         return cur.execute('''SELECT * FROM Customer WHERE customerID = ?''', (customer_id,)).fetchall()
     columns = ", ".join(show_columns)
