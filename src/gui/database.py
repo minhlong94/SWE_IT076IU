@@ -30,8 +30,8 @@ class Database:
         try:
             self.tables.remove("ImportDetail")
             self.tables.remove("TransactionDetail")
-        except ValueError as err:
-            print(err)
+        except ValueError:
+            pass
         self.customer_columns = Customer.columns_names(self.connection)
         self.shop_columns = Shop.columns_names(self.connection)
         self.category_columns = ItemCategory.columns_names(self.connection)

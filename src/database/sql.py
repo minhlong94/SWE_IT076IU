@@ -116,12 +116,15 @@ def import_from_csv(connection, csv_path="src/data/dummy"):
 
     try:
         csv_files = os.listdir(csv_path)
+        try:
+            csv_files.remove('dummy_data.zip')
+        except ValueError:
+            pass
+        print(f"CSV File: {csv_files}")
         for file in csv_files:
             table_name = os.path.splitext(file)[0]
             rows = pandas.read_csv(f"{csv_path}/{file}", sep=",", skipinitialspace=True)
-            print(rows.head())
             df = pandas.DataFrame(rows)
-            print(df)
             df.to_sql(table_name, connection, if_exists="append", index=False)
     except ValueError as err:
         print(err)
