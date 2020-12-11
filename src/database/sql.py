@@ -116,15 +116,14 @@ def import_from_csv(connection, csv_zip_path="src/data/dummy/dummy_data.zip"):
     import zipfile
 
     try:
-        with zipfile.ZipFile(csv_zip_path) as zf:
+        with zipfile.ZipFile("src/data/dummy/dummy_data.zip") as zf:
             csv_files = [f for f in zf.namelist()]
             print(f"CSV File: {csv_files}")
 
             for file in csv_files:
                 table_name = os.path.splitext(file)[0]
-                rows = pandas.read_csv(zf.open(file), sep=",", skipinitialspace=True)
-                df = pandas.DataFrame(rows)
-                df.to_sql(table_name, connection, if_exists="append", index=False)
-        
+                df = pandas.read_csv(zf.open(file), sep=",", skipinitialspace=True)
+                df.to_sql(name=table_name, con=connection, if_exists="append", index=False)
+
     except ValueError as err:
         print(err)
