@@ -25,9 +25,13 @@ class Database:
     def __init__(self, connection):
         self.connection = connection
         self.current_option = ""
-        self.tables = [table[0] for table in
-                       self.connection.cursor().execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()
-                       if table[0] != "ImportDetail" or table[0] != "TransactionDetail"]
+        self.tables = [table[0] for table in self.connection.cursor().execute(
+            "SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+        try:
+            self.tables.remove("ImportDetail")
+            self.tables.remove("TransactionDetail")
+        except ValueError as err:
+            print(err)
         self.customer_columns = Customer.columns_names(self.connection)
         self.shop_columns = Shop.columns_names(self.connection)
         self.category_columns = ItemCategory.columns_names(self.connection)
@@ -300,14 +304,14 @@ class Database:
             try:
                 for table in self.tables:
                     # Export data into CSV file
-                    with st.spinner(f"Exporting table '{table}'...\n"):
+                    with st.spinner(f"Exporting table '{table}'..."):
                         cursor = self.connection.cursor()
                         cursor.execute(f"SELECT * FROM {table}")
                         with open(f"{export_path}/{table}.csv", "w+", encoding="utf-8", newline="") as csv_file:
                             csv_writer = csv.writer(csv_file, delimiter=",")
                             csv_writer.writerow([i[0] for i in cursor.description])
                             csv_writer.writerows(cursor)
-                        st.success(f"Data exported Successfully into {export_path}/{table}.csv\n")
+                    st.success(f"Data exported Successfully into {export_path}/{table}.csv")
 
             except sqlite3.Error as err:
                 print(err)
