@@ -110,21 +110,21 @@ def create_database(db_file="src/database/database.db", csv_path="src/data/dummy
         con.close()
 
 
-def import_from_csv(connection, csv_path="src/data/dummy"):
+def import_from_csv(connection, csv_zip_path="src/data/dummy/dummy_data.zip"):
     import pandas
-    import os
+    import os.path
+    import zipfile
 
     try:
-        csv_files = os.listdir(csv_path)
-        try:
-            csv_files.remove('dummy_data.zip')
-        except ValueError:
-            pass
-        print(f"CSV File: {csv_files}")
-        for file in csv_files:
-            table_name = os.path.splitext(file)[0]
-            rows = pandas.read_csv(f"{csv_path}/{file}", sep=",", skipinitialspace=True)
-            df = pandas.DataFrame(rows)
-            df.to_sql(table_name, connection, if_exists="append", index=False)
+        with zipfile.ZipFile(csv_zip_path) as zf:
+            csv_files = [f for f in zf.namelist()]
+            print(f"CSV File: {csv_files}")
+
+            for file in csv_files:
+                table_name = os.path.splitext(file)[0]
+                rows = pandas.read_csv(zf.open(file), sep=",", skipinitialspace=True)
+                df = pandas.DataFrame(rows)
+                df.to_sql(table_name, connection, if_exists="append", index=False)
+        
     except ValueError as err:
         print(err)
