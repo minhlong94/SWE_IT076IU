@@ -56,3 +56,9 @@
 #
 # def get_all(connection):
 #     return connection.cursor().execute('''SELECT * FROM Buyer''')
+#
+#
+# def max_id(connection):
+#     cur = connection.cursor()
+#     cur.execute('''SELECT MAX (buyerID) FROM Buyer''')
+#     return cur.fetchone()[0]

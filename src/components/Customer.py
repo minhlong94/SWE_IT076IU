@@ -32,12 +32,12 @@ def delete_by_id(connection, customer_id):
     return removed
 
 
-def search_by_id(connection, customer_id):
-    if not customer_id:
-        raise TypeError("Argument 'customer_id' is required!")
-
+def search_by_id(connection, customer_id=0, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Customer WHERE customerID LIKE ?''', ('%' + customer_id + '%',)).fetchall()
+    if not show_columns:
+        return cur.execute('''SELECT * FROM Customer WHERE customerID = ?''', (customer_id,)).fetchall()
+    columns = ", ".join(show_columns)
+    return cur.execute(f'''SELECT {columns} FROM Customer WHERE customerID = ?''', (customer_id,)).fetchall()
 
 
 def search_by_name(connection, customer_name="", show_columns=None):
@@ -54,6 +54,12 @@ def get_all(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM Customer''')
     return cur.fetchall()
+
+
+def max_id(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT MAX (customerID) FROM Customer''')
+    return cur.fetchone()[0]
 
 
 def columns_names(connection):

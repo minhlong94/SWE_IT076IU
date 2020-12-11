@@ -32,12 +32,12 @@ def delete_by_id(connection, shop_id):
     return removed
 
 
-def search_by_id(connection, shop_id):
-    if not shop_id:
-        raise TypeError("Argument 'shop_id' is required!")
-
+def search_by_id(connection, shop_id=0, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Shop WHERE shopID LIKE ?''', ('%' + shop_id + '%',)).fetchall()
+    if not show_columns:
+        return cur.execute('''SELECT * FROM Shop WHERE shopID = ?''', (shop_id,)).fetchall()
+    columns = ", ".join(show_columns)
+    return cur.execute(f'''SELECT {columns} FROM Shop WHERE shopID = ?''', (shop_id,)).fetchall()
 
 
 def search_by_name(connection, shop_name="", show_columns=None):
@@ -52,6 +52,12 @@ def get_all(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM Shop''')
     return cur.fetchall()
+
+
+def max_id(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT MAX (shopID) FROM Shop''')
+    return cur.fetchone()[0]
 
 
 def columns_names(connection):

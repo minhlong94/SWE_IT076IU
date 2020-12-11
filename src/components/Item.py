@@ -92,6 +92,12 @@ def get_all(connection):
     return cur.fetchall()
 
 
+def max_id(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT MAX (itemID) FROM Item''')
+    return cur.fetchone()[0]
+
+
 def columns_names(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM Item LIMIT 0''')

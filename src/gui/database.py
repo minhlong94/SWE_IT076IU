@@ -1,6 +1,4 @@
-import hashlib
 import sqlite3
-from uuid import uuid4
 
 import pandas as pd
 import streamlit as st
@@ -48,7 +46,7 @@ class Database:
                     *Limit to 1000 rows.*
                 """)
                 customer_name = st.text_input("Input customer name: ", value="")
-                columns = st.multiselect("Select columns to search: ", self.customer_columns)
+                columns = st.multiselect("Select columns to show: ", self.customer_columns)
                 if not columns:
                     columns = self.customer_columns
                 if st.button("Search"):
@@ -81,7 +79,7 @@ class Database:
                     *Limit to 1000 rows.*
                 """)
                 shop_name = st.text_input("Input shop name: ", value="")
-                columns = st.multiselect("Select columns to search: ", self.shop_columns)
+                columns = st.multiselect("Select columns to show: ", self.shop_columns)
                 if not columns:
                     columns = self.shop_columns
                 if st.button("Search"):
@@ -106,7 +104,7 @@ class Database:
                 item_name = st.text_input("Input item name: ", value="")
                 category_name = st.text_input("Input category name: ", value="")
                 shop_name = st.text_input("Input shop name: ", value="")
-                columns = st.multiselect("Select columns to search: ", self.item_columns)
+                columns = st.multiselect("Select columns to show: ", self.item_columns)
                 if not columns:
                     columns = self.item_columns
                 if st.button("Search by item name"):
@@ -128,7 +126,7 @@ class Database:
 
             if self.current_option == "Customer":
                 customer_name = st.text_input("Input customer name: ", value="")
-                customer_id = "CUSTOMER-ID-" + str(uuid4())
+                customer_id = Customer.max_id(self.connection) + 1
                 if st.button("Add customer"):
                     check = Customer.insert(self.connection, customer_id, customer_name)
                     with st.spinner("Adding customer..."):
@@ -142,7 +140,7 @@ class Database:
 
             elif self.current_option == "ItemCategory":
                 category_name = st.text_input("Input ItemCategory name: ", value="")
-                category_id = "ItemCategory-ID-" + hashlib.md5(category_name.encode()).hexdigest()
+                category_id = ItemCategory.max_id(self.connection) + 1
                 if st.button("Add item category"):
                     check = ItemCategory.insert(self.connection, category_id, category_name)
                     if check is None:
@@ -158,7 +156,7 @@ class Database:
 
             elif self.current_option == "Shop":
                 shop_name = st.text_input("Input shop name: ", value="")
-                shop_id = "SHOP-ID-" + hashlib.md5(shop_name.encode()).hexdigest()
+                shop_id = Shop.max_id(self.connection)
                 if st.button("Add shop"):
                     check = Shop.insert(self.connection, shop_id, shop_name)
                     if check is None:
@@ -179,7 +177,7 @@ class Database:
 
             elif self.current_option == "Item":
                 item_name = st.text_input("Input item name: ", value="")
-                item_id = "ITEM-ID-" + hashlib.md5(item_name.encode()).hexdigest()
+                item_id = Item.max_id(self.connection)
                 quantity = st.number_input("Input item quantity: ", min_value=0, value=0, step=1)
                 categories = {}
                 for category in ItemCategory.get_all(self.connection):
@@ -214,21 +212,36 @@ class Database:
             self.current_option = st.selectbox("Select table to remove: ", self.tables)
 
             if self.current_option == "Customer":
-                st.write("""
-                    Input name to search for customer in the database.
+                st.info("""
+                    Input id or name to search for customer to remove from the database.
                     If there is no input, all entries be shown.
                     Limit to 1000 rows.
                 """)
-                customer_name = st.text_input("Input customer name: ", value="")
-                data = Customer.search_by_name(self.connection, customer_name)
-                df = pd.DataFrame.from_records(data, columns=self.customer_columns)[:1000]
-                with st.beta_expander("Show customer"):
-                    st.dataframe(df)
-                rows = st.multiselect("Select customer: ", df.index)
-                with st.beta_expander("Show selected customer(s)"):
+                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                if choice == "id":
+                    customer_id = st.number_input("Input customer id: ", min_value=0,
+                                                  max_value=Customer.max_id(self.connection), value=0, step=1)
+                    data = Customer.search_by_id(self.connection, customer_id)
+                elif choice == "name":
+                    customer_name = st.text_input("Input customer name: ", value="")
                     data = Customer.search_by_name(self.connection, customer_name)
-                    df = pd.DataFrame.from_records(data, columns=self.customer_columns).iloc[rows, :]
-                    selected_ids = df.loc[:, "customerID"].tolist()
+                df = pd.DataFrame.from_records(data, columns=self.customer_columns)[:1000]
+                with st.beta_expander("Show all customers"):
+                    st.dataframe(df)
+                with st.beta_expander("Remove customer(s)", expanded=True):
+                    if choice == "id":
+                        selected_ids = [customer_id]
+                        data = Customer.search_by_id(self.connection, customer_id)
+                        df = pd.DataFrame.from_records(data, columns=self.customer_columns).loc[
+                            df["customerID"] == customer_id]
+                    elif choice == "name":
+                        selected_ids = st.multiselect("Select customer id(s): ", df["customerID"])
+                        data = Customer.search_by_name(self.connection, customer_name)
+                        try:
+                            df = pd.concat([pd.DataFrame.from_records(data, columns=self.customer_columns).loc[
+                                                df["customerID"] == i] for i in selected_ids], ignore_index=True)
+                        except ValueError:
+                            pass
                     st.dataframe(df)
                     if st.button("Remove customer"):
                         for Cid in selected_ids:
@@ -237,23 +250,37 @@ class Database:
                             st.experimental_rerun()
 
             elif self.current_option == "ItemCategory":
-                st.write("""
-                    Input name to search for category in the database.
+                st.info("""
+                    Input id or name to search for item category to remove from the database.
                     If there is no input, all entries be shown.
                     Limit to 1000 rows.
                 """)
-                category_name = st.text_input("Input category name: ", value="")
-                data = ItemCategory.search_by_name(self.connection, category_name)
-                df = pd.DataFrame.from_records(data, columns=self.category_columns)[:1000]
-                with st.beta_expander("Show item category"):
-                    st.dataframe(df)
-                rows = st.multiselect("Select item category: ", df.index)
-                with st.beta_expander("Show selected category(s)"):
+                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                if choice == "id":
+                    category_id = st.number_input("Input category id: ", min_value=0,
+                                                  max_value=ItemCategory.max_id(self.connection), value=0, step=1)
+                    data = ItemCategory.search_by_id(self.connection, category_id)
+                elif choice == "name":
+                    category_name = st.text_input("Input category name: ", value="")
                     data = ItemCategory.search_by_name(self.connection, category_name)
-                    df = pd.DataFrame.from_records(data, columns=self.category_columns).iloc[rows, :]
-                    selected_ids = df.loc[:, "categoryID"].tolist()
+                df = pd.DataFrame.from_records(data, columns=self.category_columns)[:1000]
+                with st.beta_expander("Show all item categories"):
                     st.dataframe(df)
-                    if st.button("Remove item category"):
+                with st.beta_expander("Remove item category(s)", expanded=True):
+                    if choice == "id":
+                        data = ItemCategory.search_by_id(self.connection, category_id)
+                        df = pd.DataFrame.from_records(data, columns=self.category_columns).loc[
+                            df["categoryID"] == category_id]
+                    elif choice == "name":
+                        selected_ids = st.multiselect("Select category id(s): ", df["categoryID"])
+                        data = ItemCategory.search_by_name(self.connection, category_name)
+                        try:
+                            df = pd.concat([pd.DataFrame.from_records(data, columns=self.category_columns).loc[
+                                                df["categoryID"] == i] for i in selected_ids], ignore_index=True)
+                        except ValueError:
+                            pass
+                    st.dataframe(df)
+                    if st.button("Remove customer"):
                         for ICid in selected_ids:
                             removed = ItemCategory.delete_by_id(self.connection, ICid)
                             print(removed)
@@ -263,25 +290,39 @@ class Database:
                 pass
 
             elif self.current_option == "Shop":
-                st.write("""
-                    Input name to search for shop in the database.
+                st.info("""
+                    Input id or name to search for shop to remove from the database.
                     If there is no input, all entries be shown.
                     Limit to 1000 rows.
                 """)
-                shop_name = st.text_input("Input shop name: ", value="")
-                data = Shop.search_by_name(self.connection, shop_name)
-                df = pd.DataFrame.from_records(data, columns=self.shop_columns)[:1000]
-                with st.beta_expander("Show shop"):
-                    st.dataframe(df)
-                rows = st.multiselect("Select shop: ", df.index)
-                with st.beta_expander("Show selected shop(s)"):
+                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                if choice == "id":
+                    shop_id = st.number_input("Input shop id: ", min_value=0,
+                                              max_value=Shop.max_id(self.connection), value=0, step=1)
+                    data = Shop.search_by_id(self.connection, shop_id)
+                elif choice == "name":
+                    shop_name = st.text_input("Input shop name: ", value="")
                     data = Shop.search_by_name(self.connection, shop_name)
-                    df = pd.DataFrame.from_records(data, columns=self.shop_columns).iloc[rows, :]
-                    selected_ids = df.loc[:, "shopID"].tolist()
+                df = pd.DataFrame.from_records(data, columns=self.shop_columns)[:1000]
+                with st.beta_expander("Show all shops"):
                     st.dataframe(df)
-                    if st.button("Remove shop"):
-                        for Sid in selected_ids:
-                            removed = Shop.delete_by_id(self.connection, Sid)
+                with st.beta_expander("Remove shop(s)"):
+                    if choice == "id":
+                        data = Shop.search_by_id(self.connection, shop_id)
+                        df = pd.DataFrame.from_records(data, columns=self.shop_columns).loc[
+                            df["shopID"] == shop_id]
+                    elif choice == "name":
+                        selected_ids = st.multiselect("Select shop id(s): ", df["shopID"])
+                        data = Shop.search_by_name(self.connection, shop_name)
+                        try:
+                            df = pd.concat([pd.DataFrame.from_records(data, columns=self.shop_columns).loc[
+                                                df["shopID"] == i] for i in selected_ids], ignore_index=True)
+                        except ValueError:
+                            pass
+                    st.dataframe(df)
+                    if st.button("Remove customer"):
+                        for Cid in selected_ids:
+                            removed = Shop.delete_by_id(self.connection, Cid)
                             print(removed)
                             st.experimental_rerun()
 

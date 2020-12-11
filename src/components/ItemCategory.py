@@ -41,12 +41,12 @@ def delete_by_name(connection, category_name):
     connection.commit()
 
 
-def search_by_id(connection, category_id):
-    if not category_id:
-        raise TypeError("Argument 'category_id' is required!")
-
+def search_by_id(connection, category_id=0, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM ItemCategory WHERE categoryID LIKE ?''', ('%' + category_id + '%',)).fetchall()
+    if not show_columns:
+        return cur.execute('''SELECT * FROM ItemCategory WHERE categoryID = ?''', (category_id,)).fetchall()
+    columns = ", ".join(show_columns)
+    return cur.execute(f'''SELECT {columns} FROM ItemCategory WHERE categoryID = ?''', (category_id,)).fetchall()
 
 
 def search_by_name(connection, category_name="", show_columns=None):
@@ -63,6 +63,12 @@ def get_all(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM ItemCategory''')
     return cur.fetchall()
+
+
+def max_id(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT MAX (categoryID) FROM Category''')
+    return cur.fetchone()[0]
 
 
 def columns_names(connection):
