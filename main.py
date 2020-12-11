@@ -19,7 +19,7 @@ def login_section():
 
 
 def main():
-    with open("src/encryption/check_login", "rb") as f:
+    with open("src/encryption/check_login", "rb+") as f:
         check_login = f.readline()
     with open("src/encryption/hash_pw", "rb") as f:
         hashed_password = f.read()
@@ -48,6 +48,14 @@ def main():
         menu = Menu()
         menu.display_option()
     st.sidebar.write("Note: this is a collapsible sidebar.")
+
+    import atexit
+    atexit.register(on_terminate)
+
+
+def on_terminate():
+    with open("src/encryption/check_login", "wb") as f:
+        f.write(hashlib.md5("IS_LOGGED_OUT".encode()).digest())
 
 
 if __name__ == "__main__":

@@ -115,7 +115,7 @@ def _load_df(connection):
     return df
 
 
-@st.cache(persist=True, hash_funcs={sqlite3.Connection: id})
+@st.cache(show_spinner=False, hash_funcs={sqlite3.Connection: id})
 def _load_shop(connection):
     query = '''SELECT * FROM Shop'''
     return pd.read_sql_query(query, connection)
