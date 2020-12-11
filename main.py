@@ -1,3 +1,4 @@
+import atexit
 import base64
 import hashlib
 
@@ -6,6 +7,11 @@ import streamlit as st
 
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
+
+
+def on_terminate():
+    with open("src/encryption/check_login", "wb") as f:
+        f.write(hashlib.md5("IS_LOGGED_OUT".encode()).digest())
 
 
 def login_section():
@@ -49,13 +55,7 @@ def main():
         menu.display_option()
     st.sidebar.write("Note: this is a collapsible sidebar.")
 
-    import atexit
     atexit.register(on_terminate)
-
-
-def on_terminate():
-    with open("src/encryption/check_login", "wb") as f:
-        f.write(hashlib.md5("IS_LOGGED_OUT".encode()).digest())
 
 
 if __name__ == "__main__":
