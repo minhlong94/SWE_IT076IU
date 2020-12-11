@@ -25,8 +25,9 @@ class Database:
     def __init__(self, connection):
         self.connection = connection
         self.current_option = ""
-        self.tables = [table[0] for table in self.connection.cursor().execute(
-            "SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+        self.tables = [table[0] for table in
+                       self.connection.cursor().execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()
+                       if table[0] != "ImportDetail" or table[0] != "TransactionDetail"]
         self.customer_columns = Customer.columns_names(self.connection)
         self.shop_columns = Shop.columns_names(self.connection)
         self.category_columns = ItemCategory.columns_names(self.connection)
@@ -85,10 +86,12 @@ class Database:
                         st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
 
             elif self.current_option == "Imports":
-                pass
+                st.warning("Not yet implemented.")
+                st.stop()
 
             elif self.current_option == "Transactions":
-                pass
+                st.warning("Not yet implemented.")
+                st.stop()
 
             elif self.current_option == "Item":
                 st.info("""
@@ -163,10 +166,12 @@ class Database:
                         st.dataframe(pd.DataFrame.from_records(data, columns=self.shop_columns))
 
             elif self.current_option == "Imports":
-                pass
+                st.warning("Not yet implemented.")
+                st.stop()
 
             elif self.current_option == "Transactions":
-                pass
+                st.warning("Not yet implemented.")
+                st.stop()
 
             elif self.current_option == "Item":
                 item_name = st.text_input("Input item name: ", value="")
@@ -277,13 +282,16 @@ class Database:
                             st.experimental_rerun()
 
             elif self.current_option == "Imports":
-                pass
+                st.warning("Not yet implemented.")
+                st.stop()
 
             elif self.current_option == "Transactions":
-                pass
+                st.warning("Not yet implemented.")
+                st.stop()
 
             elif self.current_option == "Item":
-                pass
+                st.warning("Not yet implemented.")
+                st.stop()
 
     def export_data(self, export_path="src/data/dummy"):
         import csv
@@ -292,14 +300,14 @@ class Database:
             try:
                 for table in self.tables:
                     # Export data into CSV file
-                    st.info(f"Exporting table '{table}'...\n")
-                    cursor = self.connection.cursor()
-                    cursor.execute(f"SELECT * FROM {table}")
-                    with open(f"{export_path}/{table}.csv", "w+", encoding="utf-8", newline="") as csv_file:
-                        csv_writer = csv.writer(csv_file, delimiter=",")
-                        csv_writer.writerow([i[0] for i in cursor.description])
-                        csv_writer.writerows(cursor)
-                    st.success(f"Data exported Successfully into {export_path}/{table}.csv\n")
+                    with st.spinner(f"Exporting table '{table}'...\n"):
+                        cursor = self.connection.cursor()
+                        cursor.execute(f"SELECT * FROM {table}")
+                        with open(f"{export_path}/{table}.csv", "w+", encoding="utf-8", newline="") as csv_file:
+                            csv_writer = csv.writer(csv_file, delimiter=",")
+                            csv_writer.writerow([i[0] for i in cursor.description])
+                            csv_writer.writerows(cursor)
+                        st.success(f"Data exported Successfully into {export_path}/{table}.csv\n")
 
             except sqlite3.Error as err:
                 print(err)
