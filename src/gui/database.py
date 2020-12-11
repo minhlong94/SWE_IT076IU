@@ -84,9 +84,9 @@ class Database:
                         elif choice == "name":
                             data = ItemCategory.search_by_name(self.connection, category_name, columns)
                         st.dataframe(pd.DataFrame.from_records(data, columns=columns)[:1000])
-
-            elif self.current_option == "Buyer":
-                pass
+            #
+            # elif self.current_option == "Buyer":
+            #     pass
 
             elif self.current_option == "Shop":
                 st.info("""
@@ -188,7 +188,7 @@ class Database:
 
             elif self.current_option == "Shop":
                 shop_name = st.text_input("Input shop name: ", value="")
-                shop_id = Shop.max_id(self.connection)
+                shop_id = Shop.max_id(self.connection) + 1
                 if st.button("Add shop"):
                     check = Shop.insert(self.connection, shop_id, shop_name)
                     if check is None:
@@ -219,7 +219,7 @@ class Database:
                 for key, value in categories.items():
                     if value == category_name:
                         category_id = key
-                st.write(f"Category ID currently: {category_id}")
+                st.write(f"Current Category ID: {category_id}")
                 shops = {}
                 for shop in Shop.get_all(self.connection):
                     shops[shop[0]] = shop[1]
@@ -228,7 +228,7 @@ class Database:
                 for key, value in shops.items():
                     if value == shop_name:
                         shop_id = key
-                st.write(f"Shop ID currently: {shop_id}")
+                st.write(f"Current Shop ID: {shop_id}")
                 if st.button("Add item"):
                     check = Item.insert(self.connection, item_id, item_name, quantity, category_id, shop_id)
                     if check is None:
