@@ -46,7 +46,7 @@ class Database:
                     *Limit to 1000 rows.*
                 """)
                 customer_name = ''
-                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                choice = st.radio("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     customer_id = st.number_input("Input customer id: ", min_value=0,
                                                   max_value=Customer.max_id(self.connection), value=0, step=1)
@@ -70,7 +70,7 @@ class Database:
                     *Limit to 1000 rows.*
                 """)
                 category_name = ''
-                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                choice = st.radio("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     category_id = st.number_input("Input category id: ", min_value=0,
                                                   max_value=ItemCategory.max_id(self.connection), value=0, step=1)
@@ -97,7 +97,7 @@ class Database:
                     *Limit to 1000 rows.*
                 """)
                 shop_name = ''
-                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                choice = st.radio("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     shop_id = st.number_input("Input shop id: ", min_value=0,
                                               max_value=Shop.max_id(self.connection), value=0, step=1)
@@ -129,9 +129,9 @@ class Database:
                     *Limit to 1000 rows.*
                 """)
                 item_name = ''
-                choice = st.selectbox("Search by id/name: ", options=['id', 'name', 'category', 'shop'])
+                choice = st.radio("Search by id/name/category/shop: ", options=['id', 'name', 'category', 'shop'])
                 if choice == "id":
-                    item_id = st.number_input("Input category id: ", min_value=0,
+                    item_id = st.number_input("Input item id: ", min_value=0,
                                               max_value=Item.max_id(self.connection), value=0, step=1)
                 elif choice == "name":
                     item_name = st.text_input("Input item name: ", value=item_name)
@@ -252,7 +252,7 @@ class Database:
                     Input id or name to search for customer to remove from the database.
                     If there is no input, all entries be shown.
                 """)
-                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                choice = st.radio("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     customer_id = st.number_input("Input customer id: ", min_value=0,
                                                   max_value=Customer.max_id(self.connection), value=0, step=1)
@@ -289,7 +289,7 @@ class Database:
                     Input id or name to search for item category to remove from the database.
                     If there is no input, all entries be shown.
                 """)
-                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                choice = st.radio("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     category_id = st.number_input("Input category id: ", min_value=0,
                                                   max_value=ItemCategory.max_id(self.connection), value=0, step=1)
@@ -328,7 +328,7 @@ class Database:
                     Input id or name to search for shop to remove from the database.
                     If there is no input, all entries be shown.
                 """)
-                choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
+                choice = st.radio("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     shop_id = st.number_input("Input shop id: ", min_value=0,
                                               max_value=Shop.max_id(self.connection), value=0, step=1)
