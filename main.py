@@ -25,7 +25,7 @@ def login_section():
 
 
 def main():
-    with open("src/encryption/check_login", "rb+") as f:
+    with open("src/encryption/check_login", "rb") as f:
         check_login = f.readline()
     with open("src/encryption/hash_pw", "rb") as f:
         hashed_password = f.read()
