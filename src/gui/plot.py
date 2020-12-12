@@ -103,7 +103,7 @@ class Plot:
                 st.plotly_chart(fig)
 
 
-@st.cache(persist=True, hash_funcs={sqlite3.Connection: id})
+@st.cache(persist=True, show_spinner=False, hash_funcs={sqlite3.Connection: id})
 def _load_df(connection):
     query = '''
             SELECT t.transactionDate, t.shopID, td.itemID, td.itemPrice, td.transactionAmount 

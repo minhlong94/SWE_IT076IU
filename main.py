@@ -4,6 +4,7 @@ import hashlib
 
 import bcrypt
 import streamlit as st
+from streamlit.report_thread import get_report_ctx
 
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
@@ -25,6 +26,8 @@ def login_section():
 
 
 def main():
+    ctx = get_report_ctx()
+
     with open("src/encryption/check_login", "rb") as f:
         check_login = f.readline()
     with open("src/encryption/hash_pw", "rb") as f:
@@ -35,7 +38,7 @@ def main():
     main_page = MainPage()
     main_page.call()
 
-    if check_login != hashlib.md5("IS_LOGGED_IN".encode()).digest():
+    if check_login != hashlib.md5(ctx.session_id.encode()).digest():
         input_password = login_section()
         if st.sidebar.button("Login") or input_password:
             if not bcrypt.checkpw(base64.b64encode(hashlib.sha256(input_password.encode()).digest()), hashed_password):
@@ -43,7 +46,7 @@ def main():
                 st.stop()
             else:
                 with open("src/encryption/check_login", "wb") as f:
-                    f.write(hashlib.md5("IS_LOGGED_IN".encode()).digest())
+                    f.write(hashlib.md5(ctx.session_id.encode()).digest())
                 st.experimental_rerun()
     else:
         st.sidebar.title("Experimental App")
