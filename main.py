@@ -1,12 +1,12 @@
 import base64
 import hashlib
+import os
 
 import bcrypt
 import streamlit as st
 from streamlit.report_thread import get_report_ctx
 from streamlit.server.server import Server
 
-from src.encryption import hash_password
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
 
@@ -59,11 +59,14 @@ def _login_section():
 
 
 def main():
-    hash_password.hash_password()
     current_session_id = _get_session_id()
 
+    if not os.path.exists("src/encryption/check_session"):
+        with open("src/encryption/check_session", "w+b"):
+            pass
+
     with open("src/encryption/check_session", "rb") as f:
-        check_login = f.readline()
+        check_login = f.read()
     with open("src/encryption/hash_pw", "rb") as f:
         hashed_password = f.read()
 
