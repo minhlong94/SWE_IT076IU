@@ -6,9 +6,9 @@ import streamlit as st
 from streamlit.report_thread import get_report_ctx
 from streamlit.server.server import Server
 
+from src.encryption import hash_password
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
-from src.encryption import hash_password
 
 
 @st.cache(show_spinner=False, max_entries=1, ttl=5)
@@ -59,7 +59,7 @@ def _login_section():
 
 
 def main():
-    hash_password()
+    hash_password.hash_password()
     current_session_id = _get_session_id()
 
     with open("src/encryption/check_session", "rb") as f:
