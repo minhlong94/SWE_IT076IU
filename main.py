@@ -8,6 +8,7 @@ from streamlit.server.server import Server
 
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
+from src.encryption import hash_password
 
 
 @st.cache(show_spinner=False, max_entries=1, ttl=5)
@@ -58,9 +59,10 @@ def _login_section():
 
 
 def main():
+    hash_password()
     current_session_id = _get_session_id()
 
-    with open("src/encryption/check_login", "rb") as f:
+    with open("src/encryption/check_session", "rb") as f:
         check_login = f.readline()
     with open("src/encryption/hash_pw", "rb") as f:
         hashed_password = f.read()
@@ -77,13 +79,13 @@ def main():
                 st.sidebar.warning("Wrong password!")
                 st.stop()
             else:
-                with open("src/encryption/check_login", "wb") as f:
+                with open("src/encryption/check_session", "wb") as f:
                     f.write(hashlib.sha1(current_session_id.encode()).digest())
                 st.experimental_rerun()
     else:
         st.sidebar.title("Experimental App")
         if st.sidebar.button("Logout"):
-            with open("src/encryption/check_login", "wb") as f:
+            with open("src/encryption/check_session", "wb") as f:
                 f.write(hashlib.sha1("IS_LOGGED_OUT".encode()).digest())
             st.experimental_rerun()
         menu = Menu()
