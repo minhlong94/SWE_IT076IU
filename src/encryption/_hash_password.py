@@ -1,6 +1,5 @@
 import base64
 import hashlib
-import os.path
 
 import bcrypt
 
@@ -15,9 +14,8 @@ def hash_password(encryption_path="src/encryption"):
     """
     password = "python"
     hashed_pw = bcrypt.hashpw(base64.b64encode(hashlib.sha256(password.encode()).digest()), bcrypt.gensalt())
-    if not os.path.exists(f"{encryption_path}/hash_pw"):
-        with open(f"{encryption_path}/hash_pw", "wb+") as f:
-            f.write(hashed_pw)
-    if not os.path.exists(f"{encryption_path}/check_session"):
-        with open(f"{encryption_path}/check_session", "wb+"):
-            pass
+    with open(f"{encryption_path}/hash_pw", "w+b") as f:
+        f.write(hashed_pw)
+
+
+hash_password("encryption")
