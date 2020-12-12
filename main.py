@@ -11,7 +11,7 @@ from src.gui.main_page import MainPage
 from src.gui.menu import Menu
 
 
-@st.cache(show_spinner=False, max_entries=1, ttl=5)
+@st.cache(show_spinner=False, max_entries=1, ttl=8)
 def _get_session_id():
     # Hack to get the session object from Streamlit.
 
