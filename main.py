@@ -37,7 +37,7 @@ def main():
 
     if check_login != hashlib.md5("IS_LOGGED_IN".encode()).digest():
         input_password = login_section()
-        if st.sidebar.button("Login"):
+        if st.sidebar.button("Login") or input_password:
             if not bcrypt.checkpw(base64.b64encode(hashlib.sha256(input_password.encode()).digest()), hashed_password):
                 st.sidebar.warning("Wrong password!")
                 st.stop()
