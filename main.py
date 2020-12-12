@@ -5,13 +5,17 @@ import hashlib
 import bcrypt
 import streamlit as st
 
+import SessionState
 from src.gui.main_page import MainPage
 from src.gui.menu import Menu
 
+session_state = SessionState.get(password='')
+
 
 def on_terminate():
-    with open("src/encryption/check_login", "wb") as f:
-        f.write(hashlib.md5("IS_LOGGED_OUT".encode()).digest())
+    with open("src/encryption/check_session", "wb") as f:
+        session_state.password = ""
+        f.write(hashlib.sha1("IS_LOGGED_OUT".encode()).digest())
 
 
 def login_section():
@@ -20,13 +24,16 @@ def login_section():
         ## **WARNING: AUTHORIZED ACCESS ONLY**
         Input your administrator password on the left sidebar, then press "Enter" to login.
     """)
-    input_password = st.sidebar.text_input("Input administrator password: ", type="password", value="")
+    input_password = st.sidebar.text_input("Input administrator password: ", type="password",
+                                           value=session_state.password)
     return input_password
 
 
 def main():
-    with open("src/encryption/check_login", "rb+") as f:
-        check_login = f.readline()
+    atexit.register(on_terminate)
+
+    with open("src/encryption/check_session", "rb+") as f:
+        check_session = f.readline()
     with open("src/encryption/hash_pw", "rb") as f:
         hashed_password = f.read()
 
@@ -35,27 +42,28 @@ def main():
     main_page = MainPage()
     main_page.call()
 
-    if check_login != hashlib.md5("IS_LOGGED_IN".encode()).digest():
+    if check_session != hashlib.sha1(str(session_state.session_id).encode()).digest():
         input_password = login_section()
-        if st.sidebar.button("Login"):
-            if not bcrypt.checkpw(base64.b64encode(hashlib.sha256(input_password.encode()).digest()), hashed_password):
+        session_state.password = input_password
+
+        if st.sidebar.button("Login") or input_password:
+            if not bcrypt.checkpw(base64.b64encode(hashlib.sha256(session_state.password.encode()).digest()), hashed_password):
                 st.sidebar.warning("Wrong password!")
                 st.stop()
             else:
-                with open("src/encryption/check_login", "wb") as f:
-                    f.write(hashlib.md5("IS_LOGGED_IN".encode()).digest())
+                with open("src/encryption/check_session", "wb") as f:
+                    f.write(hashlib.sha1(str(session_state.session_id).encode()).digest())
                 st.experimental_rerun()
     else:
         st.sidebar.title("Experimental App")
         if st.sidebar.button("Logout"):
-            with open("src/encryption/check_login", "wb") as f:
-                f.write(hashlib.md5("IS_LOGGED_OUT".encode()).digest())
+            with open("src/encryption/check_session", "wb") as f:
+                session_state.password = ""
+                f.write(hashlib.sha1("IS_LOGGED_OUT".encode()).digest())
             st.experimental_rerun()
         menu = Menu()
         menu.display_option()
     st.sidebar.write("Note: this is a collapsible sidebar.")
-
-    atexit.register(on_terminate)
 
 
 if __name__ == "__main__":

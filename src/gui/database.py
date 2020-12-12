@@ -45,16 +45,17 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
+                customer_name = ''
                 choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     customer_id = st.number_input("Input customer id: ", min_value=0,
                                                   max_value=Customer.max_id(self.connection), value=0, step=1)
                 elif choice == "name":
-                    customer_name = st.text_input("Input customer name: ", value="")
+                    customer_name = st.text_input("Input customer name: ", value=customer_name)
                 columns = st.multiselect("Select columns to show: ", self.customer_columns)
                 if not columns:
                     columns = self.customer_columns
-                if st.button("Search"):
+                if st.button("Search") or customer_name:
                     with st.beta_expander("Show customer with selected column(s)"):
                         if choice == "id":
                             data = Customer.search_by_id(self.connection, customer_id, columns)
@@ -68,16 +69,17 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
+                category_name = ''
                 choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     category_id = st.number_input("Input category id: ", min_value=0,
                                                   max_value=ItemCategory.max_id(self.connection), value=0, step=1)
                 elif choice == "name":
-                    category_name = st.text_input("Input category name: ", value="")
+                    category_name = st.text_input("Input category name: ", value=category_name)
                 columns = st.multiselect("Select columns to search: ", self.category_columns)
                 if not columns:
                     columns = self.category_columns
-                if st.button("Search"):
+                if st.button("Search") or category_name:
                     with st.beta_expander("Show category with selected column(s)"):
                         if choice == "id":
                             data = ItemCategory.search_by_id(self.connection, category_id, columns)
@@ -94,16 +96,17 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
+                shop_name = ''
                 choice = st.selectbox("Search by id/name: ", options=['id', 'name'])
                 if choice == "id":
                     shop_id = st.number_input("Input shop id: ", min_value=0,
                                               max_value=Shop.max_id(self.connection), value=0, step=1)
                 elif choice == "name":
-                    shop_name = st.text_input("Input shop name: ", value="")
+                    shop_name = st.text_input("Input shop name: ", value=shop_name)
                 columns = st.multiselect("Select columns to show: ", self.shop_columns)
                 if not columns:
                     columns = self.shop_columns
-                if st.button("Search"):
+                if st.button("Search") or shop_name:
                     with st.beta_expander("Show shop with selected column(s)"):
                         if choice == "id":
                             data = Shop.search_by_id(self.connection, shop_id, columns)
@@ -125,12 +128,13 @@ class Database:
                     If there is no input, all entries be shown.\n
                     *Limit to 1000 rows.*
                 """)
+                item_name = ''
                 choice = st.selectbox("Search by id/name: ", options=['id', 'name', 'category', 'shop'])
                 if choice == "id":
                     item_id = st.number_input("Input category id: ", min_value=0,
                                               max_value=Item.max_id(self.connection), value=0, step=1)
                 elif choice == "name":
-                    item_name = st.text_input("Input item name: ", value="")
+                    item_name = st.text_input("Input item name: ", value=item_name)
                 elif choice == "category":
                     category_id = st.number_input("Input category id: ", min_value=0,
                                                   max_value=ItemCategory.max_id(self.connection), value=0, step=1)
@@ -140,7 +144,7 @@ class Database:
                 columns = st.multiselect("Select columns to show: ", self.item_columns)
                 if not columns:
                     columns = self.item_columns
-                if st.button("Search"):
+                if st.button("Search") or item_name:
                     with st.beta_expander("Show item with selected column(s)"):
                         if choice == "id":
                             data = Item.search_by_id(self.connection, item_id, columns)

@@ -69,7 +69,7 @@ def get_all(connection):
 
 def max_id(connection):
     cur = connection.cursor()
-    cur.execute('''SELECT MAX (categoryID) FROM Category''')
+    cur.execute('''SELECT MAX (categoryID) FROM ItemCategory''')
     return cur.fetchone()[0]
 
 
