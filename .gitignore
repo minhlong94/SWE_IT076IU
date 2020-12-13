@@ -1,2 +1,3 @@
 .idea
 src/encryption/check_login
+*.pyc
