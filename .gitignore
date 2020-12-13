@@ -1,3 +1,4 @@
 .idea
 src/encryption/check_login
 *.pyc
+src/database/database.db

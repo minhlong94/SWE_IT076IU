@@ -1,8 +1,8 @@
 import streamlit as st
 
-from src.gui.database import Database, create_connection
-from src.gui.plot import Plot
-from src.gui.table import Table
+from src.gui._database import Database, create_connection
+from src.gui._plot import Plot
+from src.gui._table import Table
 
 
 class Menu:
@@ -20,8 +20,8 @@ class Menu:
         options: list of string. Available options
         current_option: string, default "". Current selection of the select box
     """
-    def __init__(self):
-        self.connection = create_connection("src/database/database.db")
+    def __init__(self, db_file="database/database.db"):
+        self.connection = create_connection(db_file)
         self.select_box = st.sidebar.empty()
         self.text = "Choose an option: "
         self.options = ["Search", "Add", "Remove", "View table", "View profit plot", "Export to csv"]
