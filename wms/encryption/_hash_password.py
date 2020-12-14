@@ -4,7 +4,7 @@ import hashlib
 import bcrypt
 
 
-def hash_password(encryption_path="src/encryption"):
+def hash_password(encryption_path="wms/encryption"):
     """Hash password function
 
     This file helps to hash the password using bcrypt.

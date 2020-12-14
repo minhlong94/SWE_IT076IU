@@ -1,4 +1,4 @@
 .idea
-src/encryption/check_login
+wms/encryption/check_login
 *.pyc
 *.pyo

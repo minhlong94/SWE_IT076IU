@@ -1,4 +1,4 @@
-from src.components import \
+from wms.components import \
     Buyer, \
     ItemCategory, \
     Customer, \

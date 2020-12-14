@@ -1,4 +1,4 @@
-def create_database(db_file="src/database/database.db", csv_zip_path="src/data/dummy/dummy_data.zip"):
+def create_database(db_file="wms/database/database.db", csv_zip_path="wms/data/dummy/dummy_data.zip"):
     import os.path
     import sqlite3
 
@@ -117,7 +117,7 @@ def create_database(db_file="src/database/database.db", csv_zip_path="src/data/d
             con.close()
 
 
-def import_from_csv(connection, csv_zip_path="src/data/dummy/dummy_data.zip"):
+def import_from_csv(connection, csv_zip_path="wms/data/dummy/dummy_data.zip"):
     import pandas
     import os.path
     import zipfile

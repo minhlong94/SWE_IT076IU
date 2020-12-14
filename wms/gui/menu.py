@@ -1,8 +1,8 @@
 import streamlit as st
 
-from src.gui._database import Database, create_connection
-from src.gui._plot import Plot
-from src.gui._table import Table
+from wms.gui._database import Database, create_connection
+from wms.gui._plot import Plot
+from wms.gui._table import Table
 
 
 class Menu:

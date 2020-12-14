@@ -6,7 +6,7 @@ Works for Streamlit >= v0.65
 Usage
 -----
 
->>> from src import SessionState
+>>> from wms import SessionState
 >>>
 >>> session_state = SessionState.get(user_name='', favorite_color='black')
 >>> session_state.user_name

@@ -40,7 +40,7 @@ class Table:
         self.dataframe = st.empty()
         self.text = "Choose the DataFrame (table) you want to display. " \
                     "The viewer is limited to {} rows.".format(self.limit_rows)
-        self.data_path = "src/data/dummy"
+        self.data_path = "wms/data/dummy"
         self.profile_report = None
 
     def show_dataframe(self, minimal=True):

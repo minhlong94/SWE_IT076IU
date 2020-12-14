@@ -3,11 +3,11 @@ import sqlite3
 import pandas as pd
 import streamlit as st
 
-from src.components import *
+from wms.components import *
 
 
 def create_connection(db_file):
-    from src import database
+    from wms import database
 
     database.create_database(db_file)
 
@@ -371,7 +371,7 @@ class Database:
                 st.warning("Not yet implemented.")
                 st.stop()
 
-    def export_data(self, export_path="src/data/dummy"):
+    def export_data(self, export_path="wms/data/dummy"):
         import csv
 
         if st.button("Start exporting data"):

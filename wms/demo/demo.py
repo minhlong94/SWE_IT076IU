@@ -4,9 +4,9 @@ import hashlib
 import bcrypt
 import streamlit as st
 
-from src import SessionState
-from src.gui.main_page import MainPage
-from src.gui.menu import Menu
+from wms import SessionState
+from wms.gui.main_page import MainPage
+from wms.gui.menu import Menu
 
 
 @st.cache(allow_output_mutation=True, show_spinner=False, max_entries=1, ttl=300)
@@ -20,7 +20,7 @@ def run():
     cached_ids = get_cached_id()
     print(f"Session ID: {session_state.session_id}\t Cached ID: {cached_ids}\n")
 
-    with open("src/encryption/hash_pw", "rb") as f:
+    with open("wms/encryption/hash_pw", "rb") as f:
         hashed_password = f.read()
 
     st.set_page_config(page_title="Wholesale Management System", layout="wide")
@@ -59,7 +59,7 @@ def run():
             session_state.welcome = False
             st.experimental_rerun()
 
-        session_state.menu = Menu(db_file="src/database/database.db")
+        session_state.menu = Menu(db_file="wms/database/database.db")
         session_state.menu.display_option()
     st.sidebar.write("Note: this is a collapsible sidebar.")
 
