@@ -16,7 +16,3 @@ def hash_password(password="python", encryption_file=None):
     hashed_pw = bcrypt.hashpw(base64.b64encode(hashlib.sha512(password.encode()).digest()), bcrypt.gensalt())
     with open(encryption_file, "w+b") as f:
         f.write(hashed_pw)
-
-
-if __name__ == '__main__':
-    hash_password()

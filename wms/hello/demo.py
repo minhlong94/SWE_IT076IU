@@ -48,7 +48,14 @@ def run(**kwargs):
     cached_ids = _get_cached_id()
     print(f"Session ID: {session_state.session_id}\t Cached ID: {cached_ids}\n")
 
-    with open(ENCRYPTION_KEY, "rb") as f:
+    try:
+        encryption_key = kwargs["encryption_file"]
+        database_file = kwargs["database_file"]
+    except KeyError:
+        encryption_key = ENCRYPTION_KEY
+        database_file = DATABASE_FILE
+
+    with open(encryption_key, "rb") as f:
         hashed_password = f.read()
 
     st.set_page_config(page_title="Wholesale Management System", layout="wide")
@@ -87,7 +94,7 @@ def run(**kwargs):
             session_state.welcome = False
             st.experimental_rerun()
 
-        session_state.menu = Menu(db_file=DATABASE_FILE,
+        session_state.menu = Menu(db_file=database_file,
                                   csv_zip=os.path.join(os.path.dirname(wms.__file__), "data/dummy/dummy_data.zip"))
         session_state.menu.display_option()
     st.sidebar.write("Note: this is a collapsible sidebar.")

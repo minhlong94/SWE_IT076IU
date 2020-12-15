@@ -1,30 +1,7 @@
-import sys
-
 import setuptools
 
-try:
-    from pipenv.project import Project
-    from pipenv.utils import convert_deps_to_pip
 
-    pipfile = Project(chdir=False).parsed_pipfile
-
-    packages = pipfile["packages"].copy()
-    requirements = convert_deps_to_pip(packages, r=False)
-except ImportError:
-    requirements = [
-        "streamlit>=0.70.0",
-        "pandas>=1.1.3",
-        "bcrypt>=3.2.0",
-        "plotly>=4.13.0",
-        "hiplot>=0.1.20",
-        "pandas-profiling>=2.9.0",
-        "click>=7.1.2",
-        "numpy==1.19.3"
-    ]
-except Exception as e:
-    sys.exit(e)
-
-__version__ = "0.1.0dev0"
+__version__ = "0.1.0dev1"
 __name__ = "WMS"
 __description__ = "A wholesale management system application created with Streamlit."
 
@@ -55,9 +32,18 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(),
     # Requirements
-    install_requires=requirements,
+    install_requires=[
+        "streamlit>=0.70.0",
+        "pandas>=1.1.3",
+        "bcrypt>=3.2.0",
+        "plotly>=4.13.0",
+        "hiplot>=0.1.20",
+        "pandas-profiling>=2.9.0",
+        "click>=7.1.2",
+        "numpy==1.19.3",
+    ],
     python_requires=">=3.7, <3.9",
-    include_package_data=True,  # copy html and friends
+    include_package_data=True,
     entry_points={"console_scripts": ["wms = wms.cli:main"]},
     scripts=["bin/wms.cmd"],
 )
