@@ -2,3 +2,5 @@
 wms/encryption/check_login
 *.pyc
 *.pyo
+dist
+WMS.egg*
