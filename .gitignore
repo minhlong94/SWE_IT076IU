@@ -1,6 +1,6 @@
-.idea
-wms/encryption/check_login
 *.pyc
-*.pyo
 dist
 WMS.egg*
+wms/data/wms.db
+*.png
+*.xml
