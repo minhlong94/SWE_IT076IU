@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "43314974f5c32a602495cad54102fcd19df37dce3c967ee855a743cce5abda58"
+            "sha256": "2eebb8b24f9c6a9c93d285493fed52aca2883a68656059565baceecf45fe771e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -224,7 +224,7 @@
                 "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a",
                 "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+            "index": "pypi",
             "version": "==7.1.2"
         },
         "colorama": {
@@ -390,11 +390,11 @@
         },
         "joblib": {
             "hashes": [
-                "sha256:698c311779f347cf6b7e6b8a39bb682277b8ee4aba8cf9507bc0cf4cd4737b72",
-                "sha256:9e284edd6be6b71883a63c9b7f124738a3c16195513ad940eae7e3438de885d5"
+                "sha256:75ead23f13484a2a414874779d69ade40d4fa1abe62b222a23cd50d4bc822f6f",
+                "sha256:7ad866067ac1fdec27d51c8678ea760601b70e32ff1881d4dc8e1171f2b64b24"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==0.17.0"
+            "version": "==1.0.0"
         },
         "jsonschema": {
             "hashes": [

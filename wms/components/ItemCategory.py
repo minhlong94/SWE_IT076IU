@@ -10,11 +10,6 @@ def insert(connection, category_id, category_name):
         category_name (str)
     """
 
-    if not category_id:
-        raise TypeError("Argument 'category_id' is required!")
-    if not category_name:
-        raise TypeError("Argument 'category_name' is required!")
-
     cur = connection.cursor()
     cur.execute('''INSERT INTO ItemCategory (categoryID, categoryName) VALUES (?,?)''', (category_id, category_name))
     connection.commit()
@@ -70,7 +65,12 @@ def get_all(connection):
 def max_id(connection):
     cur = connection.cursor()
     cur.execute('''SELECT MAX (categoryID) FROM ItemCategory''')
-    return cur.fetchone()[0]
+    _id = None
+    try:
+        _id = cur.fetchone()[0]
+    except TypeError:
+        pass
+    return _id
 
 
 def columns_names(connection):

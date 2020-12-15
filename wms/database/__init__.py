@@ -1,1 +1,3 @@
-from wms.database.sql import create_database
+from wms.database import sql
+
+create_database = sql.create_database

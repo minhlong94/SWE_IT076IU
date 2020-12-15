@@ -1,4 +1,8 @@
-def create_database(db_file="wms/database/database.db", csv_zip_path="wms/data/dummy/dummy_data.zip"):
+import os
+import sys
+
+
+def create_database(db_file, csv_zip):
     import os.path
     import sqlite3
 
@@ -105,32 +109,28 @@ def create_database(db_file="wms/database/database.db", csv_zip_path="wms/data/d
             con.commit()
             cur.close()
 
-            import_from_csv(con, csv_zip_path)
-            con.commit()
+            if csv_zip:
+                _import_from_csv(con, csv_zip)
 
-            print([i[0] for i in con.cursor().execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()])
-
-        except sqlite3.Error as err:
-            print(err)
+        except sqlite3.Error as e:
+            sys.exit(e)
 
         finally:
             con.close()
 
 
-def import_from_csv(connection, csv_zip_path="wms/data/dummy/dummy_data.zip"):
+def _import_from_csv(connection, csv_zip_path):
     import pandas
-    import os.path
     import zipfile
 
     try:
         with zipfile.ZipFile(csv_zip_path) as zf:
             csv_files = [f for f in zf.namelist()]
-            print(f"CSV File: {csv_files}")
 
             for file in csv_files:
                 table_name = os.path.splitext(file)[0]
                 df = pandas.read_csv(zf.open(file), sep=",", skipinitialspace=True)
                 df.to_sql(name=table_name, con=connection, if_exists="append", index=False)
 
-    except ValueError as err:
-        print(err)
+    except ValueError as e:
+        sys.exit(e)

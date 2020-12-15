@@ -1,8 +1,8 @@
 import streamlit as st
 
-from wms.gui._database import Database, create_connection
-from wms.gui._plot import Plot
-from wms.gui._table import Table
+from wms.gui.managment import Database, create_connection
+from wms.gui.plot import Plot
+from wms.gui.table import Table
 
 
 class Menu:
@@ -20,8 +20,9 @@ class Menu:
         options: list of string. Available options
         current_option: string, default "". Current selection of the select box
     """
-    def __init__(self, db_file="database/database.db"):
-        self.connection = create_connection(db_file)
+
+    def __init__(self, db_file, csv_zip):
+        self.connection = create_connection(db_file, csv_zip)
         self.select_box = st.sidebar.empty()
         self.text = "Choose an option: "
         self.options = ["Search", "Add", "Remove", "View table", "View profit plot", "Export to csv"]

@@ -12,15 +12,6 @@ def insert(connection, import_id, import_date, buyer_id, shop_id):
         shop_id (str)
     """
 
-    if not import_id:
-        raise TypeError("Argument 'import_id' is required!")
-    if not import_date:
-        raise TypeError("Argument 'import_date' is required!")
-    if not buyer_id:
-        raise TypeError("Argument 'buyer_id' is required!")
-    if not shop_id:
-        raise TypeError("Argument 'shop_id' is required!")
-
     cur = connection.cursor()
     cur.execute('''INSERT INTO Imports (importID, importDate, buyerID, shopID) VALUES (?,?,?,?)''',
                 (import_id, import_date, buyer_id, shop_id))
@@ -77,7 +68,12 @@ def get_all(connection):
 def max_id(connection):
     cur = connection.cursor()
     cur.execute('''SELECT MAX (importID) FROM Imports''')
-    return cur.fetchone()[0]
+    _id = None
+    try:
+        _id = cur.fetchone()[0]
+    except TypeError:
+        pass
+    return _id
 
 
 def columns_names(connection):

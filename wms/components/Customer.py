@@ -10,11 +10,6 @@ def insert(connection, customer_id, customer_name):
         customer_name (str)
     """
 
-    if not customer_id:
-        raise TypeError("Argument 'customer_id' is required!")
-    if not customer_name:
-        raise TypeError("Argument 'customer_name' is required!")
-
     cur = connection.cursor()
     cur.execute('''INSERT INTO Customer (customerID, customerName) VALUES (?,?)''', (customer_id, customer_name))
     connection.commit()
@@ -61,7 +56,12 @@ def get_all(connection):
 def max_id(connection):
     cur = connection.cursor()
     cur.execute('''SELECT MAX (customerID) FROM Customer''')
-    return cur.fetchone()[0]
+    _id = None
+    try:
+        _id = cur.fetchone()[0]
+    except TypeError:
+        pass
+    return _id
 
 
 def columns_names(connection):

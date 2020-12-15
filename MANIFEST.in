@@ -1,1 +1,4 @@
 include LICENSE
+include README.md
+include Pipfile
+include wms/data/dummy/dummy_data.zip

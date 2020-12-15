@@ -13,11 +13,6 @@ def insert(connection, item_id, item_name, quantity, category_id, shop_id):
         shop_id (str)
     """
 
-    if not item_id:
-        raise TypeError("Argument 'item_id' is required!")
-    if not item_name:
-        raise TypeError("Argument 'item_name' is required!")
-
     cur = connection.cursor()
     cur.execute('''INSERT INTO Item (itemID, itemName, quantity, categoryID, shopID) VALUES (?,?,?,?,?)''',
                 (item_id, item_name, quantity, category_id, shop_id))
@@ -83,7 +78,12 @@ def get_all(connection):
 def max_id(connection):
     cur = connection.cursor()
     cur.execute('''SELECT MAX (itemID) FROM Item''')
-    return cur.fetchone()[0]
+    _id = None
+    try:
+        _id = cur.fetchone()[0]
+    except TypeError:
+        pass
+    return _id
 
 
 def columns_names(connection):

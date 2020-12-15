@@ -6,10 +6,10 @@ import streamlit as st
 from wms.components import *
 
 
-def create_connection(db_file):
+def create_connection(db_file, csv_zip):
     from wms import database
 
-    database.create_database(db_file)
+    database.create_database(db_file, csv_zip)
 
     connection = None
     try:
@@ -162,7 +162,8 @@ class Database:
 
             if self.current_option == "Customer":
                 customer_name = st.text_input("Input customer name: ", value="")
-                customer_id = Customer.max_id(self.connection) + 1
+                _last_customer_id = Customer.max_id(self.connection)
+                customer_id = 0 if _last_customer_id is None else _last_customer_id + 1
                 if st.button("Add customer"):
                     check = Customer.insert(self.connection, customer_id, customer_name)
                     with st.spinner("Adding customer..."):
@@ -176,7 +177,8 @@ class Database:
 
             elif self.current_option == "ItemCategory":
                 category_name = st.text_input("Input category name: ", value="")
-                category_id = ItemCategory.max_id(self.connection) + 1
+                _last_category_id = ItemCategory.max_id(self.connection)
+                category_id = 0 if _last_category_id is None else _last_category_id + 1
                 if st.button("Add item category"):
                     check = ItemCategory.insert(self.connection, category_id, category_name)
                     if check is None:
@@ -192,7 +194,8 @@ class Database:
 
             elif self.current_option == "Shop":
                 shop_name = st.text_input("Input shop name: ", value="")
-                shop_id = Shop.max_id(self.connection)
+                _last_shop_id = Shop.max_id(self.connection)
+                shop_id = 0 if _last_shop_id is None else _last_shop_id + 1
                 if st.button("Add shop"):
                     check = Shop.insert(self.connection, shop_id, shop_name)
                     if check is None:
@@ -213,7 +216,8 @@ class Database:
 
             elif self.current_option == "Item":
                 item_name = st.text_input("Input item name: ", value="")
-                item_id = Item.max_id(self.connection)
+                _last_item_id = Item.max_id(self.connection)
+                item_id = 0 if _last_item_id is None else _last_item_id + 1
                 quantity = st.number_input("Input item quantity: ", min_value=0, value=0, step=1)
                 categories = {}
                 for category in ItemCategory.get_all(self.connection):
@@ -371,7 +375,8 @@ class Database:
                 st.warning("Not yet implemented.")
                 st.stop()
 
-    def export_data(self, export_path="wms/data/dummy"):
+    def export_data(self, export_path):
+        import os
         import csv
 
         if st.button("Start exporting data"):
@@ -381,11 +386,12 @@ class Database:
                     with st.spinner(f"Exporting table '{table}'..."):
                         cursor = self.connection.cursor()
                         cursor.execute(f"SELECT * FROM {table}")
-                        with open(f"{export_path}/{table}.csv", "w+", encoding="utf-8", newline="") as csv_file:
+                        filename = os.path.join(export_path, f"{table}.csv")
+                        with open(filename, "w+", encoding="utf-8", newline="") as csv_file:
                             csv_writer = csv.writer(csv_file, delimiter=",")
                             csv_writer.writerow([i[0] for i in cursor.description])
                             csv_writer.writerows(cursor)
-                    st.success(f"Data exported Successfully into {export_path}/{table}.csv")
+                    st.success(f"Data exported Successfully into {filename}")
 
             except sqlite3.Error as err:
                 print(err)

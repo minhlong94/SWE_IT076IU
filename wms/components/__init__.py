@@ -1,10 +1,9 @@
 from wms.components import \
-    Buyer, \
-    ItemCategory, \
     Customer, \
     Item, \
-    Shop, \
+    ItemCategory, \
     Imports, \
     ImportDetail, \
+    Shop, \
     Transactions, \
     TransactionDetail

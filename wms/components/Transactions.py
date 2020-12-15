@@ -13,16 +13,8 @@ def insert(connection, transaction_id, transaction_date, transaction_status, cus
         shop_id (str)
     """
 
-    if not transaction_id:
-        raise TypeError("Argument 'transaction_id' is required!")
-    if not transaction_date:
-        raise TypeError("Argument 'transaction_date' is required!")
     if transaction_status != "PENDING" and transaction_status != "COMPLETED":
         raise ValueError("Argument 'transaction_status' must be either 'PENDING' or 'COMPLETED'!")
-    if not customer_id:
-        raise TypeError("Argument 'customer_id' is required!")
-    if not shop_id:
-        raise TypeError("Argument 'shop_id' is required!")
 
     cur = connection.cursor()
     cur.execute(
@@ -90,7 +82,12 @@ def get_all(connection):
 def max_id(connection):
     cur = connection.cursor()
     cur.execute('''SELECT MAX (transactionID) FROM Transactions''')
-    return cur.fetchone()[0]
+    _id = None
+    try:
+        _id = cur.fetchone()[0]
+    except TypeError:
+        pass
+    return _id
 
 
 def columns_names(connection):
