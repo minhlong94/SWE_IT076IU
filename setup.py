@@ -40,7 +40,7 @@ setuptools.setup(
     version=__version__,
     description=__description__,
     long_description=readme(),
-    url="https://github.com/Doki064/SWE_IT076IU/tree/dev",
+    url="https://github.com/Doki064/SWE_IT076IU",
     license="MIT",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -50,7 +50,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
     ],
     project_urls={
-        "Source": "https://github.com/Doki064/SWE_IT076IU/tree/dev",
+        "Source": "https://github.com/Doki064/SWE_IT076IU",
         "Origin": "https://github.com/minhlong94/SWE_IT076IU",
     },
     packages=setuptools.find_packages(),
