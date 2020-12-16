@@ -1,3 +1,6 @@
-.idea
-src/encryption/check_login
 *.pyc
+dist
+WMS.egg-info
+data/wms.db
+*.png
+*.xml
