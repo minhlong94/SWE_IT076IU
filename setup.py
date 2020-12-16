@@ -1,9 +1,12 @@
+import os
+import sys
+
 import setuptools
+from setuptools.command.install import install
 
-
-__version__ = "0.1.1dev0"
-__name__ = "WMS"
-__description__ = "A wholesale management system application created with Streamlit."
+VERSION = "0.1.1dev0"
+NAME = "WMS"
+DESCRIPTION = "A wholesale management system application created with Streamlit."
 
 
 def readme():
@@ -12,10 +15,25 @@ def readme():
         return f.read()
 
 
+class VerifyVersionCommand(install):
+    """Custom command to verify that the git tag matches our version"""
+
+    description = "verify that the git tag matches our version"
+
+    def run(self):
+        tag = os.getenv("CIRCLE_TAG")
+
+        if tag != VERSION:
+            info = "Git tag: {0} does not match the version of this app: {1}".format(
+                tag, VERSION
+            )
+            sys.exit(info)
+
+
 setuptools.setup(
-    name=__name__,
-    version=__version__,
-    description=__description__,
+    name=NAME,
+    version=VERSION,
+    description=DESCRIPTION,
     long_description=readme(),
     url="https://github.com/Doki064/SWE_IT076IU",
     license="MIT",
@@ -46,4 +64,7 @@ setuptools.setup(
     include_package_data=True,
     entry_points={"console_scripts": ["wms = wms.cli:main"]},
     scripts=["bin/wms.cmd"],
+    cmdclass={
+        "verify": VerifyVersionCommand,
+    },
 )
