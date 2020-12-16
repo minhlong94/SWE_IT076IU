@@ -1,10 +1,10 @@
-from wms.gui import main_page
-from wms.gui import menu
+from wms.gui import main_page as _main_page
+from wms.gui import menu as _menu
 
-MainPage = main_page.MainPage
-Menu = menu.Menu
+MainPage = _main_page.MainPage
+Menu = _menu.Menu
 
-intro = main_page.intro
-info = main_page.info
-login_section = main_page.login_section
-logout_section = main_page.logout_section
+intro = _main_page.intro
+info = _main_page.info
+login_section = _main_page.login_section
+logout_section = _main_page.logout_section

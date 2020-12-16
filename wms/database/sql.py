@@ -1,10 +1,9 @@
 import os
+import sqlite3
 import sys
 
 
 def create_database(db_file, csv_zip=None):
-    import os.path
-    import sqlite3
 
     if not os.path.exists(db_file):
         with open(db_file, 'x'):
@@ -134,3 +133,14 @@ def _import_from_csv(connection, csv_zip_path):
 
     except ValueError as e:
         sys.exit(e)
+
+
+def create_connection(db_file, csv_zip):
+    create_database(db_file, csv_zip)
+
+    connection = None
+    try:
+        connection = sqlite3.connect(db_file)
+    except sqlite3.Error as err:
+        print(err)
+    return connection

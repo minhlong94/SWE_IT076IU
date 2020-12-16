@@ -1,3 +1,3 @@
-from wms.database import sql
+from wms.database import sql as _sql
 
-create_database = sql.create_database
+create_connection = _sql.create_connection

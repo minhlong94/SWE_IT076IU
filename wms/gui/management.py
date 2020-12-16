@@ -10,20 +10,7 @@ from wms.components import *
 session_state = SessionState.get()
 
 
-def create_connection(db_file, csv_zip):
-    from wms import database
-
-    database.create_database(db_file, csv_zip)
-
-    connection = None
-    try:
-        connection = sqlite3.connect(db_file)
-    except sqlite3.Error as err:
-        print(err)
-    return connection
-
-
-class Database:
+class Management:
     def __init__(self, connection):
         self.connection = connection
         self.current_option = ""

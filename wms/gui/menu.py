@@ -1,7 +1,8 @@
 import streamlit as st
 
 from wms import SessionState
-from wms.gui.management import Database, create_connection
+from wms.database import create_connection
+from wms.gui.management import Management
 from wms.gui.plot import Plot
 from wms.gui.table import Table
 
@@ -28,7 +29,7 @@ class Menu:
         self.connection = create_connection(db_file, csv_zip)
         self.container = st.sidebar.beta_container()
         self.options = ["Search", "Add", "Remove", "View table", "View profit plot"]
-        self.database = Database(self.connection)
+        self.management = Management(self.connection)
         self.plot = Plot(self.connection)
         self.table = Table(self.connection)
 
@@ -48,11 +49,11 @@ class Menu:
 
         current_option = self.container.radio("Go to: ", self.options)
         if current_option == "Search":
-            self.database.show_search()
+            self.management.show_search()
         elif current_option == "Add":
-            self.database.show_add()
+            self.management.show_add()
         elif current_option == "Remove":
-            self.database.show_remove()
+            self.management.show_remove()
         elif current_option == "View table":
             self.table.show_dataframe()
         elif current_option == "View profit plot":
