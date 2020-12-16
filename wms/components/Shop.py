@@ -1,3 +1,4 @@
+"""All Shop API methods."""
 import sqlite3
 
 
@@ -17,38 +18,29 @@ def insert(connection, shop_id, shop_name):
 
 
 def delete_by_id(connection, shop_id):
-    if not shop_id:
-        raise TypeError("Argument 'shop_id' is required!")
-
     cur = connection.cursor()
     removed = cur.execute('''SELECT * FROM Shop WHERE shopID = ?''', (shop_id,))
     cur.execute('''DELETE FROM Shop WHERE shopID = ?''', (shop_id,))
     connection.commit()
-    return removed
+    return removed.fetchall()
 
 
 def search_by_id(connection, shop_id=None, show_columns=None):
     cur = connection.cursor()
+    columns = ", ".join(show_columns) if show_columns else "*"
     if shop_id is None:
-        return cur.execute('''SELECT * FROM Shop LIMIT 0''').fetchall()
-    if not show_columns:
-        return cur.execute('''SELECT * FROM Shop WHERE shopID = ?''', (shop_id,)).fetchall()
-    columns = ", ".join(show_columns)
+        return _get_none(connection, columns)
     return cur.execute(f'''SELECT {columns} FROM Shop WHERE shopID = ?''', (shop_id,)).fetchall()
 
 
 def search_by_name(connection, shop_name="", show_columns=None):
     cur = connection.cursor()
-    if not show_columns:
-        return cur.execute('''SELECT * FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',)).fetchall()
-    columns = ", ".join(show_columns)
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if shop_name == "":
+        return _get_none(connection, columns)
+    if shop_name == "*":
+        return _get_all(connection, columns)
     return cur.execute(f'''SELECT {columns} FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',)).fetchall()
-
-
-def get_all(connection):
-    cur = connection.cursor()
-    cur.execute('''SELECT * FROM Shop''')
-    return cur.fetchall()
 
 
 def max_id(connection):
@@ -65,5 +57,17 @@ def max_id(connection):
 def columns_names(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM Shop LIMIT 0''')
-    names = [i[0] for i in cur.description]
-    return names
+    columns = [i[0] for i in cur.description]
+    return columns
+
+
+def _get_all(connection, columns):
+    cur = connection.cursor()
+    cur.execute(f'''SELECT {columns} FROM Shop''')
+    return cur.fetchall()
+
+
+def _get_none(connection, columns):
+    cur = connection.cursor()
+    cur.execute(f'''SELECT {columns} FROM Shop LIMIT 0''')
+    return cur.fetchall()

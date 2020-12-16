@@ -1,3 +1,4 @@
+"""All Item category API methods."""
 import sqlite3
 
 
@@ -17,49 +18,30 @@ def insert(connection, category_id, category_name):
 
 
 def delete_by_id(connection, category_id):
-    if not category_id:
-        raise TypeError("Argument 'category_id' is required!")
-
     cur = connection.cursor()
     removed = cur.execute('''SELECT * FROM ItemCategory WHERE categoryID = ?''', (category_id,))
     cur.execute('''DELETE FROM ItemCategory WHERE categoryID = ?''', (category_id,))
     connection.commit()
-    return removed
-
-
-def delete_by_name(connection, category_name):
-    if not category_name:
-        raise TypeError("Argument 'category_name' is required!")
-
-    cur = connection.cursor()
-    cur.execute('''DELETE FROM ItemCategory WHERE categoryName = ?''', (category_name,))
-    connection.commit()
+    return removed.fetchall()
 
 
 def search_by_id(connection, category_id=None, show_columns=None):
     cur = connection.cursor()
+    columns = ", ".join(show_columns) if show_columns else "*"
     if category_id is None:
-        return cur.execute('''SELECT * FROM ItemCategory LIMIT 0''').fetchall()
-    if not show_columns:
-        return cur.execute('''SELECT * FROM ItemCategory WHERE categoryID = ?''', (category_id,)).fetchall()
-    columns = ", ".join(show_columns)
+        return _get_none(connection, columns)
     return cur.execute(f'''SELECT {columns} FROM ItemCategory WHERE categoryID = ?''', (category_id,)).fetchall()
 
 
 def search_by_name(connection, category_name="", show_columns=None):
     cur = connection.cursor()
-    if not show_columns:
-        return cur.execute('''SELECT * FROM ItemCategory WHERE categoryName LIKE ?''',
-                           ('%' + category_name + '%',)).fetchall()
-    columns = ", ".join(show_columns)
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if category_name == "":
+        return _get_none(connection, columns)
+    if category_name == "*":
+        return _get_all(connection, columns)
     return cur.execute(f'''SELECT {columns} FROM ItemCategory WHERE categoryName LIKE ?''',
                        ('%' + category_name + '%',)).fetchall()
-
-
-def get_all(connection):
-    cur = connection.cursor()
-    cur.execute('''SELECT * FROM ItemCategory''')
-    return cur.fetchall()
 
 
 def max_id(connection):
@@ -76,5 +58,17 @@ def max_id(connection):
 def columns_names(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM ItemCategory LIMIT 0''')
-    names = [i[0] for i in cur.description]
-    return names
+    columns = [i[0] for i in cur.description]
+    return columns
+
+
+def _get_all(connection, columns):
+    cur = connection.cursor()
+    cur.execute(f'''SELECT {columns} FROM ItemCategory''')
+    return cur.fetchall()
+
+
+def _get_none(connection, columns):
+    cur = connection.cursor()
+    cur.execute(f'''SELECT {columns} FROM ItemCategory LIMIT 0''')
+    return cur.fetchall()
