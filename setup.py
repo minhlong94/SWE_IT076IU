@@ -1,7 +1,7 @@
 import setuptools
 
 
-__version__ = "0.1.0dev1"
+__version__ = "0.1.1dev0"
 __name__ = "WMS"
 __description__ = "A wholesale management system application created with Streamlit."
 
@@ -40,7 +40,7 @@ setuptools.setup(
         "hiplot>=0.1.20",
         "pandas-profiling>=2.9.0",
         "click>=7.1.2",
-        "numpy==1.19.3",
+        "numpy!=1.19.4",
     ],
     python_requires=">=3.7, <3.9",
     include_package_data=True,
