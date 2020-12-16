@@ -116,7 +116,7 @@ class Plot:
                         fig = px.line(profit_df, x="date", y="profit", title="Monthly" + plot_title,
                                       template=self.template, color="shopID")  # Plotly
                     fig.update_layout(title_x=0.5)
-                st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, use_container_width=True)
 
 
 @st.cache(persist=True, show_spinner=False, hash_funcs={sqlite3.Connection: id}, ttl=500)
