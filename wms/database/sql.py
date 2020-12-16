@@ -2,7 +2,7 @@ import os
 import sys
 
 
-def create_database(db_file, csv_zip):
+def create_database(db_file, csv_zip=None):
     import os.path
     import sqlite3
 
