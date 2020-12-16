@@ -1,6 +1,6 @@
 *.pyc
 dist
-WMS.egg*
-wms/data/wms.db
+WMS.egg-info
+data/wms.db
 *.png
 *.xml
