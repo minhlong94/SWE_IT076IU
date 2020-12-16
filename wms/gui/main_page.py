@@ -46,8 +46,8 @@ def info():
     st.sidebar.markdown("""
         ---\n
         [International University - VNU-HCM](https://hcmiu.edu.vn/en/)\n
-        [Streamlit](https://www.streamlit.io/).\n
-        [GitHub](https://github.com/minhlong94/SWE_IT076IU).\n
+        [Streamlit](https://www.streamlit.io/)\n
+        [GitHub](https://github.com/minhlong94/SWE_IT076IU)\n
     """)
 
 
