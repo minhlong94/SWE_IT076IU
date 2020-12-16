@@ -74,7 +74,7 @@ class Management:
                         category_id = st.number_input("Input category id: ", step=1, value=0, min_value=0,
                                                       max_value=ItemCategory.max_id(self.connection))
                     elif choice == "name":
-                        category_name = st.text_input("Input category name (* to search all): ", value=category_name)
+                        category_name = st.text_input("Input category name: (* to search all)", value=category_name)
                     columns = st.multiselect("Select columns to search: ", self.category_columns)
 
                 if not columns:
@@ -105,7 +105,7 @@ class Management:
                         shop_id = st.number_input("Input shop id: ", step=1, value=0, min_value=0,
                                                   max_value=Shop.max_id(self.connection))
                     elif choice == "name":
-                        shop_name = st.text_input("Input shop name (* to search all): ", value=shop_name)
+                        shop_name = st.text_input("Input shop name: (* to search all)", value=shop_name)
                     columns = st.multiselect("Select columns to show: ", self.shop_columns)
 
                 if not columns:
@@ -248,7 +248,7 @@ class Management:
                         item_id = st.number_input("Input item id: ", step=1, value=0, min_value=0,
                                                   max_value=Item.max_id(self.connection))
                     elif choice == "name":
-                        item_name = st.text_input("Input item name (* to search all): ", value=item_name)
+                        item_name = st.text_input("Input item name: (* to search all)", value=item_name)
                     elif choice == "category":
                         category_id = st.number_input("Input category id: ", step=1, value=0, min_value=0,
                                                       max_value=ItemCategory.max_id(self.connection))
