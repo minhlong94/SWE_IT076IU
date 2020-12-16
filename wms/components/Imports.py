@@ -1,68 +1,76 @@
+"""All Imports API methods."""
 import sqlite3
 
 
-def insert(connection, import_id, import_date, buyer_id, shop_id):
+def insert(connection, import_id, import_date, shop_id):
     """Add a new import to the database.
 
     Args:
         connection (sqlite3.Connection)
         import_id (str)
         import_date (datetime)
-        buyer_id (str)
         shop_id (str)
     """
 
     cur = connection.cursor()
-    cur.execute('''INSERT INTO Imports (importID, importDate, buyerID, shopID) VALUES (?,?,?,?)''',
-                (import_id, import_date, buyer_id, shop_id))
+    cur.execute('''INSERT INTO Imports (importID, importDate, shopID) VALUES (?,?,?)''',
+                (import_id, import_date, shop_id))
     connection.commit()
+    return cur.lastrowid
 
 
 def delete_by_id(connection, import_id):
-    if not import_id:
-        raise TypeError("Argument 'import_id' is required!")
-
     cur = connection.cursor()
+    removed = cur.execute('''SELECT * FROM Imports WHERE importID = ?''', (import_id,))
     cur.execute('''DELETE FROM Imports WHERE importID = ?''', (import_id,))
     connection.commit()
+    return removed.fetchall()
 
 
-def search_by_id(connection, import_id):
-    if not import_id:
-        raise TypeError("Argument 'import_id' is required!")
-
+def search_by_id(connection, import_id=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE importID LIKE ?''', ('%' + import_id + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if import_id is None:
+        return _get_all(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Imports WHERE importID = ?''', (import_id,)).fetchall()
 
 
-def search_by_date(connection, import_date):
-    if not import_date:
-        raise TypeError("Argument 'import_date' is required!")
-
+def search_by_date(connection, import_date=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE importDate LIKE ?''', ('%' + import_date + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if import_date is None:
+        return _get_none(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Imports WHERE importDate = ?''', (import_date,)).fetchall()
 
 
-def search_by_buyer_id(connection, buyer_id):
-    if not buyer_id:
-        raise TypeError("Argument 'buyer_id' is required!")
-
+def search_by_shop_id(connection, shop_id=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE buyerID LIKE ?''', ('%' + buyer_id + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if shop_id is None:
+        return _get_none(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Imports WHERE shopID = ?''', (shop_id,)).fetchall()
 
 
-def search_by_shop_id(connection, shop_id):
-    if not shop_id:
-        raise TypeError("Argument 'shop_id' is required!")
-
+def search_all(connection, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Imports WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
-
-
-def get_all(connection):
-    cur = connection.cursor()
-    cur.execute('''SELECT * FROM Imports''')
+    columns = ", ".join(show_columns) if show_columns else "*"
+    cur.execute(f'''SELECT {columns} FROM Imports''')
     return cur.fetchall()
+
+
+def get_min_max_date(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT MIN (importDate), MAX (importDate) FROM Imports''')
+    min_date = max_date = None
+    try:
+        from datetime import datetime
+
+        dates = cur.fetchone()
+        min_date = datetime.strptime(dates[0], '%Y-%m-%d')
+        max_date = datetime.strptime(dates[1], '%Y-%m-%d')
+    except TypeError:
+        pass
+    return min_date, max_date
 
 
 def max_id(connection):
@@ -79,5 +87,11 @@ def max_id(connection):
 def columns_names(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM Imports LIMIT 0''')
-    names = [i[0] for i in cur.description]
-    return names
+    columns = [i[0] for i in cur.description]
+    return columns
+
+
+def _get_none(connection, columns):
+    cur = connection.cursor()
+    cur.execute(f'''SELECT {columns} FROM Imports LIMIT 0''')
+    return cur.fetchall()

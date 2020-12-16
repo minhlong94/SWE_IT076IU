@@ -1,24 +1,25 @@
-def insert(connection, transaction_id, item_id, transaction_amount):
-    if not transaction_id:
-        raise TypeError("Argument 'transaction_id' is required!")
-    if not item_id:
-        raise TypeError("Argument 'item_id' is required!")
+def insert(connection, transaction_id, item_id, item_price, transaction_amount):
+    if not isinstance(item_price, float) or item_price < 0:
+        raise TypeError("Argument 'transaction_id' must be a non-negative integer!")
     if not isinstance(transaction_amount, int) or transaction_amount < 0:
         raise TypeError("Argument 'transaction_id' must be a non-negative integer!")
 
     cur = connection.cursor()
-    cur.execute('''INSERT INTO TransactionDetail (transactionID, itemID, transactionAmount) VALUES (?,?,?)''',
-                (transaction_id, item_id, transaction_amount))
+    cur.execute(
+        '''INSERT INTO TransactionDetail (transactionID, itemID, itemPrice, transactionAmount) VALUES (?,?,?,?)''',
+        (transaction_id, item_id, item_price, transaction_amount))
     connection.commit()
 
 
-def search_by_transaction_id(connection, transaction_id):
-    if not transaction_id:
-        raise TypeError("Argument 'transaction_id' is required!")
-
+def search_by_transaction_id(connection, transaction_id=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM TransactionDetail WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
+    if transaction_id is None:
+        return cur.execute('''SELECT * FROM TransactionDetail LIMIT 0''').fetchall()
+    return cur.execute('''SELECT * FROM TransactionDetail WHERE transactionID = ?''', (transaction_id,)).fetchall()
 
 
-def get_all(connection):
-    return connection.cursor().execute('''SELECT * FROM TransactionDetail''')
+def columns_names(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT * FROM TransactionDetail LIMIT 0''')
+    columns = [i[0] for i in cur.description]
+    return columns

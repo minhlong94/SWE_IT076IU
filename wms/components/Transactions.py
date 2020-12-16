@@ -1,3 +1,4 @@
+"""All Transactions API methods."""
 import sqlite3
 
 
@@ -22,61 +23,79 @@ def insert(connection, transaction_id, transaction_date, transaction_status, cus
         VALUES (?,?,?,?,?)''',
         (transaction_id, transaction_date, transaction_status, customer_id, shop_id))
     connection.commit()
+    return cur.lastrowid
 
 
 def delete_by_id(connection, transaction_id):
-    if not transaction_id:
-        raise TypeError("Argument 'transaction_id' is required!")
-
     cur = connection.cursor()
+    removed = cur.execute('''SELECT * FROM Transactions WHERE transactionID = ?''', (transaction_id,))
     cur.execute('''DELETE FROM Transactions WHERE transactionID = ?''', (transaction_id,))
     connection.commit()
+    return removed.fetchall()
 
 
-def search_by_id(connection, transaction_id):
-    if not transaction_id:
-        raise TypeError("Argument 'transaction_id' is required!")
-
+def search_by_id(connection, transaction_id=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE transactionID LIKE ?''', ('%' + transaction_id + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if transaction_id is None:
+        return _get_none(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Transactions WHERE transactionID = ?''', (transaction_id,)).fetchall()
 
 
-def search_by_date(connection, transaction_date):
-    if not transaction_date:
-        raise TypeError("Argument 'transaction_date' is required!")
-
+def search_by_date(connection, transaction_date=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE transactionDate LIKE ?''', ('%' + transaction_date + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if transaction_date is None:
+        return _get_none(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Transactions WHERE transactionDate = ?''',
+                       (transaction_date,)).fetchall()
 
 
-def search_by_status(connection, transaction_status):
-    if not transaction_status:
-        raise TypeError("Argument 'transaction_id' is required!")
-
+def search_by_status(connection, transaction_status=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE transactionStatus LIKE ?''', ('%' + transaction_status + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if transaction_status is None:
+        return _get_none(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Transactions WHERE transactionStatus LIKE ?''',
+                       ('%' + transaction_status + '%',)).fetchall()
 
 
-def search_by_customer_id(connection, customer_id):
-    if not customer_id:
-        raise TypeError("Argument 'customer_id' is required!")
-
+def search_by_customer_id(connection, customer_id=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE customerID LIKE ?''', ('%' + customer_id + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if customer_id is None:
+        return _get_none(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Transactions WHERE customerID = ?''', (customer_id,)).fetchall()
 
 
-def search_by_shop_id(connection, shop_id):
-    if not shop_id:
-        raise TypeError("Argument 'shop_id' is required!")
-
+def search_by_shop_id(connection, shop_id=None, show_columns=None):
     cur = connection.cursor()
-    return cur.execute('''SELECT * FROM Transactions WHERE shopID LIKE ?''', ('%' + shop_id + '%',))
+    columns = ", ".join(show_columns) if show_columns else "*"
+    if shop_id is None:
+        return _get_none(connection, columns)
+    return cur.execute(f'''SELECT {columns} FROM Transactions WHERE shopID = ?''', (shop_id,)).fetchall()
 
 
-def get_all(connection):
+def search_all(connection, show_columns=None):
     cur = connection.cursor()
-    cur.execute('''SELECT * FROM Transactions''')
+    columns = ", ".join(show_columns) if show_columns else "*"
+    cur.execute(f'''SELECT {columns} FROM Transactions''')
     return cur.fetchall()
+
+
+def get_min_max_date(connection):
+    cur = connection.cursor()
+    cur.execute('''SELECT MIN (transactionDate), MAX (transactionDate) FROM Transactions''')
+    min_date = max_date = None
+    try:
+        from datetime import datetime
+
+        dates = cur.fetchone()
+        min_date = datetime.strptime(dates[0], '%Y-%m-%d')
+        max_date = datetime.strptime(dates[1], '%Y-%m-%d')
+    except TypeError:
+        pass
+    return min_date, max_date
 
 
 def max_id(connection):
@@ -93,5 +112,11 @@ def max_id(connection):
 def columns_names(connection):
     cur = connection.cursor()
     cur.execute('''SELECT * FROM Transactions LIMIT 0''')
-    names = [i[0] for i in cur.description]
-    return names
+    columns = [i[0] for i in cur.description]
+    return columns
+
+
+def _get_none(connection, columns):
+    cur = connection.cursor()
+    cur.execute(f'''SELECT {columns} FROM Transactions LIMIT 0''')
+    return cur.fetchall()
