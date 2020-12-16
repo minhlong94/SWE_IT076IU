@@ -7,6 +7,10 @@ import pandas_profiling as pp
 import streamlit as st
 import streamlit.components.v1 as components
 
+from wms import SessionState
+
+session_state = SessionState.get()
+
 
 class Table:
     """Table displayer
