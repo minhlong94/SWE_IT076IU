@@ -1,3 +1,1 @@
-import pkg_resources as _pkg_resources
-
-__version__ = _pkg_resources.get_distribution("wms").version
+__version__ = "0.1.1dev0"
