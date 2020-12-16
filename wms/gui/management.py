@@ -337,7 +337,7 @@ class Management:
                 item_id = 0 if _last_item_id is None else _last_item_id + 1
                 quantity = st.number_input("Input item quantity: ", step=1, value=0, min_value=0)
                 categories = {}
-                for category in ItemCategory.get_all(self.connection):
+                for category in ItemCategory.search_all(self.connection):
                     categories[category[0]] = category[1]
                 category_name = st.selectbox("Input item category: ", list(categories.values()))
                 category_id = None
@@ -346,7 +346,7 @@ class Management:
                         category_id = key
                 st.write(f"Category ID currently: {category_id}")
                 shops = {}
-                for shop in Shop.get_all(self.connection):
+                for shop in Shop.search_all(self.connection):
                     shops[shop[0]] = shop[1]
                 shop_name = st.selectbox("Input shop name: ", list(shops.values()))
                 shop_id = None

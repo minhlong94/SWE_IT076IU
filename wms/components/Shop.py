@@ -43,6 +43,10 @@ def search_by_name(connection, shop_name="", show_columns=None):
     return cur.execute(f'''SELECT {columns} FROM Shop WHERE shopName LIKE ?''', ('%' + shop_name + '%',)).fetchall()
 
 
+def search_all(connection):
+    return _get_all(connection, "*")
+
+
 def max_id(connection):
     cur = connection.cursor()
     cur.execute('''SELECT MAX (shopID) FROM Shop''')

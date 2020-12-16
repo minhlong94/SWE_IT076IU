@@ -44,6 +44,10 @@ def search_by_name(connection, category_name="", show_columns=None):
                        ('%' + category_name + '%',)).fetchall()
 
 
+def search_all(connection):
+    return _get_all(connection, "*")
+
+
 def max_id(connection):
     cur = connection.cursor()
     cur.execute('''SELECT MAX (categoryID) FROM ItemCategory''')
