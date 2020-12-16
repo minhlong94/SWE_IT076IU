@@ -1,8 +1,11 @@
 import streamlit as st
 
-from wms.gui.managment import Database, create_connection
+from wms import SessionState
+from wms.gui.management import Database, create_connection
 from wms.gui.plot import Plot
 from wms.gui.table import Table
+
+session_state = SessionState.get()
 
 
 class Menu:
@@ -21,12 +24,10 @@ class Menu:
         current_option: string, default "". Current selection of the select box
     """
 
-    def __init__(self, db_file, csv_zip):
+    def __init__(self, db_file, csv_zip=None):
         self.connection = create_connection(db_file, csv_zip)
-        self.select_box = st.sidebar.empty()
-        self.text = "Choose an option: "
+        self.container = st.sidebar.beta_container()
         self.options = ["Search", "Add", "Remove", "View table", "View profit plot"]
-        self.current_option = ""
         self.database = Database(self.connection)
         self.plot = Plot(self.connection)
         self.table = Table(self.connection)
@@ -42,15 +43,18 @@ class Menu:
             View profit plot: view the plot of profit in a specific amount of time.\n
             Export to csv: to export the data from the database to csv format.
         """
-        
-        self.current_option = self.select_box.selectbox(self.text, self.options)
-        if self.current_option == "Search":
+
+        self.container.header("NAVIGATION")
+
+        current_option = self.container.radio("Go to: ", self.options)
+        if current_option == "Search":
             self.database.show_search()
-        elif self.current_option == "Add":
+        elif current_option == "Add":
             self.database.show_add()
-        elif self.current_option == "Remove":
+        elif current_option == "Remove":
             self.database.show_remove()
-        elif self.current_option == "View table":
+        elif current_option == "View table":
             self.table.show_dataframe()
-        elif self.current_option == "View profit plot":
+        elif current_option == "View profit plot":
             self.plot.plot()
+        return self.container
