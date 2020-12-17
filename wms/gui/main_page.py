@@ -52,17 +52,8 @@ def info():
 
 
 def login_section():
-    st.sidebar.header("LOGIN SECTION")
-    st.sidebar.subheader("**WARNING: AUTHORIZED ACCESS ONLY**")
-    st.sidebar.write("""
-                Input your privileged password on the left sidebar, then click **Sign in** or press **Enter** to login.
-            """)
-    session_state.input_password = st.sidebar.text_input("Input privileged password: ", type="password",
-                                                         value=session_state.input_password or "")
+    pass
 
 
 def logout_section():
-    st.sidebar.markdown("---")
-    st.sidebar.write(f"*Current session ID: {session_state.get_id()}*")
-    if st.sidebar.button("Sign out"):
-        session_state.clear()
+    pass

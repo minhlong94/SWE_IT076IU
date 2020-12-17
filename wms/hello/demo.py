@@ -16,7 +16,7 @@ def _get_cached_id():
 
 
 def run(**kwargs):
-    session_state = SessionState.get(is_login=False, welcome=False, input_password="")
+    session_state = SessionState.get(is_login=False, welcome=False)
 
     try:
         encryption_key = kwargs["encryption_file"]
@@ -37,12 +37,19 @@ def run(**kwargs):
 
     if not session_state.is_login:
         gui.intro()
-        gui.login_section()
+
+        st.sidebar.header("LOGIN SECTION")
+        st.sidebar.subheader("**WARNING: AUTHORIZED ACCESS ONLY**")
+        st.sidebar.write("""
+                        Input your privileged password on the left sidebar, then click **Sign in** or press **Enter** to login.
+                    """)
+        session_state.input_password = st.sidebar.text_input("Input privileged password: ", type="password",
+                                                             value=session_state.input_password or "")
+
         if st.sidebar.button("Sign in") or session_state.input_password:
             if not bcrypt.checkpw(base64.b64encode(hashlib.sha512(session_state.input_password.encode()).digest()),
                                   hashed_password):
-                with st.sidebar.warning("Wrong password!"):
-                    session_state.input_password = ""
+                st.sidebar.warning("Wrong password!")
                 st.stop()
             else:
                 session_state.is_login = True
@@ -56,7 +63,12 @@ def run(**kwargs):
                         csv_zip=os.path.join(os.path.dirname(wms.__file__), "hello/dummy/dummy_data.zip"))
 
         menu.display_option()
-        gui.logout_section()
+
+        st.sidebar.markdown("---")
+        st.sidebar.write(f"*Current session ID: {session_state.get_id()}*")
+        if st.sidebar.button("Sign out"):
+            session_state.clear()
+
         gui.info()
 
     session_state.sync()
