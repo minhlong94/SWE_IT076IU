@@ -43,8 +43,7 @@ def run(**kwargs):
                                   hashed_password):
                 with st.sidebar.warning("Wrong password!"):
                     session_state.input_password = ""
-                session_state.clear()
-#                st.stop()
+                st.stop()
             else:
                 session_state.is_login = True
                 st.experimental_rerun()
