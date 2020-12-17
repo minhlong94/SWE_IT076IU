@@ -16,7 +16,7 @@ def _get_cached_id():
 
 
 def run(**kwargs):
-    session_state = SessionState.get(is_login=False, welcome=False)
+    session_state = SessionState.get(is_login=False, welcome=False, input_password="")
 
     try:
         encryption_key = kwargs["encryption_file"]
@@ -43,7 +43,8 @@ def run(**kwargs):
                                   hashed_password):
                 with st.sidebar.warning("Wrong password!"):
                     session_state.input_password = ""
-                st.stop()
+                session_state.clear()
+#                st.stop()
             else:
                 session_state.is_login = True
                 st.experimental_rerun()
