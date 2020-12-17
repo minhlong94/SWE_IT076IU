@@ -42,8 +42,7 @@ def run(**kwargs):
             if not bcrypt.checkpw(base64.b64encode(hashlib.sha512(session_state.input_password.encode()).digest()),
                                   hashed_password):
                 with st.sidebar.warning("Wrong password!"):
-                    session_state.input_password = ""
-                st.stop()
+                    pass
             else:
                 session_state.is_login = True
                 st.experimental_rerun()
