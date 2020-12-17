@@ -58,7 +58,7 @@ def login_section():
                 Input your privileged password on the left sidebar, then click **Sign in** or press **Enter** to login.
             """)
     session_state.input_password = st.sidebar.text_input("Input privileged password: ", type="password",
-                                                         value=session_state.input_password)
+                                                         value=session_state.input_password or "")
 
 
 def logout_section():
