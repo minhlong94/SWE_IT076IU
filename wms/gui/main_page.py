@@ -35,10 +35,10 @@ class MainPage:
 def intro():
     st.markdown("""
         ---\n
-        > This is a wholesale management system project for Software Engineering course in 
+        This is a wholesale management system project for Software Engineering course in 
         [International University - VNU-HCM](https://hcmiu.edu.vn/en/).\n
-        > The web application is built with [Streamlit](https://www.streamlit.io/).\n
-        > Source code is available at [GitHub](https://github.com/minhlong94/SWE_IT076IU).\n
+        The web application is built with [Streamlit](https://www.streamlit.io/).\n
+        Source code is available at [GitHub](https://github.com/minhlong94/SWE_IT076IU).\n
     """)
 
 
@@ -52,17 +52,8 @@ def info():
 
 
 def login_section():
-    st.sidebar.header("LOGIN SECTION")
-    st.sidebar.subheader("**WARNING: AUTHORIZED ACCESS ONLY**")
-    st.sidebar.write("""
-                Input your privileged password on the left sidebar, then click **Sign in** or press **Enter** to login.
-            """)
-    session_state.input_password = st.sidebar.text_input("Input privileged password: ", type="password",
-                                                         value=session_state.input_password or "")
+    pass
 
 
 def logout_section():
-    st.sidebar.markdown("---")
-    st.sidebar.write(f"*Current session ID: {session_state.get_id()}*")
-    if st.sidebar.button("Sign out"):
-        session_state.clear()
+    pass
